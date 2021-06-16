@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { RegisterRoute } from './register/presentation/register.route';
+import { RegisterModule } from './register/register.module';
 
 @Module({
-  controllers: [RegisterRoute],
+  imports: [RegisterModule],
 })
 export class AuthModule {}

@@ -1,15 +1,15 @@
 import { BadRequestException } from '@nestjs/common';
-import { Password } from 'src/shared/domain/value-objects/auth/password';
-import { Username } from 'src/shared/domain/value-objects/auth/username';
-import { Email } from 'src/shared/domain/value-objects/general/email';
+import { Email } from 'src/auth/core/domain/value-objects/email';
+import { Password } from 'src/auth/core/domain/value-objects/password';
+import { Username } from 'src/auth/core/domain/value-objects/username';
 import { DomainErrors } from 'src/shared/domain/value-objects/util/domain-errors';
 import { DomainErrorsProp } from 'src/shared/domain/value-objects/util/domain-errors-prop';
 
 export class RegisterInteractorRequest {
   constructor(
-    private username: Username,
-    private password: Password,
-    private email: Email,
+    readonly username: Username,
+    readonly password: Password,
+    readonly email: Email,
   ) {}
 
   static parse(
@@ -28,7 +28,11 @@ export class RegisterInteractorRequest {
       errors,
       DomainErrorsProp.password,
     );
-    const emailV = Email.parse(email, errors, DomainErrorsProp.email);
+    const emailV = Email.parse(
+      email.toLowerCase(),
+      errors,
+      DomainErrorsProp.email,
+    );
     if (usernameV === null || passwordV === null || emailV === null)
       throw new BadRequestException(errors);
     return new RegisterInteractorRequest(usernameV, passwordV, emailV);

@@ -1,12 +1,12 @@
-import { DomainErrors } from '../util/domain-errors';
-import { DomainErrorsProp } from '../util/domain-errors-prop';
+import { DomainErrors } from '../../../../shared/domain/value-objects/util/domain-errors';
+import { DomainErrorsProp } from '../../../../shared/domain/value-objects/util/domain-errors-prop';
 
 export class Email {
   static ValidationError = class {
     static hasToBeAnEmail = 'debe tener el formato de un correo electrónico';
   };
 
-  private constructor(private _val: string) {}
+  private constructor(readonly val: string) {}
 
   static parse(
     val: string,

@@ -1,9 +1,9 @@
-import { FiniteString } from '../primitives/strings/finite-string';
-import { DomainErrors } from '../util/domain-errors';
-import { DomainErrorsProp } from '../util/domain-errors-prop';
+import { FiniteString } from 'src/shared/domain/value-objects/primitives/strings/finite-string';
+import { DomainErrors } from 'src/shared/domain/value-objects/util/domain-errors';
+import { DomainErrorsProp } from 'src/shared/domain/value-objects/util/domain-errors-prop';
 
 export class Password {
-  private constructor(private _val: string) {}
+  private constructor(readonly val: string) {}
 
   static minLength = 8;
   static maxLength = 32;
