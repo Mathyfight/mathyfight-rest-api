@@ -1,0 +1,154 @@
+// class StringValidationErrors {
+//   static hasToBeLongerThan = (other: number): string =>
+//     `has to be longer than ${other}`;
+//   static hasToBeShorterThan = (other: number): string =>
+//     `has to be shorter than ${other}`;
+// }
+
+// class NumberValidationErrors {
+//   static hasToBePositive = 'has to be positive';
+//   static hasToBePositiveOrZero = `has to be positive or 0`;
+//   static cannotBe = (value: number): string => `cannot be ${value}`;
+//   static hasToBeAnInteger = 'has to be an integer';
+// }
+
+// class PlayerName {
+//   private constructor(private value: string) {}
+
+//   static parse(
+//     value: string,
+//     errors: DomainErrors,
+//     prop: DomainErrorsProp,
+//   ): PlayerName | null {
+//     if (value.length <= 2)
+//       errors.add(StringValidationErrors.hasToBeLongerThan(2), prop);
+
+//     if (value.length >= 21)
+//       errors.add(StringValidationErrors.hasToBeShorterThan(21), prop);
+
+//     if (errors.hasProp(prop)) return null;
+
+//     return new PlayerName(value);
+//   }
+// }
+
+// class NaturalNumber {
+//   private constructor(private _value: number) {}
+
+//   static parse(
+//     value: number,
+//     errors: DomainErrors,
+//     prop: DomainErrorsProp,
+//   ): NaturalNumber | null {
+//     if (value < 0)
+//       errors.add(NumberValidationErrors.hasToBePositiveOrZero, prop);
+
+//     if (!Number.isInteger(value))
+//       errors.add(NumberValidationErrors.hasToBeAnInteger, prop);
+
+//     if (errors.hasProp(prop)) return null;
+
+//     return new NaturalNumber(value);
+//   }
+
+//   get value(): number {
+//     return this._value;
+//   }
+// }
+
+// class CurrentHealth {
+//   static ValidationError = class {
+//     static hasToBeLowerThanMaxHealth = 'has to be lower than max health';
+//   };
+
+//   private constructor(private value: NaturalNumber) {}
+
+//   static parse(
+//     currentHealthValue: number,
+//     maxHealth: PositiveInteger,
+//     errors: DomainErrors,
+//     prop: DomainErrorsProp,
+//   ): CurrentHealth | null {
+//     const currentHealthValueNat = NaturalNumber.parse(
+//       currentHealthValue,
+//       errors,
+//       prop,
+//     );
+
+//     if (currentHealthValueNat === null) return null;
+
+//     if (currentHealthValueNat.value > maxHealth.value)
+//       errors.add(this.ValidationError.hasToBeLowerThanMaxHealth, prop);
+
+//     return new CurrentHealth(currentHealthValueNat);
+//   }
+// }
+
+// class BattlePlayer {
+//   constructor(
+//     public name: PlayerName,
+//     public maxHealth: PositiveInteger,
+//     public currentHealth: CurrentHealth,
+//   ) {}
+
+//   static parse(
+//     name: string,
+//     maxHealth: number,
+//     currentHealth: number,
+//     errors: DomainErrors,
+//   ): BattlePlayer | null {
+//     const nameV = PlayerName.parse(name, errors, DomainErrorsProp.name);
+
+//     const maxHealthV = PositiveInteger.parse(
+//       maxHealth,
+//       errors,
+//       DomainErrorsProp.maxHealth,
+//     );
+//     if (maxHealthV === null) return null;
+
+//     const currentHealthV = CurrentHealth.parse(
+//       currentHealth,
+//       maxHealthV,
+//       errors,
+//       DomainErrorsProp.currentHealth,
+//     );
+//     if (nameV === null || currentHealthV === null) return null;
+
+//     return new BattlePlayer(nameV, maxHealthV, currentHealthV);
+//   }
+// }
+
+// // public equippedEquipment: BattlePlayerEquipment[],
+// // public imageUrl: string,
+
+// // get attack(): number {
+// //   return this.equippedEquipment.reduce(
+// //     (acc, equipment) => acc + equipment.attack,
+// //     0,
+// //   );
+// // }
+
+// // get defense(): number {
+// //   return this.equippedEquipment.reduce(
+// //     (acc, equipment) => acc + equipment.defense,
+// //     0,
+// //   );
+// // }
+
+// // export class BattlePlayerEquipment {
+// //   constructor(
+// //     public baseAttack: number,
+// //     public baseDefense: number,
+// //     public levelAttackRate: number,
+// //     public levelDefenseRate: number,
+// //     public level: number,
+// //   ) {}
+
+// //   get attack(): number {
+// //     return this.baseAttack * (1 + this.levelAttackRate * (this.level - 1));
+// //   }
+
+// //   get defense(): number {
+// //     return this.baseDefense * (1 + this.levelDefenseRate * (this.level - 1));
+// //   }
+// // }
