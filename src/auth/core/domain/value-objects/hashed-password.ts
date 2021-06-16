@@ -10,4 +10,8 @@ export class HashedPassword {
     const hashedPassword = await bcrypt.hash(password.val, this.saltRounds);
     return new HashedPassword(hashedPassword);
   }
+
+  static fromExisting(hashedPassword: string): HashedPassword {
+    return new HashedPassword(hashedPassword);
+  }
 }

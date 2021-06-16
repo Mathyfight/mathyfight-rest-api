@@ -17,12 +17,15 @@ export class Email {
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
         val,
       );
-
     if (!compliesWithRfc5322) {
       errors.add(this.ValidationError.hasToBeAnEmail, prop);
       return null;
     }
 
-    return new Email(val);
+    return new Email(val.toLowerCase());
+  }
+
+  static fromExisting(email: string): Email {
+    return new Email(email);
   }
 }

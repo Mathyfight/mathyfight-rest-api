@@ -24,4 +24,8 @@ export class Username {
 
     return new Username(val);
   }
+
+  static fromExisting(username: string): Username {
+    return new Username(username);
+  }
 }

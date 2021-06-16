@@ -28,11 +28,7 @@ export class RegisterInteractorRequest {
       errors,
       DomainErrorsProp.password,
     );
-    const emailV = Email.parse(
-      email.toLowerCase(),
-      errors,
-      DomainErrorsProp.email,
-    );
+    const emailV = Email.parse(email, errors, DomainErrorsProp.email);
     if (usernameV === null || passwordV === null || emailV === null)
       throw new BadRequestException(errors);
     return new RegisterInteractorRequest(usernameV, passwordV, emailV);

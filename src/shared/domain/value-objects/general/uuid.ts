@@ -26,4 +26,8 @@ export class Uuid {
 
     return new Uuid(value);
   }
+
+  static fromExisting(id: string): Uuid {
+    return new Uuid(id);
+  }
 }
