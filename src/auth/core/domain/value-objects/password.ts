@@ -21,4 +21,8 @@ export class Password {
 
     return new Password(val);
   }
+
+  static fromExisting(val: string): Password {
+    return new Password(val);
+  }
 }

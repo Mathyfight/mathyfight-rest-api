@@ -14,13 +14,13 @@ export class UniqueEmail {
     return this.email.val;
   }
 
-  static parse(
+  static async parse(
     email: Email,
     repository: RegisterRepository,
     errors: DomainErrors,
     prop: DomainErrorsProp,
-  ): UniqueEmail | null {
-    const userId = repository.getOneUserIdByEmail(email);
+  ): Promise<UniqueEmail | null> {
+    const userId = await repository.getOneUserIdByEmail(email);
     const exists = userId !== null;
     if (exists) {
       errors.add(this.ValidationError.exists, prop);

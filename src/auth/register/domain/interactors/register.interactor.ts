@@ -20,27 +20,23 @@ export class RegisterInteractor {
 
   async invoke(request: RegisterInteractorRequest): Promise<void> {
     const errors = new DomainErrors();
-    const nonExistingUsername = UniqueUsername.parse(
+    const uniqueUsername = await UniqueUsername.parse(
       request.username,
       this.repository,
       errors,
       DomainErrorsProp.username,
     );
-    const nonExistingEmail = UniqueEmail.parse(
+    const uniqueEmail = await UniqueEmail.parse(
       request.email,
       this.repository,
       errors,
       DomainErrorsProp.email,
     );
 
-    if (nonExistingUsername === null || nonExistingEmail === null)
+    if (uniqueUsername === null || uniqueEmail === null)
       throw new BadRequestException(errors);
 
-    await this.saveNewUser(
-      request.password,
-      nonExistingUsername,
-      nonExistingEmail,
-    );
+    await this.saveNewUser(request.password, uniqueUsername, uniqueEmail);
   }
 
   async saveNewUser(

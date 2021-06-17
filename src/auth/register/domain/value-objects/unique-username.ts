@@ -14,13 +14,13 @@ export class UniqueUsername {
     return this.username.val;
   }
 
-  static parse(
+  static async parse(
     username: Username,
     repository: RegisterRepository,
     errors: DomainErrors,
     prop: DomainErrorsProp,
-  ): UniqueUsername | null {
-    const userId = repository.getOneUserIdByUsername(username);
+  ): Promise<UniqueUsername | null> {
+    const userId = await repository.getOneUserIdByUsername(username);
     const exists = userId !== null;
     if (exists) {
       errors.add(this.ValidationError.exists, prop);
