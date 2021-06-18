@@ -4,15 +4,15 @@ import { IsString } from 'class-validator';
 export class RegisterRouteBodyRequest {
   @ApiProperty()
   @IsString()
-  username: string;
+  readonly username: string;
 
   @ApiProperty()
   @IsString()
-  password: string;
+  readonly password: string;
 
   @ApiProperty()
   @IsString()
-  email: string;
+  readonly email: string;
 
   constructor(username: string, password: string, email: string) {
     this.username = username;
