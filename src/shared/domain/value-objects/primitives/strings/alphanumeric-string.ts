@@ -11,7 +11,7 @@ export class AlphanumericString {
     errors: DomainErrors,
     prop: DomainErrorsProp,
   ): AlphanumericString | null {
-    const isAlphanumeric = /\/^\w+$\//.test(val);
+    const isAlphanumeric = /^\w+$/.test(val);
     if (!isAlphanumeric) {
       errors.add(this.ValidationError.hasToBeAlphanumeric, prop);
       return null;

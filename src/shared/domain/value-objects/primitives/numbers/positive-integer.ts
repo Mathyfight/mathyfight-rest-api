@@ -4,7 +4,7 @@ import { Integer } from './integer';
 import { PositiveNumber } from './positive-number';
 
 export class PositiveInteger {
-  private constructor(private _val: number) {}
+  private constructor(readonly val: number) {}
 
   static parse(
     value: number,
@@ -18,9 +18,5 @@ export class PositiveInteger {
     if (!(isPositiveNumber && isInteger)) return null;
 
     return new PositiveInteger(value);
-  }
-
-  get val(): number {
-    return this._val;
   }
 }
