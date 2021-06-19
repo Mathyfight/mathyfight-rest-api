@@ -1,7 +1,9 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { LoginAppServiceResponse } from '../application/service/login.app.service.response';
 
 export class LoginRouteResponse {
-  readonly jsonWebToken: string;
+  @ApiProperty()
+  public readonly jsonWebToken: string;
 
   constructor(jsonWebToken: string) {
     this.jsonWebToken = jsonWebToken;
