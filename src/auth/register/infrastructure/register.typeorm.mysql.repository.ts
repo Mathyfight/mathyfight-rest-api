@@ -1,11 +1,11 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { Email } from 'src/auth/core/domain/value-objects/email';
-import { Username } from 'src/auth/core/domain/value-objects/username';
-import { UserTypeOrmMySql } from 'src/database/typeorm/mysql/entities/user.typeorm.mysql';
-import { Uuid } from 'src/shared/domain/value-objects/general/uuid';
-import { Raw, Repository } from 'typeorm';
-import { RegisterRepository } from '../domain/adapters/register.repository';
-import { User } from '../domain/entities/user';
+import { Email } from 'src/auth/core/domain/value-object/email';
+import { Username } from 'src/auth/core/domain/value-object/username';
+import { UserTypeOrmMySql } from 'src/database/typeorm/mysql/entity/user.typeorm.mysql';
+import { Uuid } from 'src/shared/domain/value-object/general/uuid';
+import { Repository } from 'typeorm';
+import { RegisterRepository } from '../application/adapter/register.repository';
+import { User } from '../domain/entity/user';
 
 export class RegisterTypeOrmMySqlRepository implements RegisterRepository {
   constructor(
@@ -15,9 +15,7 @@ export class RegisterTypeOrmMySqlRepository implements RegisterRepository {
 
   async getOneUserIdByUsername(username: Username): Promise<Uuid | null> {
     const ormUser = await this.userRepository.findOne({
-      where: {
-        username: Raw((alias) => `${alias} = LOWER('${username.val}')`),
-      },
+      where: { username: username.val },
     });
     if (ormUser === undefined) return null;
     return Uuid.fromExisting(ormUser.id);

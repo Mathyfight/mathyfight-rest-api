@@ -1,5 +1,5 @@
 export enum DomainErrorsProp {
-  _ = '_',
+  errors = 'errors',
   username = 'username',
   password = 'password',
   email = 'email',

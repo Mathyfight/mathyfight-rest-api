@@ -1,7 +1,7 @@
-import { AlphanumericString } from 'src/shared/domain/value-objects/primitives/strings/alphanumeric-string';
-import { FiniteString } from 'src/shared/domain/value-objects/primitives/strings/finite-string';
-import { DomainErrors } from 'src/shared/domain/value-objects/util/domain-errors';
-import { DomainErrorsProp } from 'src/shared/domain/value-objects/util/domain-errors-prop';
+import { AlphanumericString } from 'src/shared/domain/value-object/primitive/string/alphanumeric-string';
+import { FiniteString } from 'src/shared/domain/value-object/primitive/string/finite-string';
+import { DomainErrors } from 'src/shared/domain/value-object/util/domain-errors';
+import { DomainErrorsProp } from 'src/shared/domain/value-object/util/domain-errors-prop';
 
 export class Username {
   private constructor(readonly val: string) {}
