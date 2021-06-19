@@ -1,5 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { LoginAppService } from '../application/service/login.app.service';
 import { LoginAppServiceRequest } from '../application/service/login.app.service.request';
 import { LoginRouteBodyRequest } from './login.route.body.request';
@@ -11,6 +11,7 @@ export class LoginRoute {
   constructor(readonly loginAppService: LoginAppService) {}
 
   @Post('login')
+  @ApiResponse({ type: LoginRouteResponse })
   async loginRoute(
     @Body() body: LoginRouteBodyRequest,
   ): Promise<LoginRouteResponse> {
