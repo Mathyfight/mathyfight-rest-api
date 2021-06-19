@@ -1,5 +1,5 @@
-import { DomainErrors } from '../../../../shared/domain/value-objects/util/domain-errors';
-import { DomainErrorsProp } from '../../../../shared/domain/value-objects/util/domain-errors-prop';
+import { DomainErrors } from '../../../../shared/domain/value-object/util/domain-errors';
+import { DomainErrorsProp } from '../../../../shared/domain/value-object/util/domain-errors-prop';
 
 export class Email {
   static ValidationError = class {

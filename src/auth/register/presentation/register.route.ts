@@ -1,21 +1,21 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { RegisterInteractor } from '../domain/interactors/register.interactor';
-import { RegisterInteractorRequest } from '../domain/interactors/register.interactor.request';
+import { RegisterAppService } from '../application/service/register.app.service';
+import { RegisterAppServiceRequest } from '../application/service/register.app.service.request';
 import { RegisterRouteBodyRequest } from './register.route.body.request';
 
 @ApiTags('auth')
 @Controller('auth')
 export class RegisterRoute {
-  constructor(readonly registerInteractor: RegisterInteractor) {}
+  constructor(readonly registerAppService: RegisterAppService) {}
 
   @Post('register')
   async registerRoute(@Body() body: RegisterRouteBodyRequest): Promise<void> {
-    const interactorRequest = RegisterInteractorRequest.parse(
+    const serviceRequest = RegisterAppServiceRequest.parse(
       body.username,
       body.password,
       body.email,
     );
-    await this.registerInteractor.invoke(interactorRequest);
+    await this.registerAppService.invoke(serviceRequest);
   }
 }

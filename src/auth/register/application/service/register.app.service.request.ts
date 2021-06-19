@@ -1,11 +1,11 @@
 import { BadRequestException } from '@nestjs/common';
-import { Email } from 'src/auth/core/domain/value-objects/email';
-import { Password } from 'src/auth/core/domain/value-objects/password';
-import { Username } from 'src/auth/core/domain/value-objects/username';
-import { DomainErrors } from 'src/shared/domain/value-objects/util/domain-errors';
-import { DomainErrorsProp } from 'src/shared/domain/value-objects/util/domain-errors-prop';
+import { Email } from 'src/auth/core/domain/value-object/email';
+import { Password } from 'src/auth/core/domain/value-object/password';
+import { Username } from 'src/auth/core/domain/value-object/username';
+import { DomainErrors } from 'src/shared/domain/value-object/util/domain-errors';
+import { DomainErrorsProp } from 'src/shared/domain/value-object/util/domain-errors-prop';
 
-export class RegisterInteractorRequest {
+export class RegisterAppServiceRequest {
   constructor(
     readonly username: Username,
     readonly password: Password,
@@ -16,7 +16,7 @@ export class RegisterInteractorRequest {
     username: string,
     password: string,
     email: string,
-  ): RegisterInteractorRequest {
+  ): RegisterAppServiceRequest {
     const errors = new DomainErrors();
     const usernameV = Username.parse(
       username,
@@ -29,8 +29,10 @@ export class RegisterInteractorRequest {
       DomainErrorsProp.password,
     );
     const emailV = Email.parse(email, errors, DomainErrorsProp.email);
+
     if (usernameV === null || passwordV === null || emailV === null)
       throw new BadRequestException(errors);
-    return new RegisterInteractorRequest(usernameV, passwordV, emailV);
+
+    return new RegisterAppServiceRequest(usernameV, passwordV, emailV);
   }
 }

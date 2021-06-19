@@ -1,6 +1,6 @@
-import { FiniteString } from 'src/shared/domain/value-objects/primitives/strings/finite-string';
-import { DomainErrors } from 'src/shared/domain/value-objects/util/domain-errors';
-import { DomainErrorsProp } from 'src/shared/domain/value-objects/util/domain-errors-prop';
+import { FiniteString } from 'src/shared/domain/value-object/primitive/string/finite-string';
+import { DomainErrors } from 'src/shared/domain/value-object/util/domain-errors';
+import { DomainErrorsProp } from 'src/shared/domain/value-object/util/domain-errors-prop';
 
 export class Password {
   private constructor(readonly val: string) {}
