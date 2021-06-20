@@ -24,7 +24,6 @@ export class LoginDomainService {
         requestPassword.val,
         foundUser.hashedPassword.val,
       );
-      console.dir(passwordsMatch);
       if (!passwordsMatch) {
         errors.add(this.invalidCredentials, DomainErrorsProp.errors);
       }

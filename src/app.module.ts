@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
+import { SharedModule } from './shared/shared.module';
 import { StoreModule } from './store/store.module';
 
 @Module({
@@ -23,6 +24,7 @@ import { StoreModule } from './store/store.module';
     AuthModule,
     DatabaseModule,
     StoreModule,
+    SharedModule,
   ],
 })
 export class AppModule {}
