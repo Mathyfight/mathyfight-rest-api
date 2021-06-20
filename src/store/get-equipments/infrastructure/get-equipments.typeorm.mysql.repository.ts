@@ -1,4 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm';
+import { AvatarTypeOrmMySql } from 'src/database/typeorm/mysql/entity/avatar.typeorm.mysql';
 import { EquipmentTypeOrmMySql } from 'src/database/typeorm/mysql/entity/equipment.typeorm.mysql';
 import { EquipmentSortingOrder } from 'src/shared/domain/value-object/equipment/equipment-sorting-order';
 import { EquipmentType } from 'src/shared/domain/value-object/equipment/equipment-type';
@@ -15,7 +16,20 @@ export class GetEquipmentTypeOrmMySqlRepository
   constructor(
     @InjectRepository(EquipmentTypeOrmMySql)
     readonly equipmentRepository: Repository<EquipmentTypeOrmMySql>,
+    @InjectRepository(AvatarTypeOrmMySql)
+    readonly avatarRepository: Repository<AvatarTypeOrmMySql>,
   ) {}
+
+  async getAvatarIdByUserId(userId: Uuid): Promise<Uuid | null> {
+    const ormAvatar = await this.avatarRepository
+      .createQueryBuilder('avatar')
+      .innerJoinAndSelect('avatar.player', 'player')
+      .innerJoinAndSelect('player.user', 'user')
+      .where('user.id = :userId', { userId: userId.val })
+      .getOne();
+    if (ormAvatar === undefined) return null;
+    return Uuid.fromExisting(ormAvatar.id);
+  }
 
   async getEquipments(
     equipmentType: EquipmentType,
@@ -42,7 +56,7 @@ export class GetEquipmentTypeOrmMySqlRepository
         'equipment.avatars',
         'avatars',
         'avatars.avatar_id = :avatarId',
-        { avatarId: 'ef7c46b9-d7ed-4f6d-99a2-ccedd2ebaa7e' },
+        { avatarId: avatarId.val },
       )
       .where('avatars.avatar_id is null')
       .andWhere('equipment.type = :equipmentType', { equipmentType })

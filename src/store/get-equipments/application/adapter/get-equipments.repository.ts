@@ -13,4 +13,5 @@ export abstract class GetEquipmentsRepository {
     sortingOrderCriteria?: SortingOrderCriteria,
     equipmentSortingOrder?: EquipmentSortingOrder,
   ): Promise<[Equipment[], number]>;
+  abstract getAvatarIdByUserId(userId: Uuid): Promise<Uuid | null>;
 }
