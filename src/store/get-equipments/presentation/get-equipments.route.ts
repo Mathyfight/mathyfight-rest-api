@@ -1,5 +1,5 @@
 import { Controller, Get, Query } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { GetEquipmentsAppService } from '../application/service/get-equipments.app.service';
 import { GetEquipmentsAppServiceRequest } from '../application/service/get-equipments.app.service.request';
 import { GetEquipmentsRouteQueries } from './get-equipments.route.queries';
@@ -11,6 +11,7 @@ export class GetEquipmentsRoute {
   constructor(readonly getEquipmentsAppService: GetEquipmentsAppService) {}
 
   @Get('equipments')
+  @ApiResponse({ type: GetEquipmentsRouteResponse })
   async getEquipmentsRoute(
     @Query() queries: GetEquipmentsRouteQueries,
   ): Promise<GetEquipmentsRouteResponse> {
