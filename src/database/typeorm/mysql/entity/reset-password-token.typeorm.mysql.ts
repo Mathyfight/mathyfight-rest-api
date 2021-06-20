@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { UserTypeOrmMySql } from './user.typeorm.mysql';
 
 @Entity('reset_password_token')
@@ -12,7 +12,10 @@ export class ResetPasswordTokenTypeOrmMySql {
   @Column('boolean', { name: 'has_been_used', nullable: false })
   hasBeenUsed: boolean;
 
-  @ManyToOne(() => UserTypeOrmMySql, (user) => user.tokens)
+  @ManyToOne(() => UserTypeOrmMySql, (user) => user.tokens, {
+    nullable: false,
+  })
+  @JoinColumn({ name: 'user_id' })
   user: UserTypeOrmMySql;
 
   constructor(

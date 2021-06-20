@@ -1,4 +1,5 @@
-import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import { Column, Entity, OneToMany, OneToOne, PrimaryColumn } from 'typeorm';
+import { PlayerTypeOrmMySql } from './player.typeorm.mysql';
 import { ResetPasswordTokenTypeOrmMySql } from './reset-password-token.typeorm.mysql';
 
 @Entity('user')
@@ -25,6 +26,9 @@ export class UserTypeOrmMySql {
   @Column('varchar', { name: 'hashed_password', length: 72, nullable: false })
   hashedPassword: string;
 
+  @OneToOne(() => PlayerTypeOrmMySql, (player) => player.user)
+  player: PlayerTypeOrmMySql;
+
   @OneToMany(() => ResetPasswordTokenTypeOrmMySql, (token) => token.user)
   tokens: ResetPasswordTokenTypeOrmMySql[];
 
@@ -34,11 +38,13 @@ export class UserTypeOrmMySql {
     username: string,
     hashedPassword: string,
     tokens: ResetPasswordTokenTypeOrmMySql[],
+    player: PlayerTypeOrmMySql,
   ) {
     this.id = id;
     this.username = username;
     this.email = email;
     this.hashedPassword = hashedPassword;
     this.tokens = tokens;
+    this.player = player;
   }
 }
