@@ -3,4 +3,5 @@ export enum DomainErrorsProp {
   username = 'username',
   password = 'password',
   email = 'email',
+  page = 'page',
 }
