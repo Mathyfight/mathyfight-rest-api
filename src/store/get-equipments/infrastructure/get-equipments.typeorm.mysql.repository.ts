@@ -33,6 +33,7 @@ export class GetEquipmentTypeOrmMySqlRepository
 
   async getEquipments(
     equipmentType: EquipmentType,
+    elementsPerPage: number,
     page: PositiveInteger,
     avatarId: Uuid,
     sortingOrderCriteria?: SortingOrderCriteria,
@@ -61,8 +62,8 @@ export class GetEquipmentTypeOrmMySqlRepository
       .where('avatars.avatar_id is null')
       .andWhere('equipment.type = :equipmentType', { equipmentType })
       .orderBy(`equipment.${order}`, orderCriteria)
-      .skip((page.val - 1) * 10)
-      .take(10)
+      .skip((page.val - 1) * elementsPerPage)
+      .take(elementsPerPage)
       .getManyAndCount();
 
     const equipments = ormEquipments.map(
