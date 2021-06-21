@@ -25,19 +25,20 @@ export class GetEquipmentsAppService {
     if (errors.isNotEmpty || avatarId === null)
       throw new BadRequestException(errors);
 
+    const elementsPerPage = 20;
     const [equipments, totalRows] = await this.repository.getEquipments(
       request.equipmentType,
+      elementsPerPage,
       request.page,
       avatarId,
       request.sortingOrderCriteria,
       request.equipmentSortingOrder,
     );
 
-    const rowsPerPage = 10;
     const lastEquipmentRow =
-      (request.page.val - 1) * rowsPerPage + equipments.length;
+      (request.page.val - 1) * elementsPerPage + equipments.length;
     const nextPage =
-      equipments.length < rowsPerPage
+      equipments.length < elementsPerPage
         ? null
         : lastEquipmentRow === totalRows
         ? null

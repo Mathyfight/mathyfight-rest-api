@@ -54,7 +54,7 @@ export class GetEquipmentsRouteResponse {
   @ApiProperty({
     type: GetEquipmentsEquipmentRouteResponse,
     isArray: true,
-    maxItems: 10,
+    maxItems: 20,
   })
   readonly equipments: GetEquipmentsEquipmentRouteResponse[];
 
