@@ -1,5 +1,4 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { Uuid } from 'src/shared/domain/value-object/general/uuid';
 import { DomainErrors } from 'src/shared/domain/value-object/util/domain-errors';
 import { GetEquipmentsDomainService } from '../../domain/service/get-equipments.domain.service';
 import { GetEquipmentsRepository } from '../adapter/get-equipments.repository';
