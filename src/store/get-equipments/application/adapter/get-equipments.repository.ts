@@ -8,6 +8,7 @@ import { Equipment } from '../../domain/entity/equipment';
 export abstract class GetEquipmentsRepository {
   abstract getEquipments(
     equipmentType: EquipmentType,
+    elementsPerPage: number,
     page: PositiveInteger,
     avatarId: Uuid,
     sortingOrderCriteria?: SortingOrderCriteria,
