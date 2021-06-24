@@ -5,4 +5,5 @@ export enum DomainErrorsProp {
   email = 'email',
   page = 'page',
   userId = 'userId',
+  equipmentId = 'equipmentId',
 }

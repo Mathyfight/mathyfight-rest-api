@@ -27,7 +27,7 @@ export class UserTypeOrmMySql {
   hashedPassword: string;
 
   @OneToOne(() => PlayerTypeOrmMySql, (player) => player.user)
-  player: PlayerTypeOrmMySql;
+  player: PlayerTypeOrmMySql | null;
 
   @OneToMany(() => ResetPasswordTokenTypeOrmMySql, (token) => token.user)
   tokens: ResetPasswordTokenTypeOrmMySql[];
@@ -38,7 +38,7 @@ export class UserTypeOrmMySql {
     username: string,
     hashedPassword: string,
     tokens: ResetPasswordTokenTypeOrmMySql[],
-    player: PlayerTypeOrmMySql,
+    player: PlayerTypeOrmMySql | null,
   ) {
     this.id = id;
     this.username = username;
