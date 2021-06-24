@@ -16,4 +16,4 @@ import { GetEquipmentsRoute } from './presentation/get-equipments.route';
   ],
   controllers: [GetEquipmentsRoute],
 })
-export class EquipmentsModule {}
+export class GetEquipmentsModule {}
