@@ -1,6 +1,7 @@
 import * as uuid from 'uuid';
 import * as bcrypt from 'bcrypt';
 import { RaceType } from 'src/shared/domain/value-object/avatar/race-type';
+import { HashedPassword } from 'src/auth/core/domain/value-object/hashed-password';
 
 export class RegisterNewUser {
   readonly id: string;
@@ -13,7 +14,7 @@ export class RegisterNewUser {
     readonly email: string,
   ) {
     this.id = uuid.v4();
-    this.hashedPassword = bcrypt.hashSync(password, 10);
+    this.hashedPassword = bcrypt.hashSync(password, HashedPassword.saltRounds);
     this.player = new Player(username);
   }
 }
