@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { DomainErrors } from 'src/shared/domain/value-object/util/domain-errors';
+import { DomainErrorsOld } from 'src/shared/domain/value-object/util/domain-errors-old';
 import { LoginRepository } from '../adapter/login.repository';
 import { LoginAppServiceRequest } from './login.app.service.request';
 import { LoginDomainService } from '../../domain/service/login.domain.service';
@@ -18,7 +18,7 @@ export class LoginAppService {
   async invoke(
     request: LoginAppServiceRequest,
   ): Promise<LoginAppServiceResponse> {
-    const errors = new DomainErrors();
+    const errors = new DomainErrorsOld();
     const domainService = new LoginDomainService();
 
     const foundUser = await this.repository.getOneUserByUsername(

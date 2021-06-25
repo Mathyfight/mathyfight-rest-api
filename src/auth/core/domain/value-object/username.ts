@@ -1,7 +1,9 @@
 import { AlphanumericString } from 'src/shared/domain/value-object/primitive/string/alphanumeric-string';
 import { FiniteString } from 'src/shared/domain/value-object/primitive/string/finite-string';
-import { DomainErrors } from 'src/shared/domain/value-object/util/domain-errors';
-import { DomainErrorsProp } from 'src/shared/domain/value-object/util/domain-errors-prop';
+import {
+  DomainErrors,
+  DomainErrorsProp,
+} from 'src/shared/domain/value-object/util/domain-errors';
 
 export class Username {
   private constructor(readonly val: string) {}
@@ -11,7 +13,7 @@ export class Username {
 
   static parse(
     val: string,
-    errors: DomainErrors,
+    errors: Partial<DomainErrors>,
     prop: DomainErrorsProp,
   ): Username | null {
     const isInsideLength =

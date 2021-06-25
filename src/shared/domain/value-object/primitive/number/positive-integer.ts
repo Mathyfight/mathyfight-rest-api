@@ -1,5 +1,5 @@
-import { DomainErrors } from '../../util/domain-errors';
-import { DomainErrorsProp } from '../../util/domain-errors-prop';
+import { DomainErrorsOld } from '../../util/domain-errors-old';
+import { DomainErrorsProp } from '../../util/domain-errors';
 import { Integer } from './integer';
 import { PositiveNumber } from './positive-number';
 
@@ -8,7 +8,7 @@ export class PositiveInteger {
 
   static parse(
     value: number,
-    errors: DomainErrors,
+    errors: DomainErrorsOld,
     prop: DomainErrorsProp,
   ): PositiveInteger | null {
     const isPositiveNumber = PositiveNumber.parse(value, errors, prop) !== null;

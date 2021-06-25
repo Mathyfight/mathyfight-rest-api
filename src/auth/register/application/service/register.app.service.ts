@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { DomainErrors } from 'src/shared/domain/value-object/util/domain-errors';
+import { DomainErrorsOld } from 'src/shared/domain/value-object/util/domain-errors-old';
 import { RegisterRepository } from '../adapter/register.repository';
 import { User } from '../../domain/entity/user';
 import { RegisterAppServiceRequest } from './register.app.service.request';
@@ -14,7 +14,7 @@ export class RegisterAppService {
   constructor(readonly repository: RegisterRepository) {}
 
   async invoke(request: RegisterAppServiceRequest): Promise<void> {
-    const errors = new DomainErrors();
+    const errors = new DomainErrorsOld();
     const domainService = new RegisterDomainService();
 
     const userIdFromUsername = await this.repository.getOneUserIdByUsername(

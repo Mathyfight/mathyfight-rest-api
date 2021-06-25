@@ -1,5 +1,5 @@
-import { DomainErrors } from 'src/shared/domain/value-object/util/domain-errors';
-import { DomainErrorsProp } from 'src/shared/domain/value-object/util/domain-errors-prop';
+import { DomainErrorsOld } from 'src/shared/domain/value-object/util/domain-errors-old';
+import { DomainErrorsProp } from 'src/shared/domain/value-object/util/domain-errors';
 import { AddEquipmentToAvatar } from '../command/add-equipment-to-avatar';
 import { BuyEquipmentCommand } from '../command/buy-equipment.command';
 import { DecreasePlayerGold } from '../command/decrease-player-gold';
@@ -17,7 +17,7 @@ export class BuyEquipmentDomainService {
   invoke(
     user: User | null,
     equipment: Equipment | null,
-    errors: DomainErrors,
+    errors: DomainErrorsOld,
   ): BuyEquipmentCommand | null {
     if (equipment === null)
       errors.add(this.equipmentDoesntExist, DomainErrorsProp.equipmentId);

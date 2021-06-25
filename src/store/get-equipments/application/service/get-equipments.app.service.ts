@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { DomainErrors } from 'src/shared/domain/value-object/util/domain-errors';
+import { DomainErrorsOld } from 'src/shared/domain/value-object/util/domain-errors-old';
 import { GetEquipmentsDomainService } from '../../domain/service/get-equipments.domain.service';
 import { GetEquipmentsRepository } from '../adapter/get-equipments.repository';
 import { GetEquipmentsAppServiceRequest } from './get-equipments.app.service.request';
@@ -15,7 +15,7 @@ export class GetEquipmentsAppService {
   async invoke(
     request: GetEquipmentsAppServiceRequest,
   ): Promise<GetEquipmentsAppServiceResponse> {
-    const errors = new DomainErrors();
+    const errors = new DomainErrorsOld();
     const domainService = new GetEquipmentsDomainService();
 
     const avatarId = await this.repository.getAvatarIdByUserId(request.userId);
