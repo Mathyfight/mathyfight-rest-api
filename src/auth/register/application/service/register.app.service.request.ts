@@ -2,8 +2,8 @@ import { BadRequestException } from '@nestjs/common';
 import { Email } from 'src/auth/core/domain/value-object/email';
 import { Password } from 'src/auth/core/domain/value-object/password';
 import { Username } from 'src/auth/core/domain/value-object/username';
-import { DomainErrors } from 'src/shared/domain/value-object/util/domain-errors';
-import { DomainErrorsProp } from 'src/shared/domain/value-object/util/domain-errors-prop';
+import { DomainErrorsProp } from 'src/shared/domain/value-object/util/domain-errors';
+import { RegisterErrors } from '../../domain/value-object/register.errors';
 
 export class RegisterAppServiceRequest {
   constructor(
@@ -17,7 +17,7 @@ export class RegisterAppServiceRequest {
     password: string,
     email: string,
   ): RegisterAppServiceRequest {
-    const errors = new DomainErrors();
+    const errors = new RegisterErrors();
     const usernameV = Username.parse(
       username,
       errors,

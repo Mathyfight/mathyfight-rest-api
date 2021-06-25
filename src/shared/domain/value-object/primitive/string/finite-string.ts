@@ -1,5 +1,4 @@
-import { DomainErrors } from '../../util/domain-errors';
-import { DomainErrorsProp } from '../../util/domain-errors-prop';
+import { DomainErrors, DomainErrorsProp } from '../../util/domain-errors';
 
 export class FiniteString {
   static ValidationError = class {
@@ -11,12 +10,12 @@ export class FiniteString {
     val: string,
     min: number,
     max: number,
-    errors: DomainErrors,
+    errors: Partial<DomainErrors>,
     prop: DomainErrorsProp,
   ): FiniteString | null {
     const isInsideLength = val.length >= min && val.length <= max;
     if (!isInsideLength) {
-      errors.add(this.ValidationError.hasToBeThisLong(min, max), prop);
+      errors[prop]?.push(this.ValidationError.hasToBeThisLong(min, max));
       return null;
     }
 

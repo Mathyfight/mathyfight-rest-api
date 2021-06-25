@@ -1,27 +1,24 @@
-import { Uuid } from 'src/shared/domain/value-object/general/uuid';
-import { DomainErrors } from 'src/shared/domain/value-object/util/domain-errors';
-import { DomainErrorsProp } from 'src/shared/domain/value-object/util/domain-errors-prop';
+import { RegisterNewUser } from '../command/register-new-user';
+import { RegisterCommand } from '../command/register.command';
+import { RegisterErrors } from '../value-object/register.errors';
 
 export class RegisterDomainService {
   readonly hasToBeUnique = 'debe no haber sido registrado antes';
 
-  validateUniqueUsername(
-    userIdFromUsername: Uuid | null,
-    errors: DomainErrors,
-  ): void {
-    const usernameExists = userIdFromUsername !== null;
-    if (usernameExists) {
-      errors.add(this.hasToBeUnique, DomainErrorsProp.username);
-    }
-  }
+  invoke(
+    userIdFromUsername: string | null,
+    userIdFromEmail: string | null,
+    password: string,
+    username: string,
+    email: string,
+    errors: RegisterErrors,
+  ): RegisterCommand | null {
+    if (userIdFromUsername !== null) errors.username.push(this.hasToBeUnique);
 
-  validateUniqueEmail(
-    userIdFromEmail: Uuid | null,
-    errors: DomainErrors,
-  ): void {
-    const emailExists = userIdFromEmail !== null;
-    if (emailExists) {
-      errors.add(this.hasToBeUnique, DomainErrorsProp.email);
-    }
+    if (userIdFromEmail !== null) errors.email.push(this.hasToBeUnique);
+
+    if (userIdFromUsername !== null || userIdFromEmail !== null) return null;
+
+    return new RegisterCommand(new RegisterNewUser(password, username, email));
   }
 }
