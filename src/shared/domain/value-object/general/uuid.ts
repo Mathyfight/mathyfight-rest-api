@@ -19,7 +19,7 @@ export class Uuid {
   ): Uuid | null {
     const isUuid = uuid.validate(value);
     if (!isUuid) {
-      errors[prop]?.push(this.ValidationError.hasToBeAnUuid, prop);
+      errors[prop]?.push(this.ValidationError.hasToBeAnUuid);
       return null;
     }
 

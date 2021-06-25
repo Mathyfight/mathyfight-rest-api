@@ -6,6 +6,7 @@ export interface DomainErrors {
   page: string[];
   userId: string[];
   equipmentId: string[];
+  resetPasswordTokenId: string[];
 }
 
 export enum DomainErrorsProp {
@@ -16,4 +17,5 @@ export enum DomainErrorsProp {
   page = 'page',
   userId = 'userId',
   equipmentId = 'equipmentId',
+  resetPasswordTokenId = 'resetPasswordTokenId',
 }

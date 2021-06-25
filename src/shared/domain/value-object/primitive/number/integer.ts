@@ -12,7 +12,7 @@ export class Integer {
   ): Integer | null {
     const isInteger = Number.isInteger(val);
     if (!isInteger) {
-      errors[prop]?.push(this.ValidationError.hasToBeAnInteger, prop);
+      errors[prop]?.push(this.ValidationError.hasToBeAnInteger);
       return null;
     }
 
