@@ -4,7 +4,7 @@ import { SendResetPasswordEmail } from '../domain/command/send-reset-password-em
 
 export class EmailSendgridSender implements EmailSender {
   async send(command: SendResetPasswordEmail): Promise<void> {
-    sgMail.setApiKey(process.env.MATHYFIGHT_POC2_SENDGRID_URL!);
+    sgMail.setApiKey(process.env.MATHYFIGHT_SENDGRID_TOKEN!);
     await sgMail
       .send({
         to: command.toEmail,
