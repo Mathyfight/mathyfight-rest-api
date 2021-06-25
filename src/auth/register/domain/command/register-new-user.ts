@@ -25,7 +25,7 @@ export class Player {
 
   constructor(avatarName: string) {
     this.id = uuid.v4();
-    this.gold = 0;
+    this.gold = 1000;
     this.avatar = new Avatar(avatarName);
   }
 }
