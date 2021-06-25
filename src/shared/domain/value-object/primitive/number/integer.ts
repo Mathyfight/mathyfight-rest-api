@@ -1,5 +1,4 @@
-import { DomainErrors } from '../../util/domain-errors';
-import { DomainErrorsProp } from '../../util/domain-errors-prop';
+import { DomainErrors, DomainErrorsProp } from '../../util/domain-errors';
 
 export class Integer {
   static ValidationError = class {
@@ -8,12 +7,12 @@ export class Integer {
 
   static parse(
     val: number,
-    errors: DomainErrors,
+    errors: Partial<DomainErrors>,
     prop: DomainErrorsProp,
   ): Integer | null {
     const isInteger = Number.isInteger(val);
     if (!isInteger) {
-      errors.add(this.ValidationError.hasToBeAnInteger, prop);
+      errors[prop]?.push(this.ValidationError.hasToBeAnInteger, prop);
       return null;
     }
 

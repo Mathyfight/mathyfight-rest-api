@@ -4,8 +4,8 @@ import { EquipmentType } from 'src/shared/domain/value-object/equipment/equipmen
 import { SortingOrderCriteria } from 'src/shared/domain/value-object/general/sorting-order-criteria';
 import { Uuid } from 'src/shared/domain/value-object/general/uuid';
 import { PositiveInteger } from 'src/shared/domain/value-object/primitive/number/positive-integer';
-import { DomainErrors } from 'src/shared/domain/value-object/util/domain-errors';
-import { DomainErrorsProp } from 'src/shared/domain/value-object/util/domain-errors-prop';
+import { DomainErrorsProp } from 'src/shared/domain/value-object/util/domain-errors';
+import { GetEquipmentsErrors } from '../../domain/value-object/get-equipments.errors';
 
 export class GetEquipmentsAppServiceRequest {
   constructor(
@@ -23,7 +23,7 @@ export class GetEquipmentsAppServiceRequest {
     sortingOrderCriteria?: SortingOrderCriteria,
     equipmentSortingOrder?: EquipmentSortingOrder,
   ): GetEquipmentsAppServiceRequest {
-    const errors = new DomainErrors();
+    const errors = new GetEquipmentsErrors();
     const pageV = PositiveInteger.parse(page, errors, DomainErrorsProp.page);
     const userIdV = Uuid.parse(userId, errors, DomainErrorsProp.userId);
 

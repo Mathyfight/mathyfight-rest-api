@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { DomainErrors } from 'src/shared/domain/value-object/util/domain-errors';
 import { GetEquipmentsDomainService } from '../../domain/service/get-equipments.domain.service';
+import { GetEquipmentsErrors } from '../../domain/value-object/get-equipments.errors';
 import { GetEquipmentsRepository } from '../adapter/get-equipments.repository';
 import { GetEquipmentsAppServiceRequest } from './get-equipments.app.service.request';
 import {
@@ -15,21 +15,22 @@ export class GetEquipmentsAppService {
   async invoke(
     request: GetEquipmentsAppServiceRequest,
   ): Promise<GetEquipmentsAppServiceResponse> {
-    const errors = new DomainErrors();
+    const errors = new GetEquipmentsErrors();
     const domainService = new GetEquipmentsDomainService();
 
-    const avatarId = await this.repository.getAvatarIdByUserId(request.userId);
-    domainService.validateExistingAvatar(avatarId, errors);
+    const avatarId = await this.repository.getAvatarIdByUserId(
+      request.userId.val,
+    );
 
-    if (errors.isNotEmpty || avatarId === null)
-      throw new BadRequestException(errors);
+    const command = domainService.invoke(avatarId, errors);
+    if (command === null) throw new BadRequestException(errors);
 
     const elementsPerPage = 20;
     const [equipments, totalRows] = await this.repository.getEquipments(
       request.equipmentType,
       elementsPerPage,
       request.page,
-      avatarId,
+      command.avatarId,
       request.sortingOrderCriteria,
       request.equipmentSortingOrder,
     );

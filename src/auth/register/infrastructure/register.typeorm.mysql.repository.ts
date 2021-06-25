@@ -1,13 +1,10 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { Email } from 'src/auth/core/domain/value-object/email';
-import { Username } from 'src/auth/core/domain/value-object/username';
 import { AvatarTypeOrmMySql } from 'src/database/typeorm/mysql/entity/avatar.typeorm.mysql';
 import { PlayerTypeOrmMySql } from 'src/database/typeorm/mysql/entity/player.typeorm.mysql';
 import { UserTypeOrmMySql } from 'src/database/typeorm/mysql/entity/user.typeorm.mysql';
-import { Uuid } from 'src/shared/domain/value-object/general/uuid';
 import { Repository } from 'typeorm';
 import { RegisterRepository } from '../application/adapter/register.repository';
-import { User } from '../domain/entity/user';
+import { RegisterNewUser } from '../domain/command/register-new-user';
 
 export class RegisterTypeOrmMySqlRepository implements RegisterRepository {
   constructor(
@@ -19,45 +16,45 @@ export class RegisterTypeOrmMySqlRepository implements RegisterRepository {
     readonly avatarRepository: Repository<AvatarTypeOrmMySql>,
   ) {}
 
-  async getOneUserIdByUsername(username: Username): Promise<Uuid | null> {
+  async getOneUserIdByUsername(username: string): Promise<string | null> {
     const ormUser = await this.userRepository.findOne({
-      where: { username: username.val },
+      where: { username: username },
     });
     if (ormUser === undefined) return null;
-    return Uuid.fromExisting(ormUser.id);
+    return ormUser.id;
   }
 
-  async getOneUserIdByEmail(email: Email): Promise<Uuid | null> {
+  async getOneUserIdByEmail(email: string): Promise<string | null> {
     const ormUser = await this.userRepository.findOne({
-      where: { email: email.val },
+      where: { email: email },
     });
     if (ormUser === undefined) return null;
-    return Uuid.fromExisting(ormUser.id);
+    return ormUser.id;
   }
 
-  async saveNewUser(user: User): Promise<void> {
+  async saveNewUser(command: RegisterNewUser): Promise<void> {
     await this.userRepository.save({
-      id: user.id.val,
-      email: user.email.val,
-      hashedPassword: user.hashedPassword.val,
-      username: user.username.val,
+      id: command.id,
+      email: command.email,
+      hashedPassword: command.hashedPassword,
+      username: command.username,
     });
     await this.playerRepository.save({
-      id: user.player.id.val,
-      gold: user.player.gold,
-      user: { id: user.id.val },
+      id: command.player.id,
+      gold: command.player.gold,
+      user: { id: command.id },
     });
     await this.avatarRepository.save({
-      id: user.player.avatar.id.val,
-      name: user.player.avatar.name,
-      currentExperience: user.player.avatar.currentExperience,
-      color: user.player.avatar.color,
-      attack: user.player.avatar.attack,
-      defense: user.player.avatar.defense,
-      health: user.player.avatar.health,
-      level: user.player.avatar.level,
-      race: user.player.avatar.race,
-      player: { id: user.player.id.val },
+      id: command.player.avatar.id,
+      name: command.player.avatar.name,
+      currentExperience: command.player.avatar.currentExperience,
+      color: command.player.avatar.color,
+      attack: command.player.avatar.attack,
+      defense: command.player.avatar.defense,
+      health: command.player.avatar.health,
+      level: command.player.avatar.level,
+      race: command.player.avatar.race,
+      player: { id: command.player.id },
     });
   }
 }

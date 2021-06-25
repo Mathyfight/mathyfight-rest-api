@@ -1,10 +1,9 @@
-import { DomainErrors } from 'src/shared/domain/value-object/util/domain-errors';
-import { DomainErrorsProp } from 'src/shared/domain/value-object/util/domain-errors-prop';
 import { AddEquipmentToAvatar } from '../command/add-equipment-to-avatar';
 import { BuyEquipmentCommand } from '../command/buy-equipment.command';
 import { DecreasePlayerGold } from '../command/decrease-player-gold';
 import { Equipment } from '../entity/equipment';
 import { User } from '../entity/user';
+import { BuyEquipmentErrors } from '../value-object/buy-equipment.errors';
 
 export class BuyEquipmentDomainService {
   userDoesntExist = 'el usuario debe existir';
@@ -17,18 +16,17 @@ export class BuyEquipmentDomainService {
   invoke(
     user: User | null,
     equipment: Equipment | null,
-    errors: DomainErrors,
+    errors: BuyEquipmentErrors,
   ): BuyEquipmentCommand | null {
-    if (equipment === null)
-      errors.add(this.equipmentDoesntExist, DomainErrorsProp.equipmentId);
+    if (equipment === null) errors.equipmentId.push(this.equipmentDoesntExist);
 
     if (user === null) {
-      errors.add(this.userDoesntExist, DomainErrorsProp.userId);
+      errors.userId.push(this.userDoesntExist);
       return null;
     }
 
     if (user.player === null) {
-      errors.add(this.playerDoesntExist, DomainErrorsProp.userId);
+      errors.userId.push(this.playerDoesntExist);
       return null;
     }
 
@@ -38,16 +36,13 @@ export class BuyEquipmentDomainService {
       (e) => e.id === equipment.id,
     );
     if (alreadyHasEquipment) {
-      errors.add(this.playerAlreadyHasEquipment, DomainErrorsProp.errors);
+      errors.errors.push(this.playerAlreadyHasEquipment);
       return null;
     }
 
     const remainingGold = user.player.gold - equipment.buyPrice;
     if (remainingGold < 0) {
-      errors.add(
-        this.playerNeedsToHave(-remainingGold),
-        DomainErrorsProp.errors,
-      );
+      errors.errors.push(this.playerNeedsToHave(-remainingGold));
       return null;
     }
 

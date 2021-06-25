@@ -16,10 +16,6 @@ export class LoginTypeOrmMySqlRepository implements LoginRepository {
       where: { username: username.val },
     });
     if (ormUser === undefined) return null;
-    return User.fromExisting(
-      ormUser.id,
-      ormUser.username,
-      ormUser.hashedPassword,
-    );
+    return new User(ormUser.id, ormUser.username, ormUser.hashedPassword);
   }
 }

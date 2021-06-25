@@ -1,5 +1,4 @@
-import { DomainErrors } from '../util/domain-errors';
-import { DomainErrorsProp } from '../util/domain-errors-prop';
+import { DomainErrors, DomainErrorsProp } from '../util/domain-errors';
 import * as uuid from 'uuid';
 
 export class Uuid {
@@ -15,12 +14,12 @@ export class Uuid {
 
   static parse(
     value: string,
-    errors: DomainErrors,
+    errors: Partial<DomainErrors>,
     prop: DomainErrorsProp,
   ): Uuid | null {
     const isUuid = uuid.validate(value);
     if (!isUuid) {
-      errors.add(this.ValidationError.hasToBeAnUuid, prop);
+      errors[prop]?.push(this.ValidationError.hasToBeAnUuid, prop);
       return null;
     }
 

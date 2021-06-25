@@ -1,5 +1,7 @@
-import { DomainErrors } from '../../../../shared/domain/value-object/util/domain-errors';
-import { DomainErrorsProp } from '../../../../shared/domain/value-object/util/domain-errors-prop';
+import {
+  DomainErrors,
+  DomainErrorsProp,
+} from '../../../../shared/domain/value-object/util/domain-errors';
 
 export class Email {
   static ValidationError = class {
@@ -10,7 +12,7 @@ export class Email {
 
   static parse(
     val: string,
-    errors: DomainErrors,
+    errors: Partial<DomainErrors>,
     prop: DomainErrorsProp,
   ): Email | null {
     const compliesWithRfc5322 =
@@ -18,7 +20,7 @@ export class Email {
         val,
       );
     if (!compliesWithRfc5322) {
-      errors.add(this.ValidationError.hasToBeAnEmail, prop);
+      errors[prop]?.push(this.ValidationError.hasToBeAnEmail);
       return null;
     }
 
