@@ -1,7 +1,4 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { AvatarEquipmentTypeOrmMySql } from 'src/database/typeorm/mysql/entity/avatar.equipment.typeorm.mysql';
-import { EquipmentTypeOrmMySql } from 'src/database/typeorm/mysql/entity/equipment.typeorm.mysql';
-import { PlayerTypeOrmMySql } from 'src/database/typeorm/mysql/entity/player.typeorm.mysql';
 import { ResetPasswordTokenTypeOrmMySql } from 'src/database/typeorm/mysql/entity/reset-password-token.typeorm.mysql';
 import { UserTypeOrmMySql } from 'src/database/typeorm/mysql/entity/user.typeorm.mysql';
 import { Repository } from 'typeorm';

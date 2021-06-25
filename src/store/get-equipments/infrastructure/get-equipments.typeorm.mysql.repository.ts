@@ -4,7 +4,6 @@ import { EquipmentTypeOrmMySql } from 'src/database/typeorm/mysql/entity/equipme
 import { EquipmentSortingOrder } from 'src/shared/domain/value-object/equipment/equipment-sorting-order';
 import { EquipmentType } from 'src/shared/domain/value-object/equipment/equipment-type';
 import { SortingOrderCriteria } from 'src/shared/domain/value-object/general/sorting-order-criteria';
-import { Uuid } from 'src/shared/domain/value-object/general/uuid';
 import { PositiveInteger } from 'src/shared/domain/value-object/primitive/number/positive-integer';
 import { Repository } from 'typeorm';
 import { GetEquipmentsRepository } from '../application/adapter/get-equipments.repository';
@@ -20,22 +19,22 @@ export class GetEquipmentTypeOrmMySqlRepository
     readonly avatarRepository: Repository<AvatarTypeOrmMySql>,
   ) {}
 
-  async getAvatarIdByUserId(userId: Uuid): Promise<Uuid | null> {
+  async getAvatarIdByUserId(userId: string): Promise<string | null> {
     const ormAvatar = await this.avatarRepository
       .createQueryBuilder('avatar')
       .innerJoinAndSelect('avatar.player', 'player')
       .innerJoinAndSelect('player.user', 'user')
-      .where('user.id = :userId', { userId: userId.val })
+      .where('user.id = :userId', { userId: userId })
       .getOne();
     if (ormAvatar === undefined) return null;
-    return Uuid.fromExisting(ormAvatar.id);
+    return ormAvatar.id;
   }
 
   async getEquipments(
     equipmentType: EquipmentType,
     elementsPerPage: number,
     page: PositiveInteger,
-    avatarId: Uuid,
+    avatarId: string,
     sortingOrderCriteria?: SortingOrderCriteria,
     equipmentSortingOrder?: EquipmentSortingOrder,
   ): Promise<[Equipment[], number]> {
@@ -57,7 +56,7 @@ export class GetEquipmentTypeOrmMySqlRepository
         'equipment.avatars',
         'avatars',
         'avatars.avatar_id = :avatarId',
-        { avatarId: avatarId.val },
+        { avatarId: avatarId },
       )
       .where('avatars.avatar_id is null')
       .andWhere('equipment.type = :equipmentType', { equipmentType })

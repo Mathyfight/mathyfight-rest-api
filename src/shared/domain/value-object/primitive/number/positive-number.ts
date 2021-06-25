@@ -1,5 +1,4 @@
-import { DomainErrorsOld } from '../../util/domain-errors-old';
-import { DomainErrorsProp } from '../../util/domain-errors';
+import { DomainErrors, DomainErrorsProp } from '../../util/domain-errors';
 
 export class PositiveNumber {
   static ValidationError = class {
@@ -8,12 +7,12 @@ export class PositiveNumber {
 
   static parse(
     val: number,
-    errors: DomainErrorsOld,
+    errors: Partial<DomainErrors>,
     prop: DomainErrorsProp,
   ): PositiveNumber | null {
     const isPositive = val > 0;
     if (!isPositive) {
-      errors.add(this.ValidationError.hasToBePositive, prop);
+      errors[prop]?.push(this.ValidationError.hasToBePositive, prop);
       return null;
     }
 

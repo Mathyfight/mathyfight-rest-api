@@ -4,6 +4,7 @@ import { JwtPayload } from 'src/auth/core/domain/value-object/jwt-payload';
 import { JwtAuthGuard } from 'src/shared/presentation/jwt-auth.guard';
 import { GetEquipmentsAppService } from '../application/service/get-equipments.app.service';
 import { GetEquipmentsAppServiceRequest } from '../application/service/get-equipments.app.service.request';
+import { GetEquipmentsRouteErrors } from './get-equipments.route.errors';
 import { GetEquipmentsRouteQueries } from './get-equipments.route.queries';
 import { GetEquipmentsRouteResponse } from './get-equipments.route.response';
 
@@ -15,7 +16,8 @@ export class GetEquipmentsRoute {
   constructor(readonly getEquipmentsAppService: GetEquipmentsAppService) {}
 
   @Get('equipments')
-  @ApiResponse({ type: GetEquipmentsRouteResponse })
+  @ApiResponse({ status: 200, type: GetEquipmentsRouteResponse })
+  @ApiResponse({ status: 400, type: GetEquipmentsRouteErrors })
   async getEquipmentsRoute(
     @Request() request: { user: JwtPayload },
     @Query() queries: GetEquipmentsRouteQueries,

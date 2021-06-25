@@ -1,13 +1,17 @@
-import { Uuid } from 'src/shared/domain/value-object/general/uuid';
-import { DomainErrorsOld } from 'src/shared/domain/value-object/util/domain-errors-old';
-import { DomainErrorsProp } from 'src/shared/domain/value-object/util/domain-errors';
+import { GetEquipmentsCommand } from '../command/get-equipments.command';
+import { GetEquipmentsErrors } from '../value-object/get-equipments.errors';
 
 export class GetEquipmentsDomainService {
   readonly userHasToHaveAnAvatar = 'debe tener un avatar';
 
-  validateExistingAvatar(avatarId: Uuid | null, errors: DomainErrorsOld): void {
-    const existingAvatar = avatarId !== null;
-    if (!existingAvatar)
-      errors.add(this.userHasToHaveAnAvatar, DomainErrorsProp.userId);
+  invoke(
+    avatarId: string | null,
+    errors: GetEquipmentsErrors,
+  ): GetEquipmentsCommand | null {
+    if (avatarId === null) {
+      errors.userId.push(this.userHasToHaveAnAvatar);
+      return null;
+    }
+    return new GetEquipmentsCommand(avatarId);
   }
 }

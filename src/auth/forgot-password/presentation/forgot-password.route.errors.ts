@@ -1,13 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { ForgotPasswordErrors } from '../domain/value-object/forgot-password.errors';
 
-export class ForgotPasswordRouteErrors {
+export class ForgotPasswordRouteErrors implements ForgotPasswordErrors {
   @ApiProperty()
   email: string[];
-  @ApiProperty()
-  errors: string[];
 
-  private constructor(email: string[], errors: string[]) {
-    this.email = email;
-    this.errors = errors;
+  private constructor() {
+    this.email = [];
   }
 }

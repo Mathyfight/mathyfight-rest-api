@@ -3,7 +3,7 @@ import { Email } from 'src/auth/core/domain/value-object/email';
 import { Password } from 'src/auth/core/domain/value-object/password';
 import { Username } from 'src/auth/core/domain/value-object/username';
 import { DomainErrorsProp } from 'src/shared/domain/value-object/util/domain-errors';
-import { RegisterErrors } from '../../domain/value-object/register-errors';
+import { RegisterErrors } from '../../domain/value-object/register.errors';
 
 export class RegisterAppServiceRequest {
   constructor(
