@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
 import { SharedModule } from './shared/shared.module';
@@ -20,6 +22,10 @@ import { StoreModule } from './store/store.module';
           rejectUnauthorized: false,
         },
       },
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client'),
+      exclude: ['/api*'],
     }),
     AuthModule,
     DatabaseModule,
