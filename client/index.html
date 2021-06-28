@@ -1,1 +1,252 @@
-hola mundo
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recuperar contraseña - Mathyfight</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      box-sizing: border-box;
+    }
+    body {
+      background: #f3f7fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      width: 100%;
+      height: 100vh;
+    }
+
+    .card {
+      background: #fff;
+      display: flex;
+      width: 500px;
+      flex-direction: column;
+      padding: 64px;
+      border-radius: 4px;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .card h2 {
+      text-align: center;
+    }
+    .card p {
+      width: 100%;
+      text-align: center;
+      font-size: 14px;
+      margin-top: 8px;
+      color: #323232;
+    }
+    .form {
+      display: flex;
+      flex-direction: column;
+      margin-top: 48px;
+      width: 100%;
+      position: relative;
+      align-items: center;
+    }
+
+    .form input {
+      border: 1px solid #dedede;
+      padding: 12px;
+      width: 100%;
+      border-radius: 4px;
+      margin-bottom: 24px;
+    }
+    .form input:focus {
+      outline: none;
+      border: 1px solid #aaa;
+    }
+
+    .form button {
+      border: none;
+      border-radius: 4px;
+      background: #3413ff;
+      color: #fff;
+      padding: 12px 24px;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+    }
+    .form .error {
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .form .error p {
+      color: #ff5656;
+    }
+
+    .lds-ripple {
+      display: inline-block;
+      position: relative;
+      width: 80px;
+      height: 80px;
+    }
+    .lds-ripple div {
+      position: absolute;
+      border: 4px solid #3413ff;
+      opacity: 1;
+      border-radius: 50%;
+      animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+    }
+    .lds-ripple div:nth-child(2) {
+      animation-delay: -0.5s;
+    }
+    @media (max-width: 520px) {
+      .card {
+        width: 90%;
+        padding: 32px;
+      }
+    }
+    @keyframes lds-ripple {
+      0% {
+        top: 36px;
+        left: 36px;
+        width: 0;
+        height: 0;
+        opacity: 1;
+      }
+      100% {
+        top: 0px;
+        left: 0px;
+        width: 72px;
+        height: 72px;
+        opacity: 0;
+      }
+    }
+  </style>
+  <body>
+    <div id="recovery-password-request" class="card">
+      <h2>Nueva contraseña</h2>
+      <p>
+        Ingresa tu nueva contraseña para poder ingresar a la aplicación de
+        Mathyfight
+      </p>
+      <div class="form">
+        <input
+          type="password"
+          id="new-password"
+          name="password"
+          placeholder="Ingrese su nueva contraseña"
+        />
+        <div id="token-expired-container" class="error">
+          <p class="error">
+            El link ha expirado, por favor reitente recuperar contraseña desde
+            el aplicativo
+          </p>
+        </div>
+        <div id="invalid-password-container" class="error">
+          <p class="error">La contraseña tiene de 8 hasta 32 caracteres.</p>
+        </div>
+        <div id="loading" class="lds-ripple">
+          <div></div>
+          <div></div>
+        </div>
+        <button type="button" onclick="recoveryPassword()" id="btn-submit">
+          Actualizar contraseña
+        </button>
+      </div>
+    </div>
+    <div id="recovery-password-success" class="card">
+      <h2>Enhorabuena</h2>
+      <p>Su contraseña se ha restablecido con éxito</p>
+    </div>
+    <div id="not-found" class="card">
+      <h2>Error</h2>
+      <p>Esta página no existe</p>
+    </div>
+    <script>
+      // Variables
+      const token = window.location.pathname.split('/')[2];
+      const submitButton = document.getElementById('btn-submit');
+      const loadingPulse = document.getElementById('loading');
+      const notFoundContainer = document.getElementById('not-found');
+      const urlApi =
+        'https://mathyfight-api.herokuapp.com/api/auth/reset-password/';
+      const recoveryPasswordRequestContainer = document.getElementById(
+        'recovery-password-request',
+      );
+      const recoveryPasswordSuccessContainer = document.getElementById(
+        'recovery-password-success',
+      );
+      const tokenExpiredContainer = document.getElementById(
+        'token-expired-container',
+      );
+      const invalidPasswordContainer = document.getElementById(
+        'invalid-password-container',
+      );
+
+
+      // Show success Container
+      const showSuccessRecovery = () => {
+        recoveryPasswordSuccessContainer.style.display = 'flex';
+        recoveryPasswordRequestContainer.style.display = 'none';
+      };
+
+      // Validate url path
+      const init = () => {
+        tokenExpiredContainer.style.display = 'none';
+        invalidPasswordContainer.style.display = 'none';
+        loadingPulse.style.display = 'none';
+        if (window.location.pathname.includes('reset-password') && token != undefined) {
+          recoveryPasswordSuccessContainer.style.display = 'none';
+          notFoundContainer.style.display = 'none';
+        } else {
+          recoveryPasswordSuccessContainer.style.display = 'none';
+          recoveryPasswordRequestContainer.style.display = 'none';
+          notFoundContainer.style.display = 'flex';
+        }
+      };
+
+      const showErrorContainer = (container) => {
+        container.style.display = 'flex';
+      };
+
+      // Fetch Recovery Password
+      const recoveryPassword = async () => {
+        tokenExpiredContainer.style.display = 'none';
+        invalidPasswordContainer.style.display = 'none';
+        loadingPulse.style.display = 'inline-block';
+        submitButton.style.display = 'none';
+
+        const newPasswordValue = document.getElementById('new-password').value;
+
+        await fetch(`${urlApi}${token}`, {
+          method: 'PUT',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ password: newPasswordValue }),
+        }).then(async (res) => {
+          loadingPulse.style.display = 'none';
+          submitButton.style.display = 'initial';
+          if (res.status >= 400) {
+            const b = await res.json();
+            if (b.password.length) {
+              showErrorContainer(invalidPasswordContainer);
+            } else if (b.resetPasswordTokenId.length) {
+              showErrorContainer(tokenExpiredContainer);
+            }
+          } else {
+            showSuccessRecovery();
+          }
+        });
+      };
+
+      init();
+    </script>
+  </body>
+</html>
