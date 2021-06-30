@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsEnum, IsInt, IsOptional, IsPositive } from 'class-validator';
-import { EquipmentSortingOrder } from 'src/store/get-equipments/domain/value-object/equipment-sorting-order';
 import { EquipmentType } from 'src/shared/domain/value-object/equipment/equipment-type';
 import { SortingOrderCriteria } from 'src/shared/domain/value-object/general/sorting-order-criteria';
+import { EquipmentSortingOrder } from '../domain/value-object/equipment-sorting-order';
 
 export class GetEquipmentsRouteQueries {
   @ApiProperty({ enum: EquipmentType })

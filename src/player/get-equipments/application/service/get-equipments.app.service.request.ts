@@ -1,10 +1,10 @@
 import { BadRequestException } from '@nestjs/common';
-import { EquipmentSortingOrder } from 'src/store/get-equipments/domain/value-object/equipment-sorting-order';
 import { EquipmentType } from 'src/shared/domain/value-object/equipment/equipment-type';
 import { SortingOrderCriteria } from 'src/shared/domain/value-object/general/sorting-order-criteria';
 import { Uuid } from 'src/shared/domain/value-object/general/uuid';
 import { PositiveInteger } from 'src/shared/domain/value-object/primitive/number/positive-integer';
 import { DomainErrorsProp } from 'src/shared/domain/value-object/util/domain-errors';
+import { EquipmentSortingOrder } from '../../domain/value-object/equipment-sorting-order';
 import { GetEquipmentsErrors } from '../../domain/value-object/get-equipments.errors';
 
 export class GetEquipmentsAppServiceRequest {

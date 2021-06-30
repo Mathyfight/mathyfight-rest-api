@@ -1,4 +1,4 @@
-import { EquipmentSortingOrder } from 'src/shared/domain/value-object/equipment/equipment-sorting-order';
+import { EquipmentSortingOrder } from 'src/store/get-equipments/domain/value-object/equipment-sorting-order';
 import { EquipmentType } from 'src/shared/domain/value-object/equipment/equipment-type';
 import { SortingOrderCriteria } from 'src/shared/domain/value-object/general/sorting-order-criteria';
 import { PositiveInteger } from 'src/shared/domain/value-object/primitive/number/positive-integer';
