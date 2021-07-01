@@ -19,4 +19,5 @@ export enum DomainErrorsProp {
   userId = 'userId',
   equipmentId = 'equipmentId',
   resetPasswordTokenId = 'resetPasswordTokenId',
+  avatarEquipmentId = 'avatarEquipmentId',
 }
