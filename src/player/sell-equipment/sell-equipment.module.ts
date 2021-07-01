@@ -3,7 +3,7 @@ import { DatabaseModule } from 'src/database/database.module';
 import { SellEquipmentRepository } from './application/adapter/sell-equipment.repository';
 import { SellEquipmentAppService } from './application/service/sell-equipment.app.service';
 import { SellEquipmentTypeOrmMySqlRepository } from './infrastructure/sell-equipment.typeorm.mysql.repository';
-import { SellEquipmentRoute } from './presentation/sell-equipment.route';
+import { PlayerSellEquipmentRoute } from './presentation/player-sell-equipment.route';
 
 @Module({
   imports: [DatabaseModule],
@@ -14,6 +14,6 @@ import { SellEquipmentRoute } from './presentation/sell-equipment.route';
       useClass: SellEquipmentTypeOrmMySqlRepository,
     },
   ],
-  controllers: [SellEquipmentRoute],
+  controllers: [PlayerSellEquipmentRoute],
 })
 export class SellEquipmentModule {}

@@ -5,7 +5,7 @@ import { LoginRepository } from './application/adapter/login.repository';
 import { LoginAppService } from './application/service/login.app.service';
 import { LoginTypeOrmMySqlRepository } from './infrastructure/login.typeorm.mysql.repository';
 import { NestJwtService } from './infrastructure/nest-jwt.service';
-import { LoginRoute } from './presentation/login.route';
+import { AuthLoginRoute } from './presentation/auth-login.route';
 
 @Module({
   imports: [DatabaseModule],
@@ -20,6 +20,6 @@ import { LoginRoute } from './presentation/login.route';
       useClass: NestJwtService,
     },
   ],
-  controllers: [LoginRoute],
+  controllers: [AuthLoginRoute],
 })
 export class LoginModule {}
