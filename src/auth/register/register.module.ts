@@ -3,7 +3,7 @@ import { DatabaseModule } from 'src/database/database.module';
 import { RegisterRepository } from './application/adapter/register.repository';
 import { RegisterAppService } from './application/service/register.app.service';
 import { RegisterTypeOrmMySqlRepository } from './infrastructure/register.typeorm.mysql.repository';
-import { RegisterRoute } from './presentation/register.route';
+import { AuthRegisterRoute } from './presentation/auth-register.route';
 
 @Module({
   imports: [DatabaseModule],
@@ -14,6 +14,6 @@ import { RegisterRoute } from './presentation/register.route';
       useClass: RegisterTypeOrmMySqlRepository,
     },
   ],
-  controllers: [RegisterRoute],
+  controllers: [AuthRegisterRoute],
 })
 export class RegisterModule {}

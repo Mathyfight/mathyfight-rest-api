@@ -5,7 +5,7 @@ import { ForgotPasswordRepository } from './application/adapter/forgot-password.
 import { ForgotPasswordAppService } from './application/service/forgot-password.app.service';
 import { EmailSendgridSender } from './infrastructure/email.sendgrid.sender';
 import { ForgotPasswordTypeOrmMySqlRepository } from './infrastructure/forgot-password.typeorm.mysql.repository';
-import { ForgotPasswordRoute } from './presentation/forgot-password.route';
+import { AuthForgotPasswordRoute } from './presentation/auth-forgot-password.route';
 
 @Module({
   imports: [DatabaseModule],
@@ -20,6 +20,6 @@ import { ForgotPasswordRoute } from './presentation/forgot-password.route';
       useClass: EmailSendgridSender,
     },
   ],
-  controllers: [ForgotPasswordRoute],
+  controllers: [AuthForgotPasswordRoute],
 })
 export class ForgotPasswordModule {}

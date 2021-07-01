@@ -3,7 +3,7 @@ import { DatabaseModule } from 'src/database/database.module';
 import { ResetPasswordRepository } from './application/adapter/reset-password.repository';
 import { ResetPasswordAppService } from './application/service/reset-password.app.service';
 import { ResetPasswordTypeOrmMySqlRepository } from './infrastructure/reset-password.typeorm.mysql.repository';
-import { ResetPasswordRoute } from './presentation/reset-password.route';
+import { AuthResetPasswordRoute } from './presentation/auth-reset-password.route';
 
 @Module({
   imports: [DatabaseModule],
@@ -14,6 +14,6 @@ import { ResetPasswordRoute } from './presentation/reset-password.route';
       useClass: ResetPasswordTypeOrmMySqlRepository,
     },
   ],
-  controllers: [ResetPasswordRoute],
+  controllers: [AuthResetPasswordRoute],
 })
 export class ResetPasswordModule {}
