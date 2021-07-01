@@ -20,9 +20,7 @@ export class UpgradeEquipmentDomainService {
 
     if (!avatarEquipment.canUpgrade) {
       errors.avatarEquipmentId.push(
-        this.doesNotHaveEnoughGold(
-          avatarEquipment.player.gold - avatarEquipment.upgradePrice,
-        ),
+        this.doesNotHaveEnoughGold(avatarEquipment.goldDifferenceForUpgrade),
       );
       return null;
     }

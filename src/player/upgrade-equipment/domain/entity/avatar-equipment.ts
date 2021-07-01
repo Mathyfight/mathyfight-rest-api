@@ -10,4 +10,8 @@ export class AvatarEquipment {
   get canUpgrade(): boolean {
     return this.player.gold - this.upgradePrice >= 0;
   }
+
+  get goldDifferenceForUpgrade(): number {
+    return this.upgradePrice - this.player.gold;
+  }
 }
