@@ -15,7 +15,7 @@ export class GetGeneralInfoRoute {
   constructor(readonly appService: GetGeneralInfoAppService) {}
 
   @Get('general-info')
-  @ApiResponse({ status: 200 })
+  @ApiResponse({ status: 200, type: GetGeneralInfoRouteResponse })
   @ApiResponse({ status: 400, type: GetGeneralInfoRouteErrors })
   async route(
     @Request() request: { user: JwtPayload },
