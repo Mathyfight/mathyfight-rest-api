@@ -27,7 +27,7 @@ export class RegisterAppService {
       request.email.val,
       errors,
     );
-    if (command === null) throw new BadRequestException(errors);
+    if (command === null) throw new BadRequestException({ errors: errors });
 
     await this.repository.saveNewUser(command.registerNewUser);
   }

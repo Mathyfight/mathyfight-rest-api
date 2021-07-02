@@ -19,7 +19,7 @@ export class BuyEquipmentAppServiceRequest {
     );
 
     if (userIdV === null || equipmentIdV === null)
-      throw new BadRequestException(errors);
+      throw new BadRequestException({ errors: errors });
 
     return new BuyEquipmentAppServiceRequest(userIdV, equipmentIdV);
   }

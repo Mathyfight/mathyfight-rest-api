@@ -28,7 +28,7 @@ export class GetEquipmentsAppServiceRequest {
     const userIdV = Uuid.parse(userId, errors, DomainErrorsProp.userId);
 
     if (pageV === null || userIdV === null)
-      throw new BadRequestException(errors);
+      throw new BadRequestException({ errors: errors });
 
     return new GetEquipmentsAppServiceRequest(
       equipmentType,

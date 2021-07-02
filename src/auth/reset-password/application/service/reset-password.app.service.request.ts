@@ -24,7 +24,7 @@ export class ResetPasswordAppServiceRequest {
     );
 
     if (resetPasswordIdV === null || passwordV === null)
-      throw new BadRequestException(errors);
+      throw new BadRequestException({ errors: errors });
 
     return new ResetPasswordAppServiceRequest(resetPasswordIdV, passwordV);
   }

@@ -16,7 +16,7 @@ export class UpgradeEquipmentAppService {
       request.avatarEquipmentId.val,
     );
     const command = domainService.invoke(avatarEquipment, errors);
-    if (command === null) throw new BadRequestException(errors);
+    if (command === null) throw new BadRequestException({ errors: errors });
 
     await this.repository.upgradeEquipmentLevel(command.upgradeEquipmentLevel);
     await this.repository.removePlayerGold(command.removePlayerGold);

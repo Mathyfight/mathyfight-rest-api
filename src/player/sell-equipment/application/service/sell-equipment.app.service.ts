@@ -16,7 +16,7 @@ export class SellEquipmentAppService {
       request.avatarEquipmentId.val,
     );
     const command = domainService.invoke(avatarEquipment, errors);
-    if (command === null) throw new BadRequestException(errors);
+    if (command === null) throw new BadRequestException({ errors: errors });
 
     await this.repository.removeAvatarEquipment(command.removeAvatarEquipment);
     await this.repository.givePlayerGold(command.givePlayerGold);

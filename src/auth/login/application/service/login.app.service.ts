@@ -29,7 +29,7 @@ export class LoginAppService {
       request.password.val,
       errors,
     );
-    if (command === null) throw new BadRequestException(errors);
+    if (command === null) throw new BadRequestException({ errors: errors });
 
     return new LoginAppServiceResponse(
       this.jwtService.sign({ userId: command.generateJwt.userId }),

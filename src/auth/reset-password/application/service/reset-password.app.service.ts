@@ -17,7 +17,7 @@ export class ResetPasswordAppService {
     );
 
     const command = domainService.invoke(token, request.password.val, errors);
-    if (command === null) throw new BadRequestException(errors);
+    if (command === null) throw new BadRequestException({ errors: errors });
 
     await this.repository.disableToken(command.disableToken);
     await this.repository.changeUserPassword(command.changeUserPassword);
