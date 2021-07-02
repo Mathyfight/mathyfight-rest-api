@@ -28,6 +28,7 @@ export class UpgradeEquipmentTypeOrmMySqlRepository
     if (ormAvatarEquipment === undefined) return null;
     return new AvatarEquipment(
       ormAvatarEquipment.id,
+      ormAvatarEquipment.level,
       new Player(
         ormAvatarEquipment.avatar.player.id,
         ormAvatarEquipment.avatar.player.gold,
