@@ -7,7 +7,11 @@ export class PlayerUpgradeEquipmentRouteErrors
   @ApiProperty()
   avatarEquipmentId: string[];
 
+  @ApiProperty()
+  errors: string[];
+
   constructor() {
     this.avatarEquipmentId = [];
+    this.errors = [];
   }
 }
