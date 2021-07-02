@@ -8,6 +8,7 @@ export class UpgradeEquipmentDomainService {
   doesNotExist = 'debe existir';
   doesNotHaveEnoughGold = (requiredGold: number): string =>
     `se necesita ${requiredGold} de oro más`;
+  reachedMaximumLevel = 'llegó al nivel máximo';
 
   invoke(
     avatarEquipment: AvatarEquipment | null,
@@ -18,8 +19,13 @@ export class UpgradeEquipmentDomainService {
       return null;
     }
 
-    if (!avatarEquipment.canUpgrade) {
-      errors.avatarEquipmentId.push(
+    if (avatarEquipment.reachedMaximumLevel) {
+      errors.avatarEquipmentId.push(this.reachedMaximumLevel);
+      return null;
+    }
+
+    if (!avatarEquipment.canBuyUpgrade) {
+      errors.errors.push(
         this.doesNotHaveEnoughGold(avatarEquipment.goldDifferenceForUpgrade),
       );
       return null;
