@@ -26,7 +26,7 @@ export class GetEquipmentsAppService {
       request.sortingOrderCriteria,
       request.equipmentSortingOrder,
     );
-    if (command === null) throw new BadRequestException(errors);
+    if (command === null) throw new BadRequestException({ errors: errors });
 
     const [equipments, totalRows] = await this.repository.getEquipments(
       command,

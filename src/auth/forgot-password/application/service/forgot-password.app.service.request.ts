@@ -10,7 +10,7 @@ export class ForgotPasswordAppServiceRequest {
     const errors = new ForgotPasswordErrors();
     const emailV = Email.parse(email, errors, DomainErrorsProp.email);
 
-    if (emailV === null) throw new BadRequestException(errors);
+    if (emailV === null) throw new BadRequestException({ errors: errors });
 
     return new ForgotPasswordAppServiceRequest(emailV);
   }

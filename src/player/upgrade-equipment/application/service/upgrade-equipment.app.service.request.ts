@@ -13,7 +13,7 @@ export class UpgradeEquipmentAppServiceRequest {
       errors,
       DomainErrorsProp.avatarEquipmentId,
     );
-    if (avatarEquipmentIdV === null) throw new BadRequestException(errors);
+    if (avatarEquipmentIdV === null) throw new BadRequestException({ errors: errors });
     return new UpgradeEquipmentAppServiceRequest(avatarEquipmentIdV);
   }
 }

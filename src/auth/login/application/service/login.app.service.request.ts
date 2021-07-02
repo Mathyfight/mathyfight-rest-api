@@ -21,7 +21,7 @@ export class LoginAppServiceRequest {
     );
 
     if (usernameV === null || passwordV === null)
-      throw new BadRequestException(errors);
+      throw new BadRequestException({ errors: errors });
 
     return new LoginAppServiceRequest(usernameV, passwordV);
   }

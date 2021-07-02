@@ -18,7 +18,7 @@ export class BuyEquipmentAppService {
     );
 
     const command = domainService.invoke(foundUser, foundEquipment, errors);
-    if (command === null) throw new BadRequestException(errors);
+    if (command === null) throw new BadRequestException({ errors: errors });
 
     await this.repository.decreasePlayerGold(command.decreasePlayerGold);
     await this.repository.addEquipmentToAvatarInventory(

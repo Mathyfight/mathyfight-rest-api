@@ -10,7 +10,7 @@ export class GetGeneralInfoAppServiceRequest {
     const errors = new GetGeneralInfoErrors();
 
     const userIdV = Uuid.parse(userId, errors, DomainErrorsProp.userId);
-    if (userIdV === null) throw new BadRequestException(errors);
+    if (userIdV === null) throw new BadRequestException({ errors: errors });
 
     return new GetGeneralInfoAppServiceRequest(userIdV);
   }

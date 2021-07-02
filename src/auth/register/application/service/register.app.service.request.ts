@@ -31,7 +31,7 @@ export class RegisterAppServiceRequest {
     const emailV = Email.parse(email, errors, DomainErrorsProp.email);
 
     if (usernameV === null || passwordV === null || emailV === null)
-      throw new BadRequestException(errors);
+      throw new BadRequestException({ errors: errors });
 
     return new RegisterAppServiceRequest(usernameV, passwordV, emailV);
   }
