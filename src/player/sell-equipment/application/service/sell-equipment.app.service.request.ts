@@ -15,7 +15,7 @@ export class SellEquipmentAppServiceRequest {
       DomainErrorsProp.equipmentId,
     );
 
-    if (equipmentIdV === null) throw new BadRequestException(errors);
+    if (equipmentIdV === null) throw new BadRequestException({ errors: errors });
 
     return new SellEquipmentAppServiceRequest(equipmentIdV);
   }

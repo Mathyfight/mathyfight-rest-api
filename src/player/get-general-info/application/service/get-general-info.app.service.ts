@@ -19,7 +19,7 @@ export class GetGeneralInfoAppService {
       request.userId.val,
     );
     domainService.invoke(generalInfo, errors);
-    if (generalInfo === null) throw new BadRequestException(errors);
+    if (generalInfo === null) throw new BadRequestException({ errors: errors });
 
     return new GetGeneralInfoAppServiceResponse(generalInfo);
   }

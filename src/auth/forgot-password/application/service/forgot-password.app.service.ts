@@ -19,7 +19,7 @@ export class ForgotPasswordAppService {
     const user = await this.repository.getUserIdByEmail(request.email.val);
     const command = domainservice.invoke(user, errors);
 
-    if (command === null) throw new BadRequestException(errors);
+    if (command === null) throw new BadRequestException({ errors: errors });
 
     await this.repository.saveResetPasswordToken(
       command.createResetPasswordToken,

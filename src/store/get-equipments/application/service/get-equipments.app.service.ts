@@ -23,7 +23,7 @@ export class GetEquipmentsAppService {
     );
 
     const command = domainService.invoke(avatarId, errors);
-    if (command === null) throw new BadRequestException(errors);
+    if (command === null) throw new BadRequestException({ errors: errors });
 
     const elementsPerPage = 20;
     const [equipments, totalRows] = await this.repository.getEquipments(
