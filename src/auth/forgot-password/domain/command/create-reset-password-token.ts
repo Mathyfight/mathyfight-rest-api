@@ -1,13 +1,9 @@
-import * as uuid from 'uuid';
+import { Uuid } from 'src/shared/domain/value-object/general/uuid';
 
 export class CreateResetPasswordToken {
-  readonly id: string;
-  readonly createdAt: Date;
-  readonly hasBeenUsed: boolean;
+  constructor(readonly userId: string) {}
 
-  constructor(readonly userId: string) {
-    this.id = uuid.v4();
-    this.createdAt = new Date();
-    this.hasBeenUsed = false;
-  }
+  readonly id: string = Uuid.newPrimitive();
+  readonly createdAt = new Date();
+  readonly hasBeenUsed = false;
 }

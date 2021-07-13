@@ -1,5 +1,5 @@
 import * as sgMail from '@sendgrid/mail';
-import { EmailSender } from '../application/adapter/email.sender';
+import { EmailSender } from '../adapter/interface/email.sender';
 import { SendResetPasswordEmail } from '../domain/command/send-reset-password-email';
 
 export class EmailSendgridSender implements EmailSender {

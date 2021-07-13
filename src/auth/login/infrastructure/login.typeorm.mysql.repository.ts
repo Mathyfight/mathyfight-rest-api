@@ -2,7 +2,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Username } from 'src/auth/core/domain/value-object/username';
 import { UserTypeOrmMySql } from 'src/database/typeorm/mysql/entity/user.typeorm.mysql';
 import { Repository } from 'typeorm';
-import { LoginRepository } from '../application/adapter/login.repository';
+import { LoginRepository } from '../adapter/interface/login.repository';
 import { User } from '../domain/entity/user';
 
 export class LoginTypeOrmMySqlRepository implements LoginRepository {

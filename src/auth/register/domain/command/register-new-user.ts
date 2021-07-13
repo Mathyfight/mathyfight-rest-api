@@ -1,54 +1,40 @@
-import * as uuid from 'uuid';
-import * as bcrypt from 'bcrypt';
-import { RaceType } from 'src/shared/domain/value-object/avatar/race-type';
-import { HashedPassword } from 'src/auth/core/domain/value-object/hashed-password';
+import { HashedPassword } from '../../../../auth/core/domain/value-object/hashed-password';
+import { RaceType } from '../../../../shared/domain/value-object/avatar/race-type';
+import { Uuid } from '../../../../shared/domain/value-object/general/uuid';
 
 export class RegisterNewUser {
-  readonly id: string;
-  readonly hashedPassword: string;
-  readonly player: Player;
-
   constructor(
-    readonly password: string,
+    password: string,
     readonly username: string,
     readonly email: string,
   ) {
-    this.id = uuid.v4();
-    this.hashedPassword = bcrypt.hashSync(password, HashedPassword.saltRounds);
-    this.player = new Player(username);
+    this.hashedPassword = HashedPassword.newPrimitive(password);
   }
+
+  readonly id: string = Uuid.newPrimitive();
+  readonly hashedPassword: string;
+  readonly player = new NewPlayer(this.username);
 }
 
-export class Player {
-  readonly id: string;
-  readonly gold: number;
-  readonly avatar: Avatar;
-
+export class NewPlayer {
   constructor(avatarName: string) {
-    this.id = uuid.v4();
-    this.gold = 1000;
-    this.avatar = new Avatar(avatarName);
+    this.avatar = new NewAvatar(avatarName);
   }
+
+  readonly id: string = Uuid.newPrimitive();
+  readonly gold = 1000;
+  readonly avatar: NewAvatar;
 }
 
-export class Avatar {
-  readonly id: string;
-  readonly attack: number;
-  readonly defense: number;
-  readonly health: number;
-  readonly level: number;
-  readonly currentExperience: number;
-  readonly color: string;
-  readonly race: RaceType;
+export class NewAvatar {
+  constructor(readonly name: string) {}
 
-  constructor(readonly name: string) {
-    this.id = uuid.v4();
-    this.attack = 1;
-    this.defense = 1;
-    this.health = 10;
-    this.level = 1;
-    this.currentExperience = 0;
-    this.color = 'E0AC69';
-    this.race = RaceType.HumanMale;
-  }
+  readonly id: string = Uuid.newPrimitive();
+  readonly attack = 1;
+  readonly defense = 1;
+  readonly health = 10;
+  readonly level = 1;
+  readonly currentExperience = 0;
+  readonly color = 'E0AC69';
+  readonly race = RaceType.HumanMale;
 }

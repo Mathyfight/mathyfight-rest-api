@@ -3,13 +3,8 @@ import { ResetPasswordErrors } from '../domain/value-object/reset-password.error
 
 export class AuthResetPasswordRouteErrors implements ResetPasswordErrors {
   @ApiProperty()
-  resetPasswordTokenId: string[];
+  resetPasswordTokenId: string[] = [];
 
   @ApiProperty()
-  password: string[];
-
-  private constructor() {
-    this.resetPasswordTokenId = [];
-    this.password = [];
-  }
+  password: string[] = [];
 }

@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from 'src/database/database.module';
-import { RegisterRepository } from './application/adapter/register.repository';
-import { RegisterAppService } from './application/service/register.app.service';
+import { RegisterRepository } from './adapter/interface/register.repository';
+import { RegisterInteractor } from './adapter/interactor/register.interactor';
 import { RegisterTypeOrmMySqlRepository } from './infrastructure/register.typeorm.mysql.repository';
 import { AuthRegisterRoute } from './presentation/auth-register.route';
 
 @Module({
   imports: [DatabaseModule],
   providers: [
-    RegisterAppService,
+    RegisterInteractor,
     {
       provide: RegisterRepository,
       useClass: RegisterTypeOrmMySqlRepository,

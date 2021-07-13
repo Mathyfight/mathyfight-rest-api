@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from 'src/database/database.module';
-import { GetEquipmentsRepository } from './application/adapter/get-equipments.repository';
-import { GetEquipmentsAppService } from './application/service/get-equipments.app.service';
+import { GetEquipmentsRepository } from './adapter/interface/get-equipments.repository';
+import { GetEquipmentsInteractor } from './adapter/interactor/get-equipments.interactor';
 import { GetEquipmentTypeOrmMySqlRepository } from './infrastructure/get-equipments.typeorm.mysql.repository';
 import { StoreGetEquipmentsRoute } from './presentation/store-get-equipments.route';
 
 @Module({
   imports: [DatabaseModule],
   providers: [
-    GetEquipmentsAppService,
+    GetEquipmentsInteractor,
     {
       provide: GetEquipmentsRepository,
       useClass: GetEquipmentTypeOrmMySqlRepository,

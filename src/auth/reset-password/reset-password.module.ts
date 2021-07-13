@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from 'src/database/database.module';
-import { ResetPasswordRepository } from './application/adapter/reset-password.repository';
-import { ResetPasswordAppService } from './application/service/reset-password.app.service';
+import { ResetPasswordRepository } from './adapter/interface/reset-password.repository';
+import { ResetPasswordInteractor } from './adapter/interactor/reset-password.interactor';
 import { ResetPasswordTypeOrmMySqlRepository } from './infrastructure/reset-password.typeorm.mysql.repository';
 import { AuthResetPasswordRoute } from './presentation/auth-reset-password.route';
 
 @Module({
   imports: [DatabaseModule],
   providers: [
-    ResetPasswordAppService,
+    ResetPasswordInteractor,
     {
       provide: ResetPasswordRepository,
       useClass: ResetPasswordTypeOrmMySqlRepository,
