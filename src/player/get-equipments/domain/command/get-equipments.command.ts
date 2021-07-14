@@ -5,8 +5,8 @@ import { EquipmentSortingOrder } from '../value-object/equipment-sorting-order';
 import { GetEquipmentsErrors } from '../value-object/get-equipments.errors';
 
 export class GetEquipmentsCommand {
-  static userDoesNotExist = 'debe existir';
-  static avatarDoesNotExist = 'el usuario debe tener un avatar';
+  static readonly userDoesNotExist = 'debe existir';
+  static readonly avatarDoesNotExist = 'el usuario debe tener un avatar';
 
   private constructor(
     readonly avatarId: string,

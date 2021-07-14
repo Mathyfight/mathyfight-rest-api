@@ -4,8 +4,8 @@ import { GivePlayerGold } from './give-player-gold';
 import { RemoveAvatarEquipment } from './remove-avatar-equipment';
 
 export class SellEquipmentCommand {
-  static doesNotExist = 'debe existir';
-  static userDoesNotOwnEquipment = 'debe poseer el equipamiento';
+  static readonly doesNotExist = 'debe existir';
+  static readonly userDoesNotOwnEquipment = 'debe poseer el equipamiento';
 
   private constructor(
     readonly givePlayerGold: GivePlayerGold,

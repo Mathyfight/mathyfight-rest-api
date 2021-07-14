@@ -4,9 +4,8 @@ import {
 } from '../../../../shared/domain/value-object/util/domain-errors';
 
 export class Email {
-  static ValidationError = class {
-    static hasToBeAnEmail = 'debe tener el formato de un correo electrónico';
-  };
+  static readonly isNotAnEmail =
+    'debe tener el formato de un correo electrónico';
 
   private constructor(readonly val: string) {}
 
@@ -20,14 +19,10 @@ export class Email {
         val,
       );
     if (!compliesWithRfc5322) {
-      errors[prop]?.push(this.ValidationError.hasToBeAnEmail);
+      errors[prop]?.push(this.isNotAnEmail);
       return null;
     }
 
     return new Email(val.toLowerCase());
-  }
-
-  static fromExisting(email: string): Email {
-    return new Email(email);
   }
 }

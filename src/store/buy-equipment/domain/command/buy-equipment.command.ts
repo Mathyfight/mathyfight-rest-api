@@ -5,11 +5,12 @@ import { AddEquipmentToAvatar } from './add-equipment-to-avatar';
 import { DecreasePlayerGold } from './decrease-player-gold';
 
 export class BuyEquipmentCommand {
-  static userDoesntExist = 'el usuario debe existir';
-  static playerDoesntExist = 'el usuario debe tener un jugador';
-  static equipmentDoesntExist = 'el equipamiento debe existir';
-  static playerAlreadyHasEquipment = 'el jugador ya tiene el equipamiento';
-  static playerNeedsToHave = (gold: number): string =>
+  static readonly userDoesntExist = 'el usuario debe existir';
+  static readonly playerDoesntExist = 'el usuario debe tener un jugador';
+  static readonly equipmentDoesntExist = 'el equipamiento debe existir';
+  static readonly playerAlreadyHasEquipment =
+    'el jugador ya tiene el equipamiento';
+  static readonly playerNeedsToHave = (gold: number): string =>
     `el jugador debe tener ${gold} de oro más`;
 
   private constructor(

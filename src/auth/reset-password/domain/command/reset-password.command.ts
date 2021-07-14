@@ -4,8 +4,8 @@ import { ChangeUserPassword } from './change-user-password';
 import { DisableToken } from './disable-token';
 
 export class ResetPasswordCommand {
-  static tokenDoesNotExist = 'no existe';
-  static tokenHasBeenUsed = 'ya fue utilizado';
+  static readonly tokenDoesNotExist = 'no existe';
+  static readonly tokenHasBeenUsed = 'ya fue utilizado';
 
   private constructor(
     readonly changeUserPassword: ChangeUserPassword,

@@ -4,7 +4,8 @@ import { LoginErrors } from '../value-object/login.errors';
 import { GenerateJwt } from './generate.jwt';
 
 export class LoginCommand {
-  static invalidCredentials = 'nombre de usuario o contraseña incorrecta';
+  static readonly invalidCredentials =
+    'nombre de usuario o contraseña incorrecta';
 
   private constructor(readonly generateJwt: GenerateJwt) {}
 

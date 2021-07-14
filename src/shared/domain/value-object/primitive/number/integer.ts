@@ -1,9 +1,7 @@
 import { DomainErrors, DomainErrorsProp } from '../../util/domain-errors';
 
 export class Integer {
-  static ValidationError = class {
-    static hasToBeAnInteger = 'debe ser un entero';
-  };
+  static readonly isNotAnInteger = 'debe ser un entero';
 
   static parse(
     val: number,
@@ -12,7 +10,7 @@ export class Integer {
   ): Integer | null {
     const isInteger = Number.isInteger(val);
     if (!isInteger) {
-      errors[prop]?.push(this.ValidationError.hasToBeAnInteger);
+      errors[prop]?.push(this.isNotAnInteger);
       return null;
     }
 

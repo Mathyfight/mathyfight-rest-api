@@ -1,10 +1,8 @@
 import { DomainErrors, DomainErrorsProp } from '../../util/domain-errors';
 
 export class FiniteString {
-  static ValidationError = class {
-    static hasToBeThisLong = (min: number, max: number): string =>
-      `debe tener entre ${min} hasta ${max} caracteres`;
-  };
+  static readonly isNotThisLong = (min: number, max: number): string =>
+    `debe tener entre ${min} hasta ${max} caracteres`;
 
   static parse(
     val: string,
@@ -15,7 +13,7 @@ export class FiniteString {
   ): FiniteString | null {
     const isInsideLength = val.length >= min && val.length <= max;
     if (!isInsideLength) {
-      errors[prop]?.push(this.ValidationError.hasToBeThisLong(min, max));
+      errors[prop]?.push(this.isNotThisLong(min, max));
       return null;
     }
 
