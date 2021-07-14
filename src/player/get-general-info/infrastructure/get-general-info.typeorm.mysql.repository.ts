@@ -1,7 +1,7 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { AvatarTypeOrmMySql } from 'src/database/typeorm/mysql/entity/avatar.typeorm.mysql';
 import { Repository } from 'typeorm';
-import { GetGeneralInfoRepository } from '../application/adapter/get-general-info.repository';
+import { GetGeneralInfoRepository } from '../adapter/interface/get-general-info.repository';
 import { Experience } from '../domain/entity/experience';
 import { GeneralInfo } from '../domain/entity/general-info';
 

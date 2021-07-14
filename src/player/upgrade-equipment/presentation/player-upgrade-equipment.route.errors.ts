@@ -5,13 +5,11 @@ export class PlayerUpgradeEquipmentRouteErrors
   implements UpgradeEquipmentErrors
 {
   @ApiProperty()
-  avatarEquipmentId: string[];
+  userId: string[] = [];
 
   @ApiProperty()
-  errors: string[];
+  avatarEquipmentId: string[] = [];
 
-  constructor() {
-    this.avatarEquipmentId = [];
-    this.errors = [];
-  }
+  @ApiProperty()
+  errors: string[] = [];
 }

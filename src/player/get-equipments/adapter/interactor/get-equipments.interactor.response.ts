@@ -1,8 +1,8 @@
 import { Equipment } from '../../domain/entity/equipment';
 
-export class GetEquipmentsAppServiceResponse {
+export class GetEquipmentsInteractorResponse {
   readonly nextPage: number | null;
-  readonly equipments: GetEquipmentsEquipmentAppServiceResponse[];
+  readonly equipments: GetEquipmentsEquipmentInteractorResponse[];
 
   constructor(
     page: number,
@@ -20,7 +20,7 @@ export class GetEquipmentsAppServiceResponse {
 
     this.equipments = equipments.map(
       (e) =>
-        new GetEquipmentsEquipmentAppServiceResponse(
+        new GetEquipmentsEquipmentInteractorResponse(
           e.id,
           e.name,
           e.equipmentStats.attack,
@@ -30,7 +30,7 @@ export class GetEquipmentsAppServiceResponse {
           e.equipmentStats.sellPrice,
           e.equipmentStats.level,
           e.equipmentStats.canUpgrade
-            ? new GetEquipmentsEquipmentUpgradeAppServiceResponse(
+            ? new GetEquipmentsEquipmentUpgradeInteractorResponse(
                 e.equipmentStats.upgradePrice,
                 e.equipmentStats.improvedAttack,
                 e.equipmentStats.improvedDefense,
@@ -41,7 +41,7 @@ export class GetEquipmentsAppServiceResponse {
   }
 }
 
-export class GetEquipmentsEquipmentAppServiceResponse {
+export class GetEquipmentsEquipmentInteractorResponse {
   constructor(
     readonly id: string,
     readonly name: string,
@@ -51,11 +51,11 @@ export class GetEquipmentsEquipmentAppServiceResponse {
     readonly description: string,
     readonly sellPrice: number,
     readonly level: number,
-    readonly upgrade: GetEquipmentsEquipmentUpgradeAppServiceResponse | null,
+    readonly upgrade: GetEquipmentsEquipmentUpgradeInteractorResponse | null,
   ) {}
 }
 
-export class GetEquipmentsEquipmentUpgradeAppServiceResponse {
+export class GetEquipmentsEquipmentUpgradeInteractorResponse {
   constructor(
     readonly price: number,
     readonly improvedAttack: number,

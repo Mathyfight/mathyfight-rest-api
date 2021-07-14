@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { GetEquipmentsRepository } from '../adapter/interface/get-equipments.repository';
 import { Equipment } from '../domain/entity/equipment';
 import { GetEquipmentsCommand } from '../domain/command/get-equipments.command';
+import { TypeOrmMySqlMapper } from 'src/shared/infrastructure/typeorm.mysql.mapper';
 
 export class GetEquipmentTypeOrmMySqlRepository
   implements GetEquipmentsRepository
@@ -41,10 +42,9 @@ export class GetEquipmentTypeOrmMySqlRepository
         ? 'name'
         : 'buyPrice';
 
-    const orderCriteria =
-      cmd.sortingOrderCriteria === SortingOrderCriteria.Ascendant
-        ? 'ASC'
-        : 'DESC';
+    const orderCriteria = TypeOrmMySqlMapper.sortingOrderCriteriaToSqlCriteria(
+      cmd.sortingOrderCriteria,
+    );
 
     const [ormEquipments, count] = await this.equipmentRepository
       .createQueryBuilder('equipment')

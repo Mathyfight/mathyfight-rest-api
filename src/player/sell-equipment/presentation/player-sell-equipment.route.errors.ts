@@ -3,9 +3,8 @@ import { SellEquipmentErrors } from '../domain/value-object/sell-equipment.error
 
 export class PlayerSellEquipmentRouteErrors implements SellEquipmentErrors {
   @ApiProperty()
-  avatarEquipmentId: string[];
+  avatarEquipmentId: string[] = [];
 
-  constructor() {
-    this.avatarEquipmentId = [];
-  }
+  @ApiProperty()
+  userId: string[] = [];
 }

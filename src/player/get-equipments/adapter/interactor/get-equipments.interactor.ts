@@ -1,23 +1,22 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { GetEquipmentsErrors } from '../../domain/value-object/get-equipments.errors';
-import { GetEquipmentsAppServiceRequest } from './get-equipments.app.service.request';
-import { GetEquipmentsAppServiceResponse } from './get-equipments.app.service.response';
-import { GetEquipmentsDomainService } from '../../domain/service/get-equipments.domain.service';
-import { GetEquipmentsRepository } from '../adapter/get-equipments.repository';
+import { GetEquipmentsInteractorRequest } from './get-equipments.interactor.request';
+import { GetEquipmentsInteractorResponse } from './get-equipments.interactor.response';
+import { GetEquipmentsRepository } from '../interface/get-equipments.repository';
+import { GetEquipmentsCommand } from '../../domain/command/get-equipments.command';
 
 @Injectable()
-export class GetEquipmentsAppService {
+export class GetEquipmentsInteractor {
   constructor(readonly repository: GetEquipmentsRepository) {}
 
   async invoke(
-    request: GetEquipmentsAppServiceRequest,
-  ): Promise<GetEquipmentsAppServiceResponse> {
+    request: GetEquipmentsInteractorRequest,
+  ): Promise<GetEquipmentsInteractorResponse> {
     const errors = new GetEquipmentsErrors();
-    const domainService = new GetEquipmentsDomainService();
 
     const user = await this.repository.getUserById(request.userId.val);
 
-    const command = domainService.invoke(
+    const command = GetEquipmentsCommand.new(
       user,
       20,
       request.page.val,
@@ -31,7 +30,7 @@ export class GetEquipmentsAppService {
     const [equipments, totalRows] = await this.repository.getEquipments(
       command,
     );
-    return new GetEquipmentsAppServiceResponse(
+    return new GetEquipmentsInteractorResponse(
       command.page,
       command.elementsPerPage,
       totalRows,

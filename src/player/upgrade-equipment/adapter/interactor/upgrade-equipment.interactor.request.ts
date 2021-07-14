@@ -3,18 +3,24 @@ import { Uuid } from 'src/shared/domain/value-object/general/uuid';
 import { DomainErrorsProp } from 'src/shared/domain/value-object/util/domain-errors';
 import { UpgradeEquipmentErrors } from '../../domain/value-object/upgrade-equipment.errors';
 
-export class UpgradeEquipmentAppServiceRequest {
-  constructor(readonly avatarEquipmentId: Uuid) {}
+export class UpgradeEquipmentInteractorRequest {
+  constructor(readonly userId: Uuid, readonly avatarEquipmentId: Uuid) {}
 
-  static parse(avatarEquipmentId: string): UpgradeEquipmentAppServiceRequest {
+  static parse(
+    userId: string,
+    avatarEquipmentId: string,
+  ): UpgradeEquipmentInteractorRequest {
     const errors = new UpgradeEquipmentErrors();
+    const userIdV = Uuid.parse(userId, errors, DomainErrorsProp.userId);
     const avatarEquipmentIdV = Uuid.parse(
       avatarEquipmentId,
       errors,
       DomainErrorsProp.avatarEquipmentId,
     );
-    if (avatarEquipmentIdV === null)
+
+    if (userIdV === null || avatarEquipmentIdV === null)
       throw new BadRequestException({ errors: errors });
-    return new UpgradeEquipmentAppServiceRequest(avatarEquipmentIdV);
+
+    return new UpgradeEquipmentInteractorRequest(userIdV, avatarEquipmentIdV);
   }
 }

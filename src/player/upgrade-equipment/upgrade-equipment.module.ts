@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from 'src/database/database.module';
-import { UpgradeEquipmentRepository } from './application/adapter/upgrade-equipment.repository';
-import { UpgradeEquipmentAppService } from './application/service/upgrade-equipment.app.service';
+import { UpgradeEquipmentRepository } from './adapter/interface/upgrade-equipment.repository';
+import { UpgradeEquipmentInteractor } from './adapter/interactor/upgrade-equipment.interactor';
 import { UpgradeEquipmentTypeOrmMySqlRepository } from './infrastructure/upgrade-equipment.typeorm.mysql.repository';
 import { PlayerUpgradeEquipmentRoute } from './presentation/player-upgrade-equipment.route';
 
 @Module({
   imports: [DatabaseModule],
   providers: [
-    UpgradeEquipmentAppService,
+    UpgradeEquipmentInteractor,
     {
       provide: UpgradeEquipmentRepository,
       useClass: UpgradeEquipmentTypeOrmMySqlRepository,

@@ -1,12 +1,11 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { AvatarEquipmentTypeOrmMySql } from 'src/database/typeorm/mysql/entity/avatar.equipment.typeorm.mysql';
 import { PlayerTypeOrmMySql } from 'src/database/typeorm/mysql/entity/player.typeorm.mysql';
-import { EquipmentSellStats } from 'src/shared/domain/value-object/equipment/equipment-sell-stats';
-import { Repository } from 'typeorm';
-import { SellEquipmentRepository } from '../application/adapter/sell-equipment.repository';
-import { GivePlayerGold } from '../domain/command/give-player-gold';
-import { RemoveAvatarEquipment } from '../domain/command/remove-avatar-equipment';
+import { Connection, Repository } from 'typeorm';
+import { SellEquipmentRepository } from '../adapter/interface/sell-equipment.repository';
+import { SellEquipmentCommand } from '../domain/command/sell-equipment.command';
 import { AvatarEquipment } from '../domain/entity/avatar-equipment';
+import { EquipmentSellStats } from '../domain/value-object/equipment-sell-stats';
 
 export class SellEquipmentTypeOrmMySqlRepository
   implements SellEquipmentRepository
@@ -16,44 +15,47 @@ export class SellEquipmentTypeOrmMySqlRepository
     readonly avatarEquipmentRepository: Repository<AvatarEquipmentTypeOrmMySql>,
     @InjectRepository(PlayerTypeOrmMySql)
     readonly playerRepository: Repository<PlayerTypeOrmMySql>,
+    readonly connection: Connection,
   ) {}
+
+  async sellEquipment(cmd: SellEquipmentCommand): Promise<void> {
+    await this.connection.transaction('SERIALIZABLE', async (manager) => {
+      await manager.delete(AvatarEquipmentTypeOrmMySql, {
+        id: cmd.removeAvatarEquipment.avatarEquipmentId,
+      });
+      await manager.increment(
+        PlayerTypeOrmMySql,
+        { id: cmd.givePlayerGold.playerId },
+        'gold',
+        cmd.givePlayerGold.amount,
+      );
+    });
+  }
 
   async getAvatarEquipmentById(
     avatarEquipmentId: string,
   ): Promise<AvatarEquipment | null> {
     const ormAvatarEquipment = await this.avatarEquipmentRepository.findOne(
       avatarEquipmentId,
-      { relations: ['avatar', 'avatar.player', 'equipment'] },
+      {
+        relations: [
+          'avatar',
+          'avatar.player',
+          'avatar.player.user',
+          'equipment',
+        ],
+      },
     );
     if (ormAvatarEquipment === undefined) return null;
     return new AvatarEquipment(
       ormAvatarEquipment.id,
       ormAvatarEquipment.avatar.player.id,
+      ormAvatarEquipment.avatar.player.user.id,
       new EquipmentSellStats(
         ormAvatarEquipment.equipment.baseSellPrice,
         ormAvatarEquipment.level,
         ormAvatarEquipment.equipment.levelSellRate,
       ),
-    );
-  }
-
-  async removeAvatarEquipment(command: RemoveAvatarEquipment): Promise<void> {
-    await this.avatarEquipmentRepository
-      .createQueryBuilder()
-      .delete()
-      .where('id = :id', {
-        id: command.avatarEquipmentId,
-      })
-      .execute();
-  }
-
-  async givePlayerGold(command: GivePlayerGold): Promise<void> {
-    await this.playerRepository.increment(
-      {
-        id: command.playerId,
-      },
-      'gold',
-      command.amount,
     );
   }
 }

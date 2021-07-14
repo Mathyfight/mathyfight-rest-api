@@ -1,10 +1,9 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { AvatarEquipmentTypeOrmMySql } from 'src/database/typeorm/mysql/entity/avatar.equipment.typeorm.mysql';
 import { PlayerTypeOrmMySql } from 'src/database/typeorm/mysql/entity/player.typeorm.mysql';
-import { Repository } from 'typeorm';
-import { UpgradeEquipmentRepository } from '../application/adapter/upgrade-equipment.repository';
-import { RemovePlayerGold } from '../domain/command/remove-player-gold';
-import { UpgradeEquipmentLevel } from '../domain/command/upgrade-equipment-level';
+import { Connection, Repository } from 'typeorm';
+import { UpgradeEquipmentRepository } from '../adapter/interface/upgrade-equipment.repository';
+import { UpgradeEquipmentCommand } from '../domain/command/upgrade-equipment.command';
 import { AvatarEquipment } from '../domain/entity/avatar-equipment';
 import { Player } from '../domain/entity/player';
 
@@ -16,14 +15,32 @@ export class UpgradeEquipmentTypeOrmMySqlRepository
     readonly avatarEquipmentRepository: Repository<AvatarEquipmentTypeOrmMySql>,
     @InjectRepository(PlayerTypeOrmMySql)
     readonly playerRepository: Repository<PlayerTypeOrmMySql>,
+    readonly connection: Connection,
   ) {}
+
+  async upgradeEquipment(cmd: UpgradeEquipmentCommand): Promise<void> {
+    await this.connection.transaction('SERIALIZABLE', async (manager) => {
+      await manager.increment(
+        AvatarEquipmentTypeOrmMySql,
+        { id: cmd.upgradeEquipmentLevel.avatarEquipmentId },
+        'level',
+        cmd.upgradeEquipmentLevel.amount,
+      );
+      await manager.decrement(
+        PlayerTypeOrmMySql,
+        { id: cmd.removePlayerGold.playerId },
+        'gold',
+        cmd.removePlayerGold.amount,
+      );
+    });
+  }
 
   async getAvatarEquipmentById(
     avatarEquipmentId: string,
   ): Promise<AvatarEquipment | null> {
     const ormAvatarEquipment = await this.avatarEquipmentRepository.findOne(
       avatarEquipmentId,
-      { relations: ['avatar', 'avatar.player'] },
+      { relations: ['avatar', 'avatar.player', 'avatar.player.user'] },
     );
     if (ormAvatarEquipment === undefined) return null;
     return new AvatarEquipment(
@@ -32,23 +49,8 @@ export class UpgradeEquipmentTypeOrmMySqlRepository
       new Player(
         ormAvatarEquipment.avatar.player.id,
         ormAvatarEquipment.avatar.player.gold,
+        ormAvatarEquipment.avatar.player.user.id,
       ),
-    );
-  }
-
-  async upgradeEquipmentLevel(command: UpgradeEquipmentLevel): Promise<void> {
-    await this.avatarEquipmentRepository.increment(
-      { id: command.avatarEquipmentId },
-      'level',
-      command.amount,
-    );
-  }
-
-  async removePlayerGold(command: RemovePlayerGold): Promise<void> {
-    await this.playerRepository.decrement(
-      { id: command.playerId },
-      'gold',
-      command.amount,
     );
   }
 }

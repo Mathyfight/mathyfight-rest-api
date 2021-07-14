@@ -3,9 +3,5 @@ import { GetGeneralInfoErrors } from '../domain/value-object/get-general-info.er
 
 export class PlayerGetGeneralInfoRouteErrors implements GetGeneralInfoErrors {
   @ApiProperty()
-  userId: string[];
-
-  constructor() {
-    this.userId = [];
-  }
+  userId: string[] = [];
 }

@@ -3,21 +3,25 @@ import { Uuid } from 'src/shared/domain/value-object/general/uuid';
 import { DomainErrorsProp } from 'src/shared/domain/value-object/util/domain-errors';
 import { SellEquipmentErrors } from '../../domain/value-object/sell-equipment.errors';
 
-export class SellEquipmentAppServiceRequest {
-  constructor(readonly avatarEquipmentId: Uuid) {}
+export class SellEquipmentInteractorRequest {
+  constructor(readonly userId: Uuid, readonly avatarEquipmentId: Uuid) {}
 
-  static parse(equipmentId: string): SellEquipmentAppServiceRequest {
+  static parse(
+    userId: string,
+    equipmentId: string,
+  ): SellEquipmentInteractorRequest {
     const errors = new SellEquipmentErrors();
 
+    const userIdV = Uuid.parse(userId, errors, DomainErrorsProp.userId);
     const equipmentIdV = Uuid.parse(
       equipmentId,
       errors,
-      DomainErrorsProp.equipmentId,
+      DomainErrorsProp.avatarEquipmentId,
     );
 
-    if (equipmentIdV === null)
+    if (userIdV === null || equipmentIdV === null)
       throw new BadRequestException({ errors: errors });
 
-    return new SellEquipmentAppServiceRequest(equipmentIdV);
+    return new SellEquipmentInteractorRequest(userIdV, equipmentIdV);
   }
 }

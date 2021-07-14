@@ -7,7 +7,7 @@ import { DomainErrorsProp } from 'src/shared/domain/value-object/util/domain-err
 import { EquipmentSortingOrder } from '../../domain/value-object/equipment-sorting-order';
 import { GetEquipmentsErrors } from '../../domain/value-object/get-equipments.errors';
 
-export class GetEquipmentsAppServiceRequest {
+export class GetEquipmentsInteractorRequest {
   constructor(
     readonly equipmentType: EquipmentType,
     readonly page: PositiveInteger,
@@ -22,7 +22,7 @@ export class GetEquipmentsAppServiceRequest {
     userId: string,
     sortingOrderCriteria?: SortingOrderCriteria,
     equipmentSortingOrder?: EquipmentSortingOrder,
-  ): GetEquipmentsAppServiceRequest {
+  ): GetEquipmentsInteractorRequest {
     const errors = new GetEquipmentsErrors();
     const pageV = PositiveInteger.parse(page, errors, DomainErrorsProp.page);
     const userIdV = Uuid.parse(userId, errors, DomainErrorsProp.userId);
@@ -30,7 +30,7 @@ export class GetEquipmentsAppServiceRequest {
     if (pageV === null || userIdV === null)
       throw new BadRequestException({ errors: errors });
 
-    return new GetEquipmentsAppServiceRequest(
+    return new GetEquipmentsInteractorRequest(
       equipmentType,
       pageV,
       userIdV,
