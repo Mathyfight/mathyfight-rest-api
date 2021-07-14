@@ -10,7 +10,7 @@ export class PositiveNumber {
   ): PositiveNumber | null {
     const isPositive = val > 0;
     if (!isPositive) {
-      errors[prop]?.push(this.hasToBePositive);
+      errors[prop]?.push(this.isNotPositive);
       return null;
     }
 
