@@ -2,7 +2,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { AvatarTypeOrmMySql } from 'src/database/typeorm/mysql/entity/avatar.typeorm.mysql';
 import { EquipmentTypeOrmMySql } from 'src/database/typeorm/mysql/entity/equipment.typeorm.mysql';
 import { EquipmentSortingOrder } from 'src/store/get-equipments/domain/value-object/equipment-sorting-order';
-import { SortingOrderCriteria } from 'src/shared/domain/value-object/general/sorting-order-criteria';
 import { Repository } from 'typeorm';
 import { GetEquipmentsRepository } from '../adapter/interface/get-equipments.repository';
 import { Equipment } from '../domain/entity/equipment';

@@ -4,11 +4,11 @@ import { RemovePlayerGold } from './remove-player-gold';
 import { UpgradeEquipmentLevel } from './upgrade-equipment-level';
 
 export class UpgradeEquipmentCommand {
-  static doesNotExist = 'debe existir';
-  static doesNotHaveEnoughGold = (requiredGold: number): string =>
+  static readonly doesNotExist = 'debe existir';
+  static readonly doesNotHaveEnoughGold = (requiredGold: number): string =>
     `se necesita ${requiredGold} de oro más`;
-  static reachedMaximumLevel = 'llegó al nivel máximo';
-  static userDoesNotOwnEquipment = 'debe poseer el equipamiento';
+  static readonly reachedMaximumLevel = 'llegó al nivel máximo';
+  static readonly userDoesNotOwnEquipment = 'debe poseer el equipamiento';
 
   private constructor(
     readonly upgradeEquipmentLevel: UpgradeEquipmentLevel,

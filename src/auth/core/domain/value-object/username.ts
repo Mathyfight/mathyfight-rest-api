@@ -8,8 +8,8 @@ import {
 export class Username {
   private constructor(readonly val: string) {}
 
-  static minLength = 3;
-  static maxLength = 32;
+  static readonly minLength = 3;
+  static readonly maxLength = 32;
 
   static parse(
     val: string,
@@ -25,9 +25,5 @@ export class Username {
     if (!(isInsideLength && isAlphanumeric)) return null;
 
     return new Username(val);
-  }
-
-  static fromExisting(username: string): Username {
-    return new Username(username);
   }
 }

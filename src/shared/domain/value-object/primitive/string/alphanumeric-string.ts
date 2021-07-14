@@ -1,9 +1,7 @@
 import { DomainErrors, DomainErrorsProp } from '../../util/domain-errors';
 
 export class AlphanumericString {
-  static ValidationError = class {
-    static hasToBeAlphanumeric = 'debe ser alfanumérico';
-  };
+  static isNotAlphanumeric = 'debe ser alfanumérico';
 
   static parse(
     val: string,
@@ -12,7 +10,7 @@ export class AlphanumericString {
   ): AlphanumericString | null {
     const isAlphanumeric = /^\w+$/.test(val);
     if (!isAlphanumeric) {
-      errors[prop]?.push(this.ValidationError.hasToBeAlphanumeric);
+      errors[prop]?.push(this.isNotAlphanumeric);
       return null;
     }
 
