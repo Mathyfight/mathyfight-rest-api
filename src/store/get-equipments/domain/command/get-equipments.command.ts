@@ -5,7 +5,7 @@ import { EquipmentSortingOrder } from '../value-object/equipment-sorting-order';
 import { GetEquipmentsErrors } from '../value-object/get-equipments.errors';
 
 export class GetEquipmentsCommand {
-  static userHasToHaveAnAvatar = 'debe tener un avatar';
+  static readonly userHasToHaveAnAvatar = 'debe tener un avatar';
 
   readonly elementsPerPage = 20;
 

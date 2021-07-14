@@ -4,7 +4,7 @@ import { CreateResetPasswordToken } from './create-reset-password-token';
 import { SendResetPasswordEmail } from './send-reset-password-email';
 
 export class ForgotPasswordCommand {
-  static emailDoesNotExist = 'debe encontrarse registrado';
+  static readonly emailDoesNotExist = 'debe encontrarse registrado';
 
   private constructor(
     readonly createResetPasswordToken: CreateResetPasswordToken,

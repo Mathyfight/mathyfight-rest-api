@@ -2,7 +2,7 @@ import { GeneralInfo } from '../entity/general-info';
 import { GetGeneralInfoErrors } from '../value-object/get-general-info.errors';
 
 export class GetGeneralInfoCommand {
-  static playerDoesNotExist = 'debe tener jugador';
+  static readonly playerDoesNotExist = 'debe tener jugador';
 
   private constructor(readonly generalInfo: GeneralInfo) {}
 

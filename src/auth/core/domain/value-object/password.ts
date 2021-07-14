@@ -7,8 +7,8 @@ import {
 export class Password {
   private constructor(readonly val: string) {}
 
-  static minLength = 8;
-  static maxLength = 32;
+  static readonly minLength = 8;
+  static readonly maxLength = 32;
 
   static parse(
     val: string,
@@ -21,10 +21,6 @@ export class Password {
 
     if (!isInsideLength) return null;
 
-    return new Password(val);
-  }
-
-  static fromExisting(val: string): Password {
     return new Password(val);
   }
 }

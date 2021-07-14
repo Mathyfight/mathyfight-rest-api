@@ -2,9 +2,7 @@ import { DomainErrors, DomainErrorsProp } from '../util/domain-errors';
 import * as uuid from 'uuid';
 
 export class Uuid {
-  static ValidationError = class {
-    static hasToBeAnUuid = 'debe tener el formato de un uuid v4';
-  };
+  static readonly isNotAUuid = 'debe tener el formato de un uuid v4';
 
   private constructor(readonly val: string) {}
 
@@ -19,7 +17,7 @@ export class Uuid {
   ): Uuid | null {
     const isUuid = uuid.validate(value);
     if (!isUuid) {
-      errors[prop]?.push(this.ValidationError.hasToBeAnUuid);
+      errors[prop]?.push(this.isNotAUuid);
       return null;
     }
 
@@ -28,10 +26,6 @@ export class Uuid {
 
   static isValid(uuidStr: string): boolean {
     return uuid.validate(uuidStr);
-  }
-
-  static fromExisting(id: string): Uuid {
-    return new Uuid(id);
   }
 
   static newPrimitive(): string {
