@@ -7,19 +7,8 @@ export class AvatarEquipment {
     readonly player: Player,
   ) {}
 
-  get upgradePrice(): number {
-    return 10;
-  }
-
-  get canBuyUpgrade(): boolean {
-    return this.player.gold - this.upgradePrice >= 0;
-  }
-
-  get reachedMaximumLevel(): boolean {
-    return this.level === 10;
-  }
-
-  get goldDifferenceForUpgrade(): number {
-    return this.upgradePrice - this.player.gold;
-  }
+  readonly upgradePrice = 10;
+  readonly canBuyUpgrade = this.player.gold - this.upgradePrice >= 0;
+  readonly reachedMaximumLevel = this.level === 10;
+  readonly goldDifferenceForUpgrade = this.upgradePrice - this.player.gold;
 }

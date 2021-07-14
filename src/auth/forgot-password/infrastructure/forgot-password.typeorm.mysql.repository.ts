@@ -2,7 +2,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ResetPasswordTokenTypeOrmMySql } from 'src/database/typeorm/mysql/entity/reset-password-token.typeorm.mysql';
 import { UserTypeOrmMySql } from 'src/database/typeorm/mysql/entity/user.typeorm.mysql';
 import { Repository } from 'typeorm';
-import { ForgotPasswordRepository } from '../application/adapter/forgot-password.repository';
+import { ForgotPasswordRepository } from '../adapter/interface/forgot-password.repository';
 import { CreateResetPasswordToken } from '../domain/command/create-reset-password-token';
 import { User } from '../domain/entity/user';
 

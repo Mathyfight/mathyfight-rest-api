@@ -3,17 +3,11 @@ import { BuyEquipmentErrors } from '../domain/value-object/buy-equipment.errors'
 
 export class StoreBuyEquipmentRouteErrors implements BuyEquipmentErrors {
   @ApiProperty()
-  userId: string[];
+  userId: string[] = [];
 
   @ApiProperty()
-  equipmentId: string[];
+  equipmentId: string[] = [];
 
   @ApiProperty()
-  errors: string[];
-
-  constructor() {
-    this.userId = [];
-    this.equipmentId = [];
-    this.errors = [];
-  }
+  errors: string[] = [];
 }

@@ -3,9 +3,5 @@ import { GetEquipmentsErrors } from '../domain/value-object/get-equipments.error
 
 export class StoreGetEquipmentsRouteErrors implements GetEquipmentsErrors {
   @ApiProperty()
-  userId: string[];
-
-  constructor() {
-    this.userId = [];
-  }
+  userId: string[] = [];
 }

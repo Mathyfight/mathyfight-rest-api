@@ -9,7 +9,5 @@ export class Equipment {
     readonly buyPrice: number,
   ) {}
 
-  get level(): number {
-    return 1;
-  }
+  readonly level = 1;
 }

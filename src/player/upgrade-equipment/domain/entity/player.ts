@@ -1,3 +1,7 @@
 export class Player {
-  constructor(readonly id: string, readonly gold: number) {}
+  constructor(
+    readonly id: string,
+    readonly gold: number,
+    readonly userId: string,
+  ) {}
 }

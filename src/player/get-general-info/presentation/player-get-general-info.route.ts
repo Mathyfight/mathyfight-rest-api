@@ -1,9 +1,9 @@
 import { Controller, Request, UseGuards, Get } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { JwtPayload } from 'src/auth/core/domain/value-object/jwt-payload';
+import { JwtPayload } from 'src/shared/domain/value-object/general/jwt-payload';
 import { JwtAuthGuard } from 'src/shared/presentation/jwt-auth.guard';
-import { GetGeneralInfoAppService } from '../application/service/get-general-info.app.service';
-import { GetGeneralInfoAppServiceRequest } from '../application/service/get-general-info.app.service.request';
+import { GetGeneralInfoInteractor } from '../adapter/interactor/get-general-info.interactor';
+import { GetGeneralInfoInteractorRequest } from '../adapter/interactor/get-general-info.interactor.request';
 import { PlayerGetGeneralInfoRouteErrors } from './player-get-general-info.route.errors';
 import { PlayerGetGeneralInfoRouteResponse } from './player-get-general-info.route.response';
 
@@ -12,7 +12,7 @@ import { PlayerGetGeneralInfoRouteResponse } from './player-get-general-info.rou
 @ApiTags('player')
 @Controller('player')
 export class PlayerGetGeneralInfoRoute {
-  constructor(readonly appService: GetGeneralInfoAppService) {}
+  constructor(readonly appService: GetGeneralInfoInteractor) {}
 
   @Get('general-info')
   @ApiResponse({ status: 200, type: PlayerGetGeneralInfoRouteResponse })
@@ -20,7 +20,7 @@ export class PlayerGetGeneralInfoRoute {
   async route(
     @Request() request: { user: JwtPayload },
   ): Promise<PlayerGetGeneralInfoRouteResponse> {
-    const serviceRequest = GetGeneralInfoAppServiceRequest.parse(
+    const serviceRequest = GetGeneralInfoInteractorRequest.parse(
       request.user.userId,
     );
     const serviceResponse = await this.appService.invoke(serviceRequest);

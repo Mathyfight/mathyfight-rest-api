@@ -1,7 +1,5 @@
 export class Experience {
   constructor(readonly level: number, readonly current: number) {}
 
-  get total(): number {
-    return this.level * 100;
-  }
+  readonly total = this.level * 100;
 }

@@ -1,24 +1,24 @@
 import { Body, Controller, Param, Put } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { ResetPasswordAppService } from '../application/service/reset-password.app.service';
-import { ResetPasswordAppServiceRequest } from '../application/service/reset-password.app.service.request';
-import { AuthResetPasswordRouteBodyRequest } from './auth-reset-password.route.body.request';
+import { ResetPasswordInteractor } from '../adapter/interactor/reset-password.interactor';
+import { ResetPasswordInteractorRequest } from '../adapter/interactor/reset-password.interactor.request';
+import { AuthResetPasswordRouteBody } from './auth-reset-password.route.body';
 import { AuthResetPasswordRouteErrors } from './auth-reset-password.route.errors';
-import { AuthResetPasswordRouteParamsRequest } from './auth-reset-password.route.params.request';
+import { AuthResetPasswordRouteParams } from './auth-reset-password.route.params';
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthResetPasswordRoute {
-  constructor(readonly appService: ResetPasswordAppService) {}
+  constructor(readonly appService: ResetPasswordInteractor) {}
 
   @Put('reset-password/:resetPasswordTokenId')
   @ApiResponse({ status: 200 })
   @ApiResponse({ status: 400, type: AuthResetPasswordRouteErrors })
   async resetPasswordRoute(
-    @Param() params: AuthResetPasswordRouteParamsRequest,
-    @Body() body: AuthResetPasswordRouteBodyRequest,
+    @Param() params: AuthResetPasswordRouteParams,
+    @Body() body: AuthResetPasswordRouteBody,
   ): Promise<void> {
-    const serviceRequest = ResetPasswordAppServiceRequest.parse(
+    const serviceRequest = ResetPasswordInteractorRequest.parse(
       params.resetPasswordTokenId,
       body.password,
     );

@@ -2,18 +2,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { AvatarTypeOrmMySql } from 'src/database/typeorm/mysql/entity/avatar.typeorm.mysql';
 import { PlayerTypeOrmMySql } from 'src/database/typeorm/mysql/entity/player.typeorm.mysql';
 import { UserTypeOrmMySql } from 'src/database/typeorm/mysql/entity/user.typeorm.mysql';
-import { Repository } from 'typeorm';
-import { RegisterRepository } from '../application/adapter/register.repository';
-import { RegisterNewUser } from '../domain/command/register-new-user';
+import { Connection, Repository } from 'typeorm';
+import { RegisterRepository } from '../adapter/interface/register.repository';
+import { RegisterCommand } from '../domain/command/register.command';
 
 export class RegisterTypeOrmMySqlRepository implements RegisterRepository {
   constructor(
     @InjectRepository(UserTypeOrmMySql)
     readonly userRepository: Repository<UserTypeOrmMySql>,
-    @InjectRepository(PlayerTypeOrmMySql)
-    readonly playerRepository: Repository<PlayerTypeOrmMySql>,
-    @InjectRepository(AvatarTypeOrmMySql)
-    readonly avatarRepository: Repository<AvatarTypeOrmMySql>,
+    readonly connection: Connection,
   ) {}
 
   async getOneUserIdByUsername(username: string): Promise<string | null> {
@@ -32,29 +29,31 @@ export class RegisterTypeOrmMySqlRepository implements RegisterRepository {
     return ormUser.id;
   }
 
-  async saveNewUser(command: RegisterNewUser): Promise<void> {
-    await this.userRepository.save({
-      id: command.id,
-      email: command.email,
-      hashedPassword: command.hashedPassword,
-      username: command.username,
-    });
-    await this.playerRepository.save({
-      id: command.player.id,
-      gold: command.player.gold,
-      user: { id: command.id },
-    });
-    await this.avatarRepository.save({
-      id: command.player.avatar.id,
-      name: command.player.avatar.name,
-      currentExperience: command.player.avatar.currentExperience,
-      color: command.player.avatar.color,
-      attack: command.player.avatar.attack,
-      defense: command.player.avatar.defense,
-      health: command.player.avatar.health,
-      level: command.player.avatar.level,
-      race: command.player.avatar.race,
-      player: { id: command.player.id },
+  async registerNewUser(cmd: RegisterCommand): Promise<void> {
+    await this.connection.transaction('SERIALIZABLE', async (manager) => {
+      await manager.insert(UserTypeOrmMySql, {
+        id: cmd.registerNewUser.id,
+        email: cmd.registerNewUser.email,
+        hashedPassword: cmd.registerNewUser.hashedPassword,
+        username: cmd.registerNewUser.username,
+      });
+      await manager.insert(PlayerTypeOrmMySql, {
+        id: cmd.registerNewUser.player.id,
+        gold: cmd.registerNewUser.player.gold,
+        user: { id: cmd.registerNewUser.id },
+      });
+      await manager.insert(AvatarTypeOrmMySql, {
+        id: cmd.registerNewUser.player.avatar.id,
+        name: cmd.registerNewUser.player.avatar.name,
+        currentExperience: cmd.registerNewUser.player.avatar.currentExperience,
+        color: cmd.registerNewUser.player.avatar.color,
+        attack: cmd.registerNewUser.player.avatar.attack,
+        defense: cmd.registerNewUser.player.avatar.defense,
+        health: cmd.registerNewUser.player.avatar.health,
+        level: cmd.registerNewUser.player.avatar.level,
+        race: cmd.registerNewUser.player.avatar.race,
+        player: { id: cmd.registerNewUser.player.id },
+      });
     });
   }
 }

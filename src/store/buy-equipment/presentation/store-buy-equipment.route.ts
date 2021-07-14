@@ -1,27 +1,27 @@
 import { Request, Controller, Param, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { JwtPayload } from 'src/auth/core/domain/value-object/jwt-payload';
+import { JwtPayload } from 'src/shared/domain/value-object/general/jwt-payload';
 import { JwtAuthGuard } from 'src/shared/presentation/jwt-auth.guard';
-import { BuyEquipmentAppService } from '../application/service/buy-equipment.app.service';
-import { BuyEquipmentAppServiceRequest } from '../application/service/buy-equipment.app.service.request';
+import { BuyEquipmentInteractor } from '../adapter/interactor/buy-equipment.interactor';
+import { BuyEquipmentInteractorRequest } from '../adapter/interactor/buy-equipment.interactor.request';
 import { StoreBuyEquipmentRouteErrors } from './store-buy-equipment.route.errors';
-import { StoreBuyEquipmentRouteParamsRequest } from './store-buy-equipment.route.params.request';
+import { StoreBuyEquipmentRouteParams } from './store-buy-equipment.route.params';
 
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 @ApiTags('store')
 @Controller('store')
 export class StoreBuyEquipmentRoute {
-  constructor(readonly buyEquipmentAppService: BuyEquipmentAppService) {}
+  constructor(readonly buyEquipmentAppService: BuyEquipmentInteractor) {}
 
   @Post('equipments/:equipmentId/buy')
   @ApiResponse({ status: 201 })
   @ApiResponse({ status: 400, type: StoreBuyEquipmentRouteErrors })
   async butEquipmentRoute(
     @Request() request: { user: JwtPayload },
-    @Param() params: StoreBuyEquipmentRouteParamsRequest,
+    @Param() params: StoreBuyEquipmentRouteParams,
   ): Promise<void> {
-    const serviceRequest = BuyEquipmentAppServiceRequest.parse(
+    const serviceRequest = BuyEquipmentInteractorRequest.parse(
       request.user.userId,
       params.equipmentId,
     );

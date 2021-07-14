@@ -1,21 +1,13 @@
 import * as bcrypt from 'bcrypt';
-import { Password } from './password';
 
 export class HashedPassword {
-  private constructor(readonly password: Password) {}
+  static readonly saltRounds = 10;
 
-  get val(): string {
-    return this.password.val;
+  static passwordsMatch(hashedPassword: string, password: string): boolean {
+    return bcrypt.compareSync(password, hashedPassword);
   }
 
-  static saltRounds = 10;
-
-  static async new(password: Password): Promise<HashedPassword> {
-    const hashedPassword = await bcrypt.hash(password.val, this.saltRounds);
-    return new HashedPassword(Password.fromExisting(hashedPassword));
-  }
-
-  static fromExisting(hashedPassword: string): HashedPassword {
-    return new HashedPassword(Password.fromExisting(hashedPassword));
+  static newPrimitive(password: string): string {
+    return bcrypt.hashSync(password, this.saltRounds);
   }
 }
