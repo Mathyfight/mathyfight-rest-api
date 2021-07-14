@@ -36,21 +36,17 @@ export class AvatarEquipmentTypeOrmMySql {
   @JoinColumn({ name: 'avatar_id' })
   avatar: AvatarTypeOrmMySql;
 
-  sellPrice: number;
-
   constructor(
     id: string,
     level: number,
     equipped: boolean,
     equipment: EquipmentTypeOrmMySql,
     avatar: AvatarTypeOrmMySql,
-    sellPrice: number,
   ) {
     this.id = id;
     this.level = level;
     this.equipped = equipped;
     this.equipment = equipment;
     this.avatar = avatar;
-    this.sellPrice = sellPrice;
   }
 }

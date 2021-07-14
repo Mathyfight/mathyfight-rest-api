@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { GetEquipmentsAppServiceResponse } from '../application/service/get-equipments.app.service.response';
+import { GetEquipmentsInteractorResponse } from '../adapter/interactor/get-equipments.interactor.response';
 
 export class PlayerGetEquipmentsEquipmentUpgradeRouteResponse {
   @ApiProperty()
@@ -89,7 +89,7 @@ export class PlayerGetEquipmentsRouteResponse {
   }
 
   static fromServiceResponse(
-    response: GetEquipmentsAppServiceResponse,
+    response: GetEquipmentsInteractorResponse,
   ): PlayerGetEquipmentsRouteResponse {
     return new PlayerGetEquipmentsRouteResponse(
       response.nextPage,

@@ -1,5 +1,5 @@
-import { JwtPayload } from 'src/auth/core/domain/value-object/jwt-payload';
-import { JwtService } from '../application/adapter/jwt.service';
+import { JwtPayload } from 'src/shared/domain/value-object/general/jwt-payload';
+import { JwtService } from '../adapter/interface/jwt.service';
 import { JwtService as NestJwtServiceN } from '@nestjs/jwt';
 import { Injectable } from '@nestjs/common';
 

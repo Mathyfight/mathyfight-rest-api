@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { LoginAppServiceResponse } from '../application/service/login.app.service.response';
+import { LoginInteractorResponse } from '../adapter/interactor/login.interactor.response';
 
 export class AuthLoginRouteResponse {
   @ApiProperty()
@@ -10,7 +10,7 @@ export class AuthLoginRouteResponse {
   }
 
   static fromServiceResponse(
-    response: LoginAppServiceResponse,
+    response: LoginInteractorResponse,
   ): AuthLoginRouteResponse {
     return new AuthLoginRouteResponse(response.jsonWebToken);
   }

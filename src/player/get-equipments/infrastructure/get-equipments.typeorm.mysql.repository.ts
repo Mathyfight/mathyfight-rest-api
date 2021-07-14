@@ -4,7 +4,7 @@ import { UserTypeOrmMySql } from 'src/database/typeorm/mysql/entity/user.typeorm
 import { EquipmentStats } from 'src/shared/domain/value-object/equipment/equipment-stats';
 import { TypeOrmMySqlMapper } from 'src/shared/infrastructure/typeorm.mysql.mapper';
 import { Repository } from 'typeorm';
-import { GetEquipmentsRepository } from '../application/adapter/get-equipments.repository';
+import { GetEquipmentsRepository } from '../adapter/interface/get-equipments.repository';
 import { GetEquipmentsCommand } from '../domain/command/get-equipments.command';
 import { Avatar } from '../domain/entity/avatar';
 import { Equipment } from '../domain/entity/equipment';

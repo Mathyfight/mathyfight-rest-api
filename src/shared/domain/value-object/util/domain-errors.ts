@@ -1,13 +1,17 @@
-export interface DomainErrors {
-  errors: string[];
-  username: string[];
-  password: string[];
-  email: string[];
-  page: string[];
-  userId: string[];
-  equipmentId: string[];
-  resetPasswordTokenId: string[];
-  avatarEquipmentId: string[];
+export abstract class DomainErrors {
+  abstract errors: string[];
+  abstract username: string[];
+  abstract password: string[];
+  abstract email: string[];
+  abstract page: string[];
+  abstract userId: string[];
+  abstract equipmentId: string[];
+  abstract resetPasswordTokenId: string[];
+  abstract avatarEquipmentId: string[];
+
+  static isEmpty(errors: Partial<DomainErrors>): boolean {
+    return Object.values(errors).every((prop) => prop.length === 0);
+  }
 }
 
 export enum DomainErrorsProp {

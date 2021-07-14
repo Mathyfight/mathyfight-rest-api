@@ -9,49 +9,20 @@ export class EquipmentStats {
     readonly levelSellRate: number,
   ) {}
 
-  get attack(): number {
-    return this.calculateAttack(this.level);
-  }
+  readonly calculateAttack = (level: number): number =>
+    Math.ceil(this.baseAttack * (1 + this.levelAttackRate) ** (level - 1));
+  readonly attack: number = this.calculateAttack(this.level);
+  readonly improvedAttack: number = this.calculateAttack(this.level + 1);
 
-  get improvedAttack(): number {
-    return this.calculateAttack(this.level + 1);
-  }
+  readonly calculateDefense = (level: number): number =>
+    Math.ceil(this.baseDefense * (1 + this.levelDefenseRate) ** (level - 1));
+  readonly defense: number = this.calculateDefense(this.level);
+  readonly improvedDefense: number = this.calculateDefense(this.level + 1);
 
-  calculateAttack(level: number): number {
-    return Math.ceil(
-      this.baseAttack * (1 + this.levelAttackRate) ** (level - 1),
-    );
-  }
+  readonly calculateSellPrice = (level: number): number =>
+    Math.ceil(this.baseSellPrice * (1 + this.levelSellRate) ** (level - 1));
+  readonly sellPrice: number = this.calculateSellPrice(this.level);
 
-  get defense(): number {
-    return this.calculateDefense(this.level);
-  }
-
-  get improvedDefense(): number {
-    return this.calculateDefense(this.level + 1);
-  }
-
-  calculateDefense(level: number): number {
-    return Math.ceil(
-      this.baseDefense * (1 + this.levelDefenseRate) ** (level - 1),
-    );
-  }
-
-  get sellPrice(): number {
-    return this.calculateSellPrice(this.level);
-  }
-
-  calculateSellPrice(level: number): number {
-    return Math.ceil(
-      this.baseSellPrice * (1 + this.levelSellRate) ** (level - 1),
-    );
-  }
-
-  get canUpgrade(): boolean {
-    return this.level < 10;
-  }
-
-  get upgradePrice(): number {
-    return 10;
-  }
+  readonly canUpgrade = this.level < 10;
+  readonly upgradePrice = 10;
 }

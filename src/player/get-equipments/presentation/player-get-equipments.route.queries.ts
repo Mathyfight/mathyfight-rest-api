@@ -8,13 +8,13 @@ import { EquipmentSortingOrder } from '../domain/value-object/equipment-sorting-
 export class PlayerGetEquipmentsRouteQueries {
   @ApiProperty({ enum: EquipmentType })
   @IsEnum(EquipmentType)
-  readonly type: EquipmentType;
+  readonly type: EquipmentType = EquipmentType.Helmet;
 
   @ApiProperty()
   @IsInt()
   @IsPositive()
   @Type(() => Number)
-  readonly page: number;
+  readonly page: number = 0;
 
   @ApiProperty({ enum: EquipmentSortingOrder, required: false })
   @IsOptional()
@@ -25,9 +25,4 @@ export class PlayerGetEquipmentsRouteQueries {
   @IsOptional()
   @IsEnum(SortingOrderCriteria)
   readonly orderCriteria?: SortingOrderCriteria;
-
-  constructor(type: EquipmentType, page: number) {
-    this.type = type;
-    this.page = page;
-  }
 }

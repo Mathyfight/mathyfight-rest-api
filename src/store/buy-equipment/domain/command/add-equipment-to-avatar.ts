@@ -1,13 +1,9 @@
-import * as uuid from 'uuid';
+import { Uuid } from 'src/shared/domain/value-object/general/uuid';
 
 export class AddEquipmentToAvatar {
-  readonly id: string;
-  readonly level: number;
-  readonly equipped: boolean;
+  constructor(readonly equipmentId: string, readonly avatarId: string) {}
 
-  constructor(readonly equipmentId: string, readonly avatarId: string) {
-    this.id = uuid.v4();
-    this.level = 1;
-    this.equipped = false;
-  }
+  readonly avatarEquipmentId: string = Uuid.newPrimitive();
+  readonly level = 1;
+  readonly equipped = false;
 }

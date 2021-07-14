@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { GetGeneralInfoAppServiceResponse } from '../application/service/get-general-info.app.service.response';
+import { GetGeneralInfoInteractorResponse } from '../adapter/interactor/get-general-info.interactor.response';
 
 export class PlayerGetGeneralInfoExperienceRouteResponse {
   @ApiProperty()
@@ -35,7 +35,7 @@ export class PlayerGetGeneralInfoRouteResponse {
   }
 
   static fromServiceResponse(
-    response: GetGeneralInfoAppServiceResponse,
+    response: GetGeneralInfoInteractorResponse,
   ): PlayerGetGeneralInfoRouteResponse {
     return new PlayerGetGeneralInfoRouteResponse(
       response.gold,

@@ -2,12 +2,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { AvatarTypeOrmMySql } from 'src/database/typeorm/mysql/entity/avatar.typeorm.mysql';
 import { EquipmentTypeOrmMySql } from 'src/database/typeorm/mysql/entity/equipment.typeorm.mysql';
 import { EquipmentSortingOrder } from 'src/store/get-equipments/domain/value-object/equipment-sorting-order';
-import { EquipmentType } from 'src/shared/domain/value-object/equipment/equipment-type';
 import { SortingOrderCriteria } from 'src/shared/domain/value-object/general/sorting-order-criteria';
-import { PositiveInteger } from 'src/shared/domain/value-object/primitive/number/positive-integer';
 import { Repository } from 'typeorm';
-import { GetEquipmentsRepository } from '../application/adapter/get-equipments.repository';
+import { GetEquipmentsRepository } from '../adapter/interface/get-equipments.repository';
 import { Equipment } from '../domain/entity/equipment';
+import { GetEquipmentsCommand } from '../domain/command/get-equipments.command';
+import { TypeOrmMySqlMapper } from 'src/shared/infrastructure/typeorm.mysql.mapper';
 
 export class GetEquipmentTypeOrmMySqlRepository
   implements GetEquipmentsRepository
@@ -31,24 +31,20 @@ export class GetEquipmentTypeOrmMySqlRepository
   }
 
   async getEquipments(
-    equipmentType: EquipmentType,
-    elementsPerPage: number,
-    page: PositiveInteger,
-    avatarId: string,
-    sortingOrderCriteria?: SortingOrderCriteria,
-    equipmentSortingOrder?: EquipmentSortingOrder,
+    cmd: GetEquipmentsCommand,
   ): Promise<[Equipment[], number]> {
     const order =
-      equipmentSortingOrder === EquipmentSortingOrder.Attack
+      cmd.equipmentSortingOrder === EquipmentSortingOrder.Attack
         ? 'baseAttack'
-        : equipmentSortingOrder === EquipmentSortingOrder.Defense
+        : cmd.equipmentSortingOrder === EquipmentSortingOrder.Defense
         ? 'baseDefense'
-        : equipmentSortingOrder === EquipmentSortingOrder.Name
+        : cmd.equipmentSortingOrder === EquipmentSortingOrder.Name
         ? 'name'
         : 'buyPrice';
 
-    const orderCriteria =
-      sortingOrderCriteria === SortingOrderCriteria.Ascendant ? 'ASC' : 'DESC';
+    const orderCriteria = TypeOrmMySqlMapper.sortingOrderCriteriaToSqlCriteria(
+      cmd.sortingOrderCriteria,
+    );
 
     const [ormEquipments, count] = await this.equipmentRepository
       .createQueryBuilder('equipment')
@@ -56,13 +52,15 @@ export class GetEquipmentTypeOrmMySqlRepository
         'equipment.avatars',
         'avatars',
         'avatars.avatar_id = :avatarId',
-        { avatarId: avatarId },
+        { avatarId: cmd.avatarId },
       )
       .where('avatars.avatar_id is null')
-      .andWhere('equipment.type = :equipmentType', { equipmentType })
+      .andWhere('equipment.type = :equipmentType', {
+        equipmentType: cmd.equipmentType,
+      })
       .orderBy(`equipment.${order}`, orderCriteria)
-      .skip((page.val - 1) * elementsPerPage)
-      .take(elementsPerPage)
+      .skip((cmd.page - 1) * cmd.elementsPerPage)
+      .take(cmd.elementsPerPage)
       .getManyAndCount();
 
     const equipments = ormEquipments.map(

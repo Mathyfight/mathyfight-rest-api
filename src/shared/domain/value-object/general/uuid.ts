@@ -26,7 +26,15 @@ export class Uuid {
     return new Uuid(value);
   }
 
+  static isValid(uuidStr: string): boolean {
+    return uuid.validate(uuidStr);
+  }
+
   static fromExisting(id: string): Uuid {
     return new Uuid(id);
+  }
+
+  static newPrimitive(): string {
+    return uuid.v4();
   }
 }

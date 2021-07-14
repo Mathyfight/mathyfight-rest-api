@@ -3,17 +3,11 @@ import { LoginErrors } from '../domain/value-object/login.errors';
 
 export class AuthLoginRouteErrors implements LoginErrors {
   @ApiProperty()
-  username: string[];
+  username: string[] = [];
 
   @ApiProperty()
-  password: string[];
+  password: string[] = [];
 
   @ApiProperty()
-  errors: string[];
-
-  private constructor() {
-    this.errors = [];
-    this.password = [];
-    this.username = [];
-  }
+  errors: string[] = [];
 }

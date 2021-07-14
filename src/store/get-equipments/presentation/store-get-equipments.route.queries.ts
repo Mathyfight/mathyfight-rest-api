@@ -8,13 +8,13 @@ import { SortingOrderCriteria } from 'src/shared/domain/value-object/general/sor
 export class StoreGetEquipmentsRouteQueries {
   @ApiProperty({ enum: EquipmentType })
   @IsEnum(EquipmentType)
-  readonly type: EquipmentType;
+  readonly type: EquipmentType = EquipmentType.Helmet;
 
   @ApiProperty()
   @IsInt()
   @IsPositive()
   @Type(() => Number)
-  readonly page: number;
+  readonly page: number = 0;
 
   @ApiProperty({ enum: EquipmentSortingOrder, required: false })
   @IsOptional()
@@ -25,9 +25,4 @@ export class StoreGetEquipmentsRouteQueries {
   @IsOptional()
   @IsEnum(SortingOrderCriteria)
   readonly orderCriteria?: SortingOrderCriteria;
-
-  constructor(type: EquipmentType, page: number) {
-    this.type = type;
-    this.page = page;
-  }
 }
