@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
@@ -28,6 +29,7 @@ import { StoreModule } from './store/store.module';
       rootPath: join(__dirname, '..', 'client'),
       exclude: ['/api*'],
     }),
+    ConfigModule.forRoot(),
     AuthModule,
     DatabaseModule,
     StoreModule,
