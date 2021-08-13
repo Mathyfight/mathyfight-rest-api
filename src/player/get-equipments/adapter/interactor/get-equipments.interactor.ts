@@ -1,4 +1,5 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { ValidationException } from 'src/shared/domain/value-object/general/validation-exception';
 import { GetEquipmentsErrors } from '../../domain/value-object/get-equipments.errors';
 import { GetEquipmentsInteractorRequest } from './get-equipments.interactor.request';
 import { GetEquipmentsInteractorResponse } from './get-equipments.interactor.response';
@@ -25,7 +26,7 @@ export class GetEquipmentsInteractor {
       request.sortingOrderCriteria,
       request.equipmentSortingOrder,
     );
-    if (command === null) throw new BadRequestException({ errors: errors });
+    if (command === null) throw new ValidationException(errors);
 
     const [equipments, totalRows] = await this.repository.getEquipments(
       command,

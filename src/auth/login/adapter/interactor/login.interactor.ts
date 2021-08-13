@@ -1,4 +1,5 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { ValidationException } from 'src/shared/domain/value-object/general/validation-exception';
 import { LoginRepository } from '../interface/login.repository';
 import { LoginInteractorRequest } from './login.interactor.request';
 import { LoginInteractorResponse } from './login.interactor.response';
@@ -23,7 +24,7 @@ export class LoginInteractor {
     );
 
     const command = LoginCommand.new(foundUser, request.password.val, errors);
-    if (command === null) throw new BadRequestException({ errors: errors });
+    if (command === null) throw new ValidationException(errors);
 
     const jsonWebToken = this.jwtService.sign({
       userId: command.generateJwt.userId,

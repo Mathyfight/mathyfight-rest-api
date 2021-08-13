@@ -13,6 +13,8 @@ export class RegisterCommand {
     password: string,
     username: string,
     email: string,
+    raceId: string,
+    mathTopicLevelIds: string[],
     errors: RegisterErrors,
   ): RegisterCommand | null {
     if (userIdFromUsername !== null)
@@ -22,6 +24,8 @@ export class RegisterCommand {
 
     if (userIdFromUsername !== null || userIdFromEmail !== null) return null;
 
-    return new RegisterCommand(new RegisterNewUser(password, username, email));
+    return new RegisterCommand(
+      new RegisterNewUser(password, raceId, mathTopicLevelIds, username, email),
+    );
   }
 }

@@ -1,4 +1,4 @@
-import { BadRequestException } from '@nestjs/common';
+import { ValidationException } from 'src/shared/domain/value-object/general/validation-exception';
 import { Password } from 'src/auth/core/domain/value-object/password';
 import { Uuid } from 'src/shared/domain/value-object/general/uuid';
 import { DomainErrorsProp } from 'src/shared/domain/value-object/util/domain-errors';
@@ -24,7 +24,7 @@ export class ResetPasswordInteractorRequest {
     );
 
     if (resetPasswordIdV === null || passwordV === null)
-      throw new BadRequestException({ errors: errors });
+      throw new ValidationException(errors);
 
     return new ResetPasswordInteractorRequest(resetPasswordIdV, passwordV);
   }

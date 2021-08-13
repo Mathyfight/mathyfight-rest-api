@@ -1,4 +1,4 @@
-import { BadRequestException } from '@nestjs/common';
+import { ValidationException } from 'src/shared/domain/value-object/general/validation-exception';
 import { Password } from 'src/auth/core/domain/value-object/password';
 import { Username } from 'src/auth/core/domain/value-object/username';
 import { DomainErrorsProp } from 'src/shared/domain/value-object/util/domain-errors';
@@ -21,7 +21,7 @@ export class LoginInteractorRequest {
     );
 
     if (usernameV === null || passwordV === null)
-      throw new BadRequestException({ errors: errors });
+      throw new ValidationException(errors);
 
     return new LoginInteractorRequest(usernameV, passwordV);
   }

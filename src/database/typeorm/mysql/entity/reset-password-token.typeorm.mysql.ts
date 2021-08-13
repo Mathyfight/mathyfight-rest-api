@@ -25,8 +25,8 @@ export class ResetPasswordTokenTypeOrmMySql {
     user: UserTypeOrmMySql,
   ) {
     this.id = id;
-    this.user = user;
     this.createdAt = createdAt;
     this.hasBeenUsed = hasBeenUsed;
+    this.user = user;
   }
 }

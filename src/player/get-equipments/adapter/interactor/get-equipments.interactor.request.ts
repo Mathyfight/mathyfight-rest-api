@@ -1,4 +1,4 @@
-import { BadRequestException } from '@nestjs/common';
+import { ValidationException } from 'src/shared/domain/value-object/general/validation-exception';
 import { EquipmentType } from 'src/shared/domain/value-object/equipment/equipment-type';
 import { SortingOrderCriteria } from 'src/shared/domain/value-object/general/sorting-order-criteria';
 import { Uuid } from 'src/shared/domain/value-object/general/uuid';
@@ -28,7 +28,7 @@ export class GetEquipmentsInteractorRequest {
     const userIdV = Uuid.parse(userId, errors, DomainErrorsProp.userId);
 
     if (pageV === null || userIdV === null)
-      throw new BadRequestException({ errors: errors });
+      throw new ValidationException(errors);
 
     return new GetEquipmentsInteractorRequest(
       equipmentType,

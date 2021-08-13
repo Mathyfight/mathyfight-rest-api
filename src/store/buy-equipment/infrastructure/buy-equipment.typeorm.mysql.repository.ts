@@ -1,5 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { AvatarEquipmentTypeOrmMySql } from 'src/database/typeorm/mysql/entity/avatar.equipment.typeorm.mysql';
+import { AvatarEquipmentTypeOrmMySql } from 'src/database/typeorm/mysql/entity/avatar-equipment.typeorm.mysql';
 import { EquipmentTypeOrmMySql } from 'src/database/typeorm/mysql/entity/equipment.typeorm.mysql';
 import { PlayerTypeOrmMySql } from 'src/database/typeorm/mysql/entity/player.typeorm.mysql';
 import { UserTypeOrmMySql } from 'src/database/typeorm/mysql/entity/user.typeorm.mysql';
@@ -32,7 +32,6 @@ export class BuyEquipmentTypeOrmMySqlRepository
       );
       await manager.insert(AvatarEquipmentTypeOrmMySql, {
         id: cmd.addEquipmentToAvatar.avatarEquipmentId,
-        level: cmd.addEquipmentToAvatar.level,
         equipped: cmd.addEquipmentToAvatar.equipped,
         avatar: { id: cmd.addEquipmentToAvatar.avatarId },
         equipment: { id: cmd.addEquipmentToAvatar.equipmentId },

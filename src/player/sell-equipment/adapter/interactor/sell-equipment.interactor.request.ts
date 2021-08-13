@@ -1,4 +1,4 @@
-import { BadRequestException } from '@nestjs/common';
+import { ValidationException } from 'src/shared/domain/value-object/general/validation-exception';
 import { Uuid } from 'src/shared/domain/value-object/general/uuid';
 import { DomainErrorsProp } from 'src/shared/domain/value-object/util/domain-errors';
 import { SellEquipmentErrors } from '../../domain/value-object/sell-equipment.errors';
@@ -20,7 +20,7 @@ export class SellEquipmentInteractorRequest {
     );
 
     if (userIdV === null || equipmentIdV === null)
-      throw new BadRequestException({ errors: errors });
+      throw new ValidationException(errors);
 
     return new SellEquipmentInteractorRequest(userIdV, equipmentIdV);
   }

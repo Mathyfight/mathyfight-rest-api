@@ -1,14 +1,15 @@
-import { RaceType } from 'src/shared/domain/value-object/avatar/race-type';
 import {
   Column,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToMany,
   OneToOne,
   PrimaryColumn,
 } from 'typeorm';
-import { AvatarEquipmentTypeOrmMySql } from './avatar.equipment.typeorm.mysql';
+import { AvatarEquipmentTypeOrmMySql } from './avatar-equipment.typeorm.mysql';
 import { PlayerTypeOrmMySql } from './player.typeorm.mysql';
+import { RaceTypeOrmMySql } from './race.typeorm.mysql';
 
 @Entity('avatar')
 export class AvatarTypeOrmMySql {
@@ -18,14 +19,14 @@ export class AvatarTypeOrmMySql {
   @Column('varchar', { name: 'name', length: 64, nullable: false })
   name: string;
 
-  @Column('int', { name: 'attack', unsigned: true, nullable: false })
-  attack: number;
+  @Column('int', { name: 'base_attack', unsigned: true, nullable: false })
+  baseAttack: number;
 
-  @Column('int', { name: 'defense', unsigned: true, nullable: false })
-  defense: number;
+  @Column('int', { name: 'base_defense', unsigned: true, nullable: false })
+  baseDefense: number;
 
-  @Column('int', { name: 'health', unsigned: true, nullable: false })
-  health: number;
+  @Column('int', { name: 'max_health', unsigned: true, nullable: false })
+  maxHealth: number;
 
   @Column('int', { name: 'level', unsigned: true, nullable: false })
   level: number;
@@ -40,14 +41,11 @@ export class AvatarTypeOrmMySql {
   @Column('varchar', { name: 'color', length: 6, nullable: false })
   color: string;
 
-  @Column('enum', { name: 'race', enum: RaceType, nullable: false })
-  race: RaceType;
-
-  @OneToMany(
-    () => AvatarEquipmentTypeOrmMySql,
-    (avatarEquipment) => avatarEquipment.avatar,
-  )
-  equipments: AvatarEquipmentTypeOrmMySql[];
+  @ManyToOne(() => RaceTypeOrmMySql, (race) => race.avatars, {
+    nullable: false,
+  })
+  @JoinColumn({ name: 'race_id' })
+  race: RaceTypeOrmMySql;
 
   @OneToOne(() => PlayerTypeOrmMySql, (player) => player.avatar, {
     nullable: false,
@@ -55,24 +53,30 @@ export class AvatarTypeOrmMySql {
   @JoinColumn({ name: 'player_id' })
   player: PlayerTypeOrmMySql;
 
+  @OneToMany(
+    () => AvatarEquipmentTypeOrmMySql,
+    (avatarEquipment) => avatarEquipment.avatar,
+  )
+  equipments: AvatarEquipmentTypeOrmMySql[];
+
   constructor(
     id: string,
     name: string,
-    attack: number,
-    defense: number,
-    health: number,
+    baseAttack: number,
+    baseDefense: number,
+    maxHealth: number,
     level: number,
     currentExperience: number,
     color: string,
-    race: RaceType,
+    race: RaceTypeOrmMySql,
     equipments: AvatarEquipmentTypeOrmMySql[],
     player: PlayerTypeOrmMySql,
   ) {
     this.id = id;
     this.name = name;
-    this.attack = attack;
-    this.defense = defense;
-    this.health = health;
+    this.baseAttack = baseAttack;
+    this.baseDefense = baseDefense;
+    this.maxHealth = maxHealth;
     this.level = level;
     this.currentExperience = currentExperience;
     this.color = color;

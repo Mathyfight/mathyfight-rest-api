@@ -1,4 +1,5 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { ValidationException } from 'src/shared/domain/value-object/general/validation-exception';
 import { SellEquipmentCommand } from '../../domain/command/sell-equipment.command';
 import { SellEquipmentErrors } from '../../domain/value-object/sell-equipment.errors';
 import { SellEquipmentRepository } from '../interface/sell-equipment.repository';
@@ -19,7 +20,7 @@ export class SellEquipmentInteractor {
       avatarEquipment,
       errors,
     );
-    if (command === null) throw new BadRequestException({ errors: errors });
+    if (command === null) throw new ValidationException(errors);
 
     await this.repository.sellEquipment(command);
   }

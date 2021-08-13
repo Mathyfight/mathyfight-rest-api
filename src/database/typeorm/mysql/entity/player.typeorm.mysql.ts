@@ -1,5 +1,13 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  OneToOne,
+  PrimaryColumn,
+} from 'typeorm';
 import { AvatarTypeOrmMySql } from './avatar.typeorm.mysql';
+import { PlayerUnlockedMathTopicLevelTypeOrmMySql } from './player-unlocked-math-topic-level.typeorm.mysql';
 import { UserTypeOrmMySql } from './user.typeorm.mysql';
 
 @Entity('player')
@@ -19,15 +27,23 @@ export class PlayerTypeOrmMySql {
   @OneToOne(() => AvatarTypeOrmMySql, (avatar) => avatar.player)
   avatar: AvatarTypeOrmMySql;
 
+  @OneToMany(
+    () => PlayerUnlockedMathTopicLevelTypeOrmMySql,
+    (unlockedTopicLevels) => unlockedTopicLevels.player,
+  )
+  unlockedMathTopicLevels: PlayerUnlockedMathTopicLevelTypeOrmMySql[];
+
   constructor(
     id: string,
     gold: number,
     user: UserTypeOrmMySql,
     avatar: AvatarTypeOrmMySql,
+    unlockedMathTopicLevels: PlayerUnlockedMathTopicLevelTypeOrmMySql[],
   ) {
     this.id = id;
     this.gold = gold;
     this.user = user;
     this.avatar = avatar;
+    this.unlockedMathTopicLevels = unlockedMathTopicLevels;
   }
 }

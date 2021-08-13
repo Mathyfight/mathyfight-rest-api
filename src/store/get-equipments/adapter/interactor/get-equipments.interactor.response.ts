@@ -14,6 +14,5 @@ export class GetEquipmentsEquipmentInteractorResponse {
     readonly imageUrl: string,
     readonly description: string,
     readonly buyPrice: number,
-    readonly level: number,
   ) {}
 }

@@ -23,9 +23,6 @@ export class StoreGetEquipmentsEquipmentRouteResponse {
   @ApiProperty()
   readonly buyPrice: number;
 
-  @ApiProperty()
-  readonly level: number;
-
   constructor(
     id: string,
     name: string,
@@ -34,7 +31,6 @@ export class StoreGetEquipmentsEquipmentRouteResponse {
     imageUrl: string,
     description: string,
     buyPrice: number,
-    level: number,
   ) {
     this.id = id;
     this.name = name;
@@ -43,7 +39,6 @@ export class StoreGetEquipmentsEquipmentRouteResponse {
     this.imageUrl = imageUrl;
     this.description = description;
     this.buyPrice = buyPrice;
-    this.level = level;
   }
 }
 
@@ -81,7 +76,6 @@ export class StoreGetEquipmentsRouteResponse {
             e.imageUrl,
             e.description,
             e.buyPrice,
-            e.level,
           ),
       ),
     );

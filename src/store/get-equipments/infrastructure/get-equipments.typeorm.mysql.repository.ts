@@ -67,8 +67,8 @@ export class GetEquipmentTypeOrmMySqlRepository
         new Equipment(
           e.id,
           e.name,
-          e.baseAttack,
-          e.baseDefense,
+          e.attack,
+          e.defense,
           e.imageUrl,
           e.description,
           e.buyPrice,

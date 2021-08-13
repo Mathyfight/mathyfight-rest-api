@@ -1,4 +1,5 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { ValidationException } from 'src/shared/domain/value-object/general/validation-exception';
 import { ForgotPasswordCommand } from '../../domain/command/forgot-password.command';
 import { ForgotPasswordErrors } from '../../domain/value-object/forgot-password.errors';
 import { EmailSender } from '../interface/email.sender';
@@ -18,7 +19,7 @@ export class ForgotPasswordInteractor {
     const user = await this.repository.getUserIdByEmail(request.email.val);
     const command = ForgotPasswordCommand.new(user, errors);
 
-    if (command === null) throw new BadRequestException({ errors: errors });
+    if (command === null) throw new ValidationException(errors);
 
     await this.repository.saveResetPasswordToken(
       command.createResetPasswordToken,

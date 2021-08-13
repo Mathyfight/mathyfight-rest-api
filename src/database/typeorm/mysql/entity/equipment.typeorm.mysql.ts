@@ -1,6 +1,6 @@
 import { EquipmentType } from 'src/shared/domain/value-object/equipment/equipment-type';
 import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
-import { AvatarEquipmentTypeOrmMySql } from './avatar.equipment.typeorm.mysql';
+import { AvatarEquipmentTypeOrmMySql } from './avatar-equipment.typeorm.mysql';
 
 @Entity('equipment')
 export class EquipmentTypeOrmMySql {
@@ -19,41 +19,14 @@ export class EquipmentTypeOrmMySql {
   @Column('enum', { name: 'type', enum: EquipmentType, nullable: false })
   type: EquipmentType;
 
-  @Column('int', { name: 'base_attack', unsigned: true, nullable: false })
-  baseAttack: number;
+  @Column('int', { name: 'attack', unsigned: true, nullable: false })
+  attack: number;
 
-  @Column('int', { name: 'base_defense', unsigned: true, nullable: false })
-  baseDefense: number;
+  @Column('int', { name: 'defense', unsigned: true, nullable: false })
+  defense: number;
 
   @Column('int', { name: 'buy_price', unsigned: true, nullable: false })
   buyPrice: number;
-
-  @Column('int', { name: 'base_sell_price', unsigned: true, nullable: false })
-  baseSellPrice: number;
-
-  @Column('decimal', {
-    name: 'level_attack_rate',
-    precision: 3,
-    scale: 2,
-    nullable: false,
-  })
-  levelAttackRate: number;
-
-  @Column('decimal', {
-    name: 'level_defense_rate',
-    precision: 3,
-    scale: 2,
-    nullable: false,
-  })
-  levelDefenseRate: number;
-
-  @Column('decimal', {
-    name: 'level_sell_rate',
-    precision: 3,
-    scale: 2,
-    nullable: false,
-  })
-  levelSellRate: number;
 
   @OneToMany(
     () => AvatarEquipmentTypeOrmMySql,
@@ -67,13 +40,9 @@ export class EquipmentTypeOrmMySql {
     imageUrl: string,
     description: string,
     type: EquipmentType,
-    baseAttack: number,
-    baseDefense: number,
+    attack: number,
+    defense: number,
     buyPrice: number,
-    baseSellPrice: number,
-    levelAttackRate: number,
-    levelDefenseRate: number,
-    levelSellRate: number,
     avatars: AvatarEquipmentTypeOrmMySql[],
   ) {
     this.id = id;
@@ -81,13 +50,9 @@ export class EquipmentTypeOrmMySql {
     this.imageUrl = imageUrl;
     this.description = description;
     this.type = type;
-    this.baseAttack = baseAttack;
-    this.baseDefense = baseDefense;
+    this.attack = attack;
+    this.defense = defense;
     this.buyPrice = buyPrice;
-    this.baseSellPrice = baseSellPrice;
-    this.levelAttackRate = levelAttackRate;
-    this.levelDefenseRate = levelDefenseRate;
-    this.levelSellRate = levelSellRate;
     this.avatars = avatars;
   }
 }

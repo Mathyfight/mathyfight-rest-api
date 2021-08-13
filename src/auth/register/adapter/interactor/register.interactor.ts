@@ -1,4 +1,5 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { ValidationException } from 'src/shared/domain/value-object/general/validation-exception';
 import { RegisterRepository } from '../interface/register.repository';
 import { RegisterInteractorRequest } from './register.interactor.request';
 import { RegisterErrors } from '../../domain/value-object/register.errors';
@@ -17,6 +18,9 @@ export class RegisterInteractor {
     const userIdFromEmail = await this.repository.getOneUserIdByEmail(
       request.email.val,
     );
+    const defaultAvatarRaceId = await this.repository.getDefaultAvatarRaceId();
+    const mathTopicLevelIds =
+      await this.repository.getMathTopicLevelIdsByNumber(0);
 
     const command = RegisterCommand.new(
       userIdFromUsername,
@@ -24,9 +28,11 @@ export class RegisterInteractor {
       request.password.val,
       request.username.val,
       request.email.val,
+      defaultAvatarRaceId,
+      mathTopicLevelIds,
       errors,
     );
-    if (command === null) throw new BadRequestException({ errors: errors });
+    if (command === null) throw new ValidationException(errors);
 
     await this.repository.registerNewUser(command);
   }

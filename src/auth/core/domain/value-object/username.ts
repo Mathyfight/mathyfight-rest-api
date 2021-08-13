@@ -9,7 +9,7 @@ export class Username {
   private constructor(readonly val: string) {}
 
   static readonly minLength = 3;
-  static readonly maxLength = 32;
+  static readonly maxLength = 20;
 
   static parse(
     val: string,

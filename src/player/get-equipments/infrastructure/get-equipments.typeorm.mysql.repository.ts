@@ -1,5 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { AvatarEquipmentTypeOrmMySql } from 'src/database/typeorm/mysql/entity/avatar.equipment.typeorm.mysql';
+import { AvatarEquipmentTypeOrmMySql } from 'src/database/typeorm/mysql/entity/avatar-equipment.typeorm.mysql';
 import { UserTypeOrmMySql } from 'src/database/typeorm/mysql/entity/user.typeorm.mysql';
 import { EquipmentStats } from 'src/shared/domain/value-object/equipment/equipment-stats';
 import { TypeOrmMySqlMapper } from 'src/shared/infrastructure/typeorm.mysql.mapper';
@@ -43,48 +43,9 @@ export class GetEquipmentTypeOrmMySqlRepository
         command.sortingOrderCriteria,
       );
 
-    const ormAvatarEquipments: {
-      avatarEquipmentId: string;
-      level: number;
-      name: string;
-      description: string;
-      imageUrl: string;
-      baseAttack: number;
-      baseDefense: number;
-      baseSellPrice: number;
-      levelAttackRate: string;
-      levelDefenseRate: string;
-      levelSellRate: string;
-      upgradePrice: string;
-      sellPrice: number;
-    }[] = await this.avatarEquipmentRepository
+    const ormAvatarEquipments = await this.avatarEquipmentRepository
       .createQueryBuilder('ae')
-      .select('ae.id', 'avatarEquipmentId')
-      .addSelect('ae.`level`', 'level')
-      .addSelect('e.name', 'name')
-      .addSelect('e.description', 'description')
-      .addSelect('e.image_url', 'imageUrl')
-      .addSelect('e.base_attack', 'baseAttack')
-      .addSelect('e.base_defense', 'baseDefense')
-      .addSelect('e.base_sell_price', 'baseSellPrice')
-      .addSelect('e.level_attack_rate', 'levelAttackRate')
-      .addSelect('e.level_defense_rate', 'levelDefenseRate')
-      .addSelect('e.level_sell_rate', 'levelSellRate')
-      .addSelect('10', 'upgradePrice')
-      .addSelect(
-        'ceil(e.base_sell_price * pow(1 + e.level_sell_rate, ae.`level` - 1))',
-        'sellPrice',
-      )
-      .addSelect(
-        'ceil(e.base_attack * pow(1 + e.level_attack_rate, ae.`level`-1))',
-        'attack',
-      )
-      .addSelect(
-        'ceil(e.base_defense * pow(1 + e.level_defense_rate, ae.`level`-1))',
-        'defense',
-      )
-      .addSelect('cast(10 as float)', 'upgradePrice')
-      .innerJoin('ae.equipment', 'e')
+      .innerJoinAndSelect('ae.equipment', 'e')
       .where('ae.avatar_id = :avatarId', { avatarId: command.avatarId })
       .andWhere('e.type = :equipmentType', {
         equipmentType: command.equipmentType,
@@ -92,23 +53,19 @@ export class GetEquipmentTypeOrmMySqlRepository
       .orderBy(`${sortingOrder}`, sortingCriteria)
       .offset((command.page - 1) * command.elementsPerPage)
       .limit(command.elementsPerPage)
-      .getRawMany();
+      .getMany();
 
     const equipments = ormAvatarEquipments.map(
       (e) =>
         new Equipment(
-          e.avatarEquipmentId,
-          e.name,
-          e.description,
-          e.imageUrl,
+          e.id,
+          e.equipment.name,
+          e.equipment.description,
+          e.equipment.imageUrl,
           new EquipmentStats(
-            e.baseAttack,
-            e.baseDefense,
-            e.baseSellPrice,
-            e.level,
-            parseFloat(e.levelAttackRate),
-            parseFloat(e.levelDefenseRate),
-            parseFloat(e.levelSellRate),
+            e.equipment.attack,
+            e.equipment.defense,
+            e.equipment.buyPrice,
           ),
         ),
     );

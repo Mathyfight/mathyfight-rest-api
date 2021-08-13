@@ -1,5 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { AvatarEquipmentTypeOrmMySql } from 'src/database/typeorm/mysql/entity/avatar.equipment.typeorm.mysql';
+import { AvatarEquipmentTypeOrmMySql } from 'src/database/typeorm/mysql/entity/avatar-equipment.typeorm.mysql';
 import { PlayerTypeOrmMySql } from 'src/database/typeorm/mysql/entity/player.typeorm.mysql';
 import { Connection, Repository } from 'typeorm';
 import { SellEquipmentRepository } from '../adapter/interface/sell-equipment.repository';
@@ -51,11 +51,7 @@ export class SellEquipmentTypeOrmMySqlRepository
       ormAvatarEquipment.id,
       ormAvatarEquipment.avatar.player.id,
       ormAvatarEquipment.avatar.player.user.id,
-      new EquipmentSellStats(
-        ormAvatarEquipment.equipment.baseSellPrice,
-        ormAvatarEquipment.level,
-        ormAvatarEquipment.equipment.levelSellRate,
-      ),
+      new EquipmentSellStats(ormAvatarEquipment.equipment.buyPrice),
     );
   }
 }

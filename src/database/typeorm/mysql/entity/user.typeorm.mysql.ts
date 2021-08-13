@@ -17,7 +17,7 @@ export class UserTypeOrmMySql {
 
   @Column('varchar', {
     name: 'username',
-    length: 32,
+    length: 20,
     nullable: false,
     unique: true,
   })
@@ -25,6 +25,9 @@ export class UserTypeOrmMySql {
 
   @Column('varchar', { name: 'hashed_password', length: 72, nullable: false })
   hashedPassword: string;
+
+  @Column('boolean', { name: 'is_admin', nullable: false })
+  isAdmin: boolean;
 
   @OneToOne(() => PlayerTypeOrmMySql, (player) => player.user)
   player: PlayerTypeOrmMySql | null;
@@ -37,13 +40,15 @@ export class UserTypeOrmMySql {
     email: string,
     username: string,
     hashedPassword: string,
+    isAdmin: boolean,
     tokens: ResetPasswordTokenTypeOrmMySql[],
     player: PlayerTypeOrmMySql | null,
   ) {
     this.id = id;
-    this.username = username;
     this.email = email;
+    this.username = username;
     this.hashedPassword = hashedPassword;
+    this.isAdmin = isAdmin;
     this.tokens = tokens;
     this.player = player;
   }

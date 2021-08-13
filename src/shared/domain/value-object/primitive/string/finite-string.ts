@@ -4,6 +4,8 @@ export class FiniteString {
   static readonly isNotThisLong = (min: number, max: number): string =>
     `debe tener entre ${min} hasta ${max} caracteres`;
 
+  private constructor(readonly val: string) {}
+
   static parse(
     val: string,
     min: number,
@@ -17,6 +19,6 @@ export class FiniteString {
       return null;
     }
 
-    return new FiniteString();
+    return new FiniteString(val);
   }
 }

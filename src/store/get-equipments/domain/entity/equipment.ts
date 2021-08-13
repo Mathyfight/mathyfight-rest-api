@@ -8,6 +8,4 @@ export class Equipment {
     readonly description: string,
     readonly buyPrice: number,
   ) {}
-
-  readonly level = 1;
 }

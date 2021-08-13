@@ -1,23 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { GetEquipmentsInteractorResponse } from '../adapter/interactor/get-equipments.interactor.response';
 
-export class PlayerGetEquipmentsEquipmentUpgradeRouteResponse {
-  @ApiProperty()
-  readonly price: number;
-
-  @ApiProperty()
-  improvedAttack: number;
-
-  @ApiProperty()
-  improvedDefense: number;
-
-  constructor(price: number, improvedAttack: number, improvedDefense: number) {
-    this.price = price;
-    this.improvedAttack = improvedAttack;
-    this.improvedDefense = improvedDefense;
-  }
-}
-
 export class PlayerGetEquipmentsEquipmentRouteResponse {
   @ApiProperty()
   readonly id: string;
@@ -32,9 +15,6 @@ export class PlayerGetEquipmentsEquipmentRouteResponse {
   readonly defense: number;
 
   @ApiProperty()
-  readonly level: number;
-
-  @ApiProperty()
   readonly imageUrl: string;
 
   @ApiProperty()
@@ -42,9 +22,6 @@ export class PlayerGetEquipmentsEquipmentRouteResponse {
 
   @ApiProperty()
   readonly sellPrice: number;
-
-  @ApiProperty({ type: PlayerGetEquipmentsEquipmentUpgradeRouteResponse })
-  readonly upgrade: PlayerGetEquipmentsEquipmentUpgradeRouteResponse | null;
 
   constructor(
     id: string,
@@ -54,8 +31,6 @@ export class PlayerGetEquipmentsEquipmentRouteResponse {
     imageUrl: string,
     description: string,
     sellPrice: number,
-    level: number,
-    upgrade: PlayerGetEquipmentsEquipmentUpgradeRouteResponse | null,
   ) {
     this.id = id;
     this.name = name;
@@ -64,8 +39,6 @@ export class PlayerGetEquipmentsEquipmentRouteResponse {
     this.imageUrl = imageUrl;
     this.description = description;
     this.sellPrice = sellPrice;
-    this.level = level;
-    this.upgrade = upgrade;
   }
 }
 
@@ -103,14 +76,6 @@ export class PlayerGetEquipmentsRouteResponse {
             e.imageUrl,
             e.description,
             e.sellPrice,
-            e.level,
-            e.upgrade === null
-              ? null
-              : new PlayerGetEquipmentsEquipmentUpgradeRouteResponse(
-                  e.upgrade.price,
-                  e.upgrade.improvedAttack,
-                  e.upgrade.improvedDefense,
-                ),
           ),
       ),
     );

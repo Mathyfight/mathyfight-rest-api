@@ -15,9 +15,6 @@ export class AvatarEquipmentTypeOrmMySql {
   @PrimaryColumn('varchar', { name: 'id', length: 36, nullable: false })
   id: string;
 
-  @Column('int', { name: 'level', unsigned: true, nullable: false, default: 1 })
-  level: number;
-
   @Column('boolean', {
     name: 'equipped',
     nullable: false,
@@ -38,13 +35,11 @@ export class AvatarEquipmentTypeOrmMySql {
 
   constructor(
     id: string,
-    level: number,
     equipped: boolean,
     equipment: EquipmentTypeOrmMySql,
     avatar: AvatarTypeOrmMySql,
   ) {
     this.id = id;
-    this.level = level;
     this.equipped = equipped;
     this.equipment = equipment;
     this.avatar = avatar;
