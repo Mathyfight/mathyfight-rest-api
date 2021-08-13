@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ develop ]
   pull_request:
-    branches: [ main ]
+    branches: [ develop ]
 
 jobs:
   build:
@@ -57,3 +57,6 @@ jobs:
         HD_MATHYFIGHT_MYSQL_URL: ${{secrets.MATHYFIGHT_MYSQL_URL}}
         HD_MATHYFIGHT_JWT_SECRET: ${{secrets.MATHYFIGHT_JWT_SECRET}}
         HD_MATHYFIGHT_SENDGRID_TOKEN: ${{secrets.MATHYFIGHT_SENDGRID_TOKEN}}
+        HD_MATHYFIGHT_AZURE_STORAGE_CONTAINER: ${{secrets.MATHYFIGHT_AZURE_STORAGE_CONTAINER}}
+        HD_MATHYFIGHT_AZURE_STORAGE_URL: ${{secrets.MATHYFIGHT_AZURE_STORAGE_URL}}
+        HD_MATHYFIGHT_AZURE_STORAGE_ACCOUNT_NAME: ${{secrets.MATHYFIGHT_AZURE_STORAGE_ACCOUNT_NAME}}
