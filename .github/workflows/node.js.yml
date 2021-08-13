@@ -54,6 +54,7 @@ jobs:
         heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
         heroku_email: ${{secrets.HEROKU_EMAIL}}
       env:
+        HD_MATHYFIGHT_ENVIRONMENT: ${{secrets.MATHYFIGHT_ENVIRONMENT}}
         HD_MATHYFIGHT_MYSQL_URL: ${{secrets.MATHYFIGHT_MYSQL_URL}}
         HD_MATHYFIGHT_JWT_SECRET: ${{secrets.MATHYFIGHT_JWT_SECRET}}
         HD_MATHYFIGHT_SENDGRID_TOKEN: ${{secrets.MATHYFIGHT_SENDGRID_TOKEN}}

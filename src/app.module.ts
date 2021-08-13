@@ -15,7 +15,7 @@ import { StoreModule } from './store/store.module';
       type: 'mysql',
       url: process.env.MATHYFIGHT_MYSQL_URL,
       autoLoadEntities: true,
-      synchronize: true,
+      synchronize: process.env.MATHYFIGHT_ENVIRONMENT === 'dev' ? true : false,
       logging: true,
       ssl: true,
       timezone: 'Z',
