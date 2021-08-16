@@ -2,8 +2,10 @@ import { RegisterErrors } from '../value-object/register.errors';
 import { RegisterNewUser } from './register-new-user';
 
 export class RegisterCommand {
-  static readonly usernameNotUnique = 'debe no haber sido registrado antes';
-  static readonly emailNotUnique = 'debe no haber sido registrado antes';
+  static readonly usernameNotUnique =
+    'El nombre de usuario ya se encuentra registrado';
+  static readonly emailNotUnique =
+    'El correo electrónico ya se encuentra registrado';
 
   private constructor(readonly registerNewUser: RegisterNewUser) {}
 

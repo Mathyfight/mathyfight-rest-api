@@ -143,12 +143,12 @@
         />
         <div id="token-expired-container" class="error">
           <p class="error">
-            El link ha expirado, por favor reitente recuperar contraseña desde
-            el aplicativo
+            El link ya ha sido utilizado, por favor reintente recuperar contraseña desde
+            la aplicación móvil
           </p>
         </div>
         <div id="invalid-password-container" class="error">
-          <p class="error">La contraseña tiene de 8 hasta 32 caracteres.</p>
+          <p class="error">La contraseña debe tener entre 8 hasta 32 caracteres.</p>
         </div>
         <div id="loading" class="lds-ripple">
           <div></div>
@@ -233,11 +233,11 @@
         }).then(async (res) => {
           loadingPulse.style.display = 'none';
           submitButton.style.display = 'initial';
-          if (res.status >= 400) {
+          if (res.status === 400) {
             const b = await res.json();
-            if (b.password.length) {
+            if (b.errors.password.length) {
               showErrorContainer(invalidPasswordContainer);
-            } else if (b.resetPasswordTokenId.length) {
+            } else if (b.errors.resetPasswordTokenId.length) {
               showErrorContainer(tokenExpiredContainer);
             }
           } else {
