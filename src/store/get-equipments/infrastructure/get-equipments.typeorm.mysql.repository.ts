@@ -34,9 +34,9 @@ export class GetEquipmentTypeOrmMySqlRepository
   ): Promise<[Equipment[], number]> {
     const order =
       cmd.equipmentSortingOrder === EquipmentSortingOrder.Attack
-        ? 'baseAttack'
+        ? 'attack'
         : cmd.equipmentSortingOrder === EquipmentSortingOrder.Defense
-        ? 'baseDefense'
+        ? 'defense'
         : cmd.equipmentSortingOrder === EquipmentSortingOrder.Name
         ? 'name'
         : 'buyPrice';

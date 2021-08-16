@@ -3,11 +3,11 @@ import { EquipmentSortingOrder } from '../domain/value-object/equipment-sorting-
 export class GetEquipmentsTypeOrmMySqlMapper {
   static equipmentSortingOrderToColumn = (
     order?: EquipmentSortingOrder,
-  ): 'baseAttack' | 'baseDefense' | 'name' | 'buyPrice' =>
+  ): 'attack' | 'defense' | 'name' | 'buyPrice' =>
     order === EquipmentSortingOrder.Attack
-      ? 'baseAttack'
+      ? 'attack'
       : order === EquipmentSortingOrder.Defense
-      ? 'baseDefense'
+      ? 'defense'
       : order === EquipmentSortingOrder.Name
       ? 'name'
       : 'buyPrice';
