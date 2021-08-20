@@ -3,6 +3,7 @@ import { GetGeneralInfoModule } from './get-general-info/get-general-info.module
 import { GetEquipmentsModule } from './get-equipments/get-equipments.module';
 import { SellEquipmentModule } from './sell-equipment/sell-equipment.module';
 import { GetPlayerProfileModule } from './get-player-profile/get-player-profile.module';
+import { SearchPlayerModule } from './search-player/search-player.module';
 
 @Module({
   imports: [
@@ -10,6 +11,7 @@ import { GetPlayerProfileModule } from './get-player-profile/get-player-profile.
     SellEquipmentModule,
     GetGeneralInfoModule,
     GetPlayerProfileModule,
+    SearchPlayerModule,
   ],
 })
 export class PlayerModule {}
