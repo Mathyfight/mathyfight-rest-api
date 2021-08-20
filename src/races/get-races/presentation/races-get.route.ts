@@ -7,12 +7,12 @@ import { RacesGetRouteResponse } from './races-get.route.response';
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 @ApiTags('race')
-@Controller('races')
+@Controller()
 export class RacesGetRoute {
   constructor(readonly interactor: GetRacesInteractor) {}
 
   @Get('races')
-  @ApiResponse({ status: 200, type: RacesGetRouteResponse })
+  @ApiResponse({ status: 200, type: [RacesGetRouteResponse] })
   async route(): Promise<RacesGetRouteResponse[]> {
     const intRes = await this.interactor.invoke();
     return intRes.map(
