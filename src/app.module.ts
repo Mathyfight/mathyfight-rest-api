@@ -6,6 +6,7 @@ import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
 import { PlayerModule } from './player/player.module';
+import { RaceModule } from './races/race.module';
 import { SharedModule } from './shared/shared.module';
 import { StoreModule } from './store/store.module';
 
@@ -34,6 +35,7 @@ import { StoreModule } from './store/store.module';
     DatabaseModule,
     StoreModule,
     PlayerModule,
+    RaceModule,
     SharedModule,
   ],
 })
