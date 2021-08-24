@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
+import { MathModule } from './math/math.module';
 import { PlayerModule } from './player/player.module';
 import { RaceModule } from './races/race.module';
 import { SharedModule } from './shared/shared.module';
@@ -36,6 +37,7 @@ import { StoreModule } from './store/store.module';
     StoreModule,
     PlayerModule,
     RaceModule,
+    MathModule,
     SharedModule,
   ],
 })
