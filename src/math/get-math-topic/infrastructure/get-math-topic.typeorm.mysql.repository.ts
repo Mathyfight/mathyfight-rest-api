@@ -1,19 +1,31 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { MathTopicTypeOrmMySql } from 'src/database/typeorm/mysql/entity/math-topic.typeorm.mysql';
 import { PlayerUnlockedMathTopicLevelTypeOrmMySql } from 'src/database/typeorm/mysql/entity/player-unlocked-math-topic-level.typeorm.mysql';
+import { UserTypeOrmMySql } from 'src/database/typeorm/mysql/entity/user.typeorm.mysql';
 import { Repository } from 'typeorm';
 import { GetMathTopicRepository } from '../adapter/interface/get-math-topic.repository';
 import { Enemy, Level, MathTopic } from '../domain/entity/math-topic';
+import { User } from '../domain/entity/user';
 
 export class GetMathTopicTypeOrmMySqlRepository
   implements GetMathTopicRepository
 {
   constructor(
+    @InjectRepository(UserTypeOrmMySql)
+    readonly userRepository: Repository<UserTypeOrmMySql>,
     @InjectRepository(MathTopicTypeOrmMySql)
     readonly mathTopicRepository: Repository<MathTopicTypeOrmMySql>,
     @InjectRepository(PlayerUnlockedMathTopicLevelTypeOrmMySql)
     readonly playerUnlockedMathTopicLevelRepository: Repository<PlayerUnlockedMathTopicLevelTypeOrmMySql>,
   ) {}
+
+  async getUserById(userId: string): Promise<User | null> {
+    const ormUser = await this.userRepository.findOne(userId, {
+      relations: ['player'],
+    });
+    if (ormUser === undefined || ormUser.player === null) return null;
+    return new User(ormUser.player.id);
+  }
 
   async getMathTopic(
     mathTopicId: string,
@@ -32,9 +44,9 @@ export class GetMathTopicTypeOrmMySqlRepository
     const ormPlayerUnlockedMathTopicLevels =
       await this.playerUnlockedMathTopicLevelRepository
         .createQueryBuilder('pumtl')
-        .where('pumtl.player_id = :playerId', { playerId })
         .innerJoinAndSelect('pumtl.mathTopicLevel', 'mtl')
-        .where('mtl.math_topic_id = :mathTopicId', { mathTopicId })
+        .where('pumtl.player_id = :playerId', { playerId })
+        .andWhere('mtl.math_topic_id = :mathTopicId', { mathTopicId })
         .getMany();
 
     const mathTopic = new MathTopic(

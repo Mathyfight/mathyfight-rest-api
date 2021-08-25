@@ -14,9 +14,15 @@ export class GetMathTopicInteractor {
     request: GetMathTopicInteractorRequest,
   ): Promise<GetMathTopicInteractorResponse> {
     const errors = new GetMathTopicErrors();
+    const user = await this.repository.getUserById(request.userId.val);
+    if (user === null) {
+      errors.userId.push('debe existir');
+      throw new ValidationException(errors);
+    }
+
     const mathTopic = await this.repository.getMathTopic(
       request.mathTopicId.val,
-      request.userId.val,
+      user.playerId,
     );
     const cmd = GetMathTopicCommand.new(mathTopic, errors);
     if (cmd === null) throw new ValidationException(errors);
