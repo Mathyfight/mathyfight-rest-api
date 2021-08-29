@@ -24,6 +24,9 @@ export class MathTopicTypeOrmMySql {
   @Column('varchar', { name: 'image_url', length: 2048, nullable: false })
   imageUrl: string;
 
+  @Column('bool', { name: 'is_active', nullable: false })
+  isActive!: boolean;
+
   @ManyToOne(() => MathAreaTypeOrmMySql, (area) => area.mathTopics, {
     nullable: false,
   })

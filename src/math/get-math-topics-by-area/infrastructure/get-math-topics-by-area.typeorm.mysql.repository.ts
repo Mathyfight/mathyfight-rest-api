@@ -14,7 +14,7 @@ export class GetMathTopicsByAreaTypeOrmMySqlRepository
 
   async getMathTopicsByMathAreaId(mathAreaId: string): Promise<MathTopic[]> {
     const ormMathTopics = await this.mathTopicRepository.find({
-      where: { mathArea: { id: mathAreaId } },
+      where: { mathArea: { id: mathAreaId }, isActive: true },
     });
     return ormMathTopics.map(
       (mt) => new MathTopic(mt.id, mt.name, mt.description, mt.imageUrl),
