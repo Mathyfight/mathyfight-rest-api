@@ -24,6 +24,7 @@ export class GetBattleTypeOrmMySqlRepository implements GetBattleRepository {
         'playerUnlockedMathTopicLevel',
         'playerUnlockedMathTopicLevel.player',
         'playerUnlockedMathTopicLevel.mathTopicLevel',
+        'playerUnlockedMathTopicLevel.mathTopicLevel.mathTopic',
         'playerUnlockedMathTopicLevel.mathTopicLevel.level',
         'playerUnlockedMathTopicLevel.player.avatar',
       ],
@@ -33,7 +34,10 @@ export class GetBattleTypeOrmMySqlRepository implements GetBattleRepository {
     const ormNextLevel = await this.mathTopicLevelRepository
       .createQueryBuilder('mtl')
       .innerJoin('mtl.level', 'l')
-      .where('l.number = :levelNumber', {
+      .where('mtl.math_topic_id = :id', {
+        id: ormbattle.playerUnlockedMathTopicLevel.mathTopicLevel.mathTopic.id,
+      })
+      .andWhere('l.number = :levelNumber', {
         levelNumber:
           ormbattle.playerUnlockedMathTopicLevel.mathTopicLevel.level.number +
           1,

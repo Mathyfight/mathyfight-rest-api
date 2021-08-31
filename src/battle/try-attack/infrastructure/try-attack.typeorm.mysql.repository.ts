@@ -52,6 +52,7 @@ export class TryAttackTypeOrmMySqlRepository implements TryAttackRepository {
         'battleMathProblems.mathProblem.mathAnswers',
         'playerUnlockedMathTopicLevel',
         'playerUnlockedMathTopicLevel.mathTopicLevel',
+        'playerUnlockedMathTopicLevel.mathTopicLevel.mathTopic',
         'playerUnlockedMathTopicLevel.mathTopicLevel.level',
         'playerUnlockedMathTopicLevel.player',
         'playerUnlockedMathTopicLevel.player.avatar',
@@ -64,10 +65,14 @@ export class TryAttackTypeOrmMySqlRepository implements TryAttackRepository {
       ormBattle.battleMathProblems
         .filter((p) => !p.solved)
         .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())[0];
+
     const ormNextLevel = await this.mathTopicLevelRepository
       .createQueryBuilder('mtl')
       .innerJoin('mtl.level', 'l')
-      .where('l.number = :levelNumber', {
+      .where('mtl.math_topic_id = :id', {
+        id: ormBattle.playerUnlockedMathTopicLevel.mathTopicLevel.mathTopic.id,
+      })
+      .andWhere('l.number = :levelNumber', {
         levelNumber:
           ormBattle.playerUnlockedMathTopicLevel.mathTopicLevel.level.number +
           1,
