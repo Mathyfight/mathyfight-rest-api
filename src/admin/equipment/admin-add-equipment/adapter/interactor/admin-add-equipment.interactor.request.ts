@@ -4,6 +4,7 @@ import { EquipmentType } from 'src/shared/domain/value-object/equipment/equipmen
 import { FormImage } from 'src/shared/domain/value-object/general/form-image';
 import { Uuid } from 'src/shared/domain/value-object/general/uuid';
 import { ValidationException } from 'src/shared/domain/value-object/general/validation-exception';
+import { Integer } from 'src/shared/domain/value-object/primitive/number/integer';
 import { PositiveInteger } from 'src/shared/domain/value-object/primitive/number/positive-integer';
 import { DomainErrorsProp } from 'src/shared/domain/value-object/util/domain-errors';
 import { AdminAddEquipmentErrors } from '../../domain/value-object/admin-add-equipment.errors';
@@ -15,8 +16,8 @@ export class AdminAddEquipmentInteractorRequest {
     readonly name: EquipmentName,
     readonly description: EquipmentDescription,
     readonly buyPrice: PositiveInteger,
-    readonly attack: PositiveInteger,
-    readonly defense: PositiveInteger,
+    readonly attack: Integer,
+    readonly defense: Integer,
     readonly equipmentType: EquipmentType,
   ) {}
 
@@ -44,16 +45,8 @@ export class AdminAddEquipmentInteractorRequest {
       errors,
       DomainErrorsProp.buyPrice,
     );
-    const attackV = PositiveInteger.parse(
-      attack,
-      errors,
-      DomainErrorsProp.attack,
-    );
-    const defenseV = PositiveInteger.parse(
-      defense,
-      errors,
-      DomainErrorsProp.defense,
-    );
+    const attackV = Integer.parse(attack, errors, DomainErrorsProp.attack);
+    const defenseV = Integer.parse(defense, errors, DomainErrorsProp.defense);
     const imageV = FormImage.parse(image, errors, DomainErrorsProp.image);
 
     if (

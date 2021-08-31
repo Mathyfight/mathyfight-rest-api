@@ -1,9 +1,9 @@
 import { EquipmentDescription } from 'src/admin/equipment/core/domain/value-object/equipment-description';
 import { EquipmentName } from 'src/admin/equipment/core/domain/value-object/equipment-name';
-import { EquipmentType } from 'src/shared/domain/value-object/equipment/equipment-type';
 import { FormImage } from 'src/shared/domain/value-object/general/form-image';
 import { Uuid } from 'src/shared/domain/value-object/general/uuid';
 import { ValidationException } from 'src/shared/domain/value-object/general/validation-exception';
+import { Integer } from 'src/shared/domain/value-object/primitive/number/integer';
 import { PositiveInteger } from 'src/shared/domain/value-object/primitive/number/positive-integer';
 import { DomainErrorsProp } from 'src/shared/domain/value-object/util/domain-errors';
 import { AdminEditEquipmentErrors } from '../../domain/value-object/admin-edit-equipment.errors';
@@ -16,8 +16,8 @@ export class AdminEditEquipmentInteractorRequest {
     readonly name: EquipmentName | undefined,
     readonly description: EquipmentDescription | undefined,
     readonly buyPrice: PositiveInteger | undefined,
-    readonly attack: PositiveInteger | undefined,
-    readonly defense: PositiveInteger | undefined,
+    readonly attack: Integer | undefined,
+    readonly defense: Integer | undefined,
   ) {}
 
   static readonly noDataEditedMsg = 'debes editar al menos un campo';
@@ -59,11 +59,11 @@ export class AdminEditEquipmentInteractorRequest {
     const attackV =
       attack === undefined
         ? undefined
-        : PositiveInteger.parse(attack, errors, DomainErrorsProp.attack);
+        : Integer.parse(attack, errors, DomainErrorsProp.attack);
     const defenseV =
       defense === undefined
         ? undefined
-        : PositiveInteger.parse(defense, errors, DomainErrorsProp.defense);
+        : Integer.parse(defense, errors, DomainErrorsProp.defense);
     const imageV =
       image === undefined
         ? undefined
