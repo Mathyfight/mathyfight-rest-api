@@ -1,6 +1,8 @@
 import { DomainErrors, DomainErrorsProp } from '../../util/domain-errors';
 
 export class Integer {
+  private constructor(readonly val: number) {}
+
   static readonly isNotAnInteger = 'debe ser un entero';
 
   static parse(
@@ -14,6 +16,6 @@ export class Integer {
       return null;
     }
 
-    return new Integer();
+    return new Integer(val);
   }
 }
