@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
+import { AdminModule } from './admin/admin.module';
 import { AuthModule } from './auth/auth.module';
 import { BattleModule } from './battle/battle.module';
 import { DatabaseModule } from './database/database.module';
@@ -40,6 +41,7 @@ import { StoreModule } from './store/store.module';
     RaceModule,
     MathModule,
     BattleModule,
+    AdminModule,
     SharedModule,
   ],
 })
