@@ -17,9 +17,13 @@ export class StartAttackInteractor {
     request: StartAttackInteractorRequest,
   ): Promise<StartAttackInteractorResponse> {
     const battle = await this.repository.getBattleById(request.battleId.val);
-    const mathProblems = await this.repository.getMathProblemsByDifficultyId(
-      request.difficultyId.val,
-    );
+    const mathProblems =
+      battle === null
+        ? null
+        : await this.repository.getMathProblemsByDifficultyIdAndMathTopicId(
+            request.difficultyId.val,
+            battle.mathTopicId,
+          );
 
     const errors = new StartAttackErrors();
     const cmd = StartAttackCommand.new(

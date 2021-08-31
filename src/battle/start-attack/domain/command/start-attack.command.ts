@@ -20,10 +20,10 @@ export class StartAttackCommand {
   static new(
     battle: Battle | null,
     userId: string,
-    mathProblems: MathProblem[],
+    mathProblems: MathProblem[] | null,
     errors: StartAttackErrors,
   ): StartAttackCommand | null {
-    if (battle === null) {
+    if (battle === null || mathProblems === null) {
       errors.battleId.push(this.battleDoesNotExist);
       return null;
     }

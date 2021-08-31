@@ -4,8 +4,9 @@ import { MathProblem } from '../../domain/entity/math-problem';
 
 export abstract class StartAttackRepository {
   abstract getBattleById(battleId: string): Promise<Battle | null>;
-  abstract getMathProblemsByDifficultyId(
+  abstract getMathProblemsByDifficultyIdAndMathTopicId(
     difficultyId: string,
+    mathTopicId: string,
   ): Promise<MathProblem[]>;
   abstract saveMathProblemAndBattle(cmd: SaveMathProblemBattle): Promise<void>;
 }

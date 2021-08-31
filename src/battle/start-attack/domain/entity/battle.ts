@@ -8,6 +8,7 @@ export class Battle {
     readonly enemyHealth: number,
     readonly enemyDefense: number,
     readonly abandoned: boolean,
+    readonly mathTopicId: string,
   ) {}
 
   readonly isBattleOver =

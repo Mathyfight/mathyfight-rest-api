@@ -35,6 +35,8 @@ export class StartAttackTypeOrmMySqlRepository
     const ormBattle = await this.battleRepository.findOne(battleId, {
       relations: [
         'playerUnlockedMathTopicLevel',
+        'playerUnlockedMathTopicLevel.mathTopicLevel',
+        'playerUnlockedMathTopicLevel.mathTopicLevel.mathTopic',
         'playerUnlockedMathTopicLevel.player',
         'playerUnlockedMathTopicLevel.player.user',
         'battleMathProblems',
@@ -51,14 +53,19 @@ export class StartAttackTypeOrmMySqlRepository
       ormBattle.enemyHealth,
       ormBattle.enemyDefense,
       ormBattle.abandoned,
+      ormBattle.playerUnlockedMathTopicLevel.mathTopicLevel.mathTopic.id,
     );
   }
 
-  async getMathProblemsByDifficultyId(
+  async getMathProblemsByDifficultyIdAndMathTopicId(
     difficultyId: string,
+    mathTopicId: string,
   ): Promise<MathProblem[]> {
     const ormMathProblems = await this.mathProblemRepository.find({
-      where: { difficulty: { id: difficultyId } },
+      where: {
+        difficulty: { id: difficultyId },
+        mathTopic: { id: mathTopicId },
+      },
       relations: ['mathAnswers'],
     });
     return ormMathProblems.map(
