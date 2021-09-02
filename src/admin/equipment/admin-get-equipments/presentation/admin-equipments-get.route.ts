@@ -16,7 +16,7 @@ export class AdminEquipmentsGetRoute {
   constructor(readonly interactor: AdminGetEquipmentsInteractor) {}
 
   @Get('admin/equipments')
-  @ApiResponse({ status: 200, type: AdminEquipmentsGetRouteResponse })
+  @ApiResponse({ status: 200, type: [AdminEquipmentsGetRouteResponse] })
   @ApiResponse({ status: 400, type: AdminEquipmentsGetRouteErrors })
   async route(
     @Request() request: { user: JwtPayload },
