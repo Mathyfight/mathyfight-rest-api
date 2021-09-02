@@ -34,7 +34,7 @@ export class AdminMathTopicGetRouteResponse {
   @ApiProperty()
   readonly imageUrl: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: AdminMathTopicLevelGetRouteResponse })
   readonly levels: AdminMathTopicLevelGetRouteResponse[];
 
   constructor(res: AdminGetMathTopicInteractorResponse) {
