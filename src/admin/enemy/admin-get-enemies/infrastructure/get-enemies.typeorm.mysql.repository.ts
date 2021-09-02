@@ -13,8 +13,23 @@ export class GetEnemiesRepositoryTypeOrmMySqlRepository
     readonly connection: Connection,
   ) {}
 
-  async getEnemies(): Promise<Enemy[]> {
-    const enemies = await this.enemyRepository.find();
+  async getEnemies(available: boolean | undefined): Promise<Enemy[]> {
+    let enemies: { id: string; name: string; imageUrl: string }[];
+    if (available !== undefined) {
+      enemies = await this.enemyRepository.query(`
+        select e.id as id, e.name as name, e.image_url as imageUrl
+        from enemy e 
+        left join math_topic_level mtl 
+        on mtl.enemy_id =e.id
+        where mtl.id is ${available ? 'null' : 'not null'}
+        group by e.id
+      `);
+    } else {
+      enemies = await this.enemyRepository.query(`
+        select e.id as id, e.name as name, e.image_url as imageUrl
+        from enemy e
+      `);
+    }
     return enemies.map((e) => new Enemy(e.id, e.name, e.imageUrl));
   }
 }
