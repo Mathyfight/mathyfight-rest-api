@@ -32,7 +32,7 @@ export class AdminMathTopicAddRoute {
   @Post('admin/math/topics')
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('image'))
-  @ApiResponse({ status: 201, type: AdminMathTopicAddRouteBody })
+  @ApiResponse({ status: 201, type: AdminMathTopicAddRouteResponse })
   @ApiResponse({ status: 400, type: AdminMathTopicAddRouteErrors })
   async route(
     @Request() request: { user: JwtPayload },
