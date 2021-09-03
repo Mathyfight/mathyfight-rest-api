@@ -42,7 +42,6 @@ export class AdminEquipmentEditRoute {
     @Body() body: AdminEquipmentEditRouteBody,
     @Param() params: AdminEquipmentEditRouteParams,
   ): Promise<AdminEquipmentEditRouteResponse> {
-    console.dir(body);
     const intReq = AdminEditEquipmentInteractorRequest.parse(
       request.user.userId,
       params.equipmentId,
