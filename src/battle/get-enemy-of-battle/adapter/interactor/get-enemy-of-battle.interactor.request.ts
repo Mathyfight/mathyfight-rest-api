@@ -11,7 +11,6 @@ export class GetEnemyOfBattleInteractorRequest {
     userId: string,
   ): GetEnemyOfBattleInteractorRequest {
     const errors = new GetEnemyOfBattleErrors();
-    console.log(battleId);
     const battleIdV = Uuid.parse(battleId, errors, DomainErrorsProp.battleId);
     const userIdV = Uuid.parse(userId, errors, DomainErrorsProp.userId);
 
