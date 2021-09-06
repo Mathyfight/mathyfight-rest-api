@@ -2,6 +2,7 @@ import { Uuid } from 'src/shared/domain/value-object/general/uuid';
 
 export class PersistMathTopic {
   readonly imageUrl: string;
+  readonly isActive = true;
 
   constructor(
     readonly id: string,

@@ -74,6 +74,7 @@ export class AdminAddMathTopicTypeOrmMySqlRepository
         description: cmd.description,
         imageUrl: cmd.imageUrl,
         name: cmd.name,
+        isActive: cmd.isActive,
         mathArea: { id: cmd.mathAreaId },
       });
       await manager.insert(
