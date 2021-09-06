@@ -16,4 +16,4 @@ import { AdminMathTopicGetRoute } from './presentation/admin-math-topic-get.rout
   ],
   controllers: [AdminMathTopicGetRoute],
 })
-export class AdminGetMathtopicModule {}
+export class AdminGetMathTopicModule {}
