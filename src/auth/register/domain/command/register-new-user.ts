@@ -26,7 +26,7 @@ export class NewPlayer {
   }
 
   readonly id: string = Uuid.newPrimitive();
-  readonly gold = 1000;
+  readonly gold = 0;
   readonly avatar: NewAvatar;
   readonly unlockedLevels: UnlockedLevel[];
 }
