@@ -34,6 +34,7 @@ export class AdminGetMathTopicInteractor {
         (l) =>
           new AdminGetMathTopicLevelInteractorResponse(
             l.number,
+            l.enemyId,
             l.enemyName,
             l.enemyImageUrl,
           ),

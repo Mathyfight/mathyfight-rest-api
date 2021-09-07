@@ -38,7 +38,8 @@ export class AdminGetMathTopicTypeOrmMySqlRepository
       ormMathTopic.description,
       ormMathTopic.imageUrl,
       ormMathTopic.mathTopicLevels.map(
-        (l) => new Level(l.level.number, l.enemy.name, l.enemy.imageUrl),
+        (l) =>
+          new Level(l.level.number, l.enemy.id, l.enemy.name, l.enemy.imageUrl),
       ),
     );
   }

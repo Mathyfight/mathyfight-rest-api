@@ -9,6 +9,9 @@ export class AdminMathTopicLevelGetRouteResponse {
   readonly number: number;
 
   @ApiProperty()
+  readonly enemyId: string;
+
+  @ApiProperty()
   readonly enemyName: string;
 
   @ApiProperty()
@@ -18,6 +21,7 @@ export class AdminMathTopicLevelGetRouteResponse {
     this.number = res.number;
     this.enemyImageUrl = res.enemyImageUrl;
     this.enemyName = res.enemyName;
+    this.enemyId = res.enemyId;
   }
 }
 
