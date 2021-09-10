@@ -27,6 +27,7 @@ export abstract class DomainErrors {
   abstract attack: string[];
   abstract defense: string[];
   abstract mathTopicId: string[];
+  abstract mathProblemId: string[];
 
   static isEmpty(errors: Partial<DomainErrors>): boolean {
     return Object.values(errors).every((prop) => prop.length === 0);
@@ -62,4 +63,5 @@ export enum DomainErrorsProp {
   attack = 'attack',
   defense = 'defense',
   mathTopicId = 'mathTopicId',
+  mathProblemId = 'mathProblemId',
 }

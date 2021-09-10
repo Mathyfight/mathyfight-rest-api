@@ -1,4 +1,6 @@
 import { Global, Module } from '@nestjs/common';
+import { GetAdminUserRepository } from 'src/admin/core/adapter/interface/get-admin-user.repository';
+import { GetAdminUserTypeOrmMySqlRepository } from 'src/admin/core/infrastructure/get-admin-user.typeorm.mysql.repository';
 import { StorageService } from './adapter/interface/storage.service';
 import { AzureStorageService } from './infrastructure/azure-storage.service';
 import { JwtAuthGuard } from './presentation/jwt-auth.guard';
