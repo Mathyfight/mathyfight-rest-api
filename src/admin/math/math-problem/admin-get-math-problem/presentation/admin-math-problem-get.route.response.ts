@@ -31,6 +31,9 @@ export class AdminMathProblemGetRouteResponse {
   @ApiProperty()
   readonly difficultyId: string;
 
+  @ApiProperty()
+  readonly difficultyName: string;
+
   @ApiProperty({ type: String })
   readonly imageUrl: string | null;
 
@@ -44,6 +47,7 @@ export class AdminMathProblemGetRouteResponse {
     this.imageUrl = res.imageUrl;
     this.description = res.description;
     this.difficultyId = res.difficultyId;
+    this.difficultyName = res.difficultyName;
     this.id = res.id;
   }
 }

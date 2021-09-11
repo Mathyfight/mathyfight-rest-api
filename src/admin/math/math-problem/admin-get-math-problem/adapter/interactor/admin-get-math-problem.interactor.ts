@@ -32,7 +32,8 @@ export class AdminGetMathProblemInteractor {
     return new AdminGetMathProblemInteractorResponse(
       cmd.mathProblem.id,
       cmd.mathProblem.description,
-      cmd.mathProblem.difficulty,
+      cmd.mathProblem.difficultyId,
+      cmd.mathProblem.difficultyName,
       cmd.mathProblem.imageUrl,
       cmd.mathProblem.answers.map(
         (a) =>

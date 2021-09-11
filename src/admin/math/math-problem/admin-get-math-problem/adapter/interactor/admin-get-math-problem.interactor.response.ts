@@ -3,6 +3,7 @@ export class AdminGetMathProblemInteractorResponse {
     readonly id: string,
     readonly description: string,
     readonly difficultyId: string,
+    readonly difficultyName: string,
     readonly imageUrl: string | null,
     readonly answers: AdminGetMathProblemAnswerInteractorResponse[],
   ) {}
