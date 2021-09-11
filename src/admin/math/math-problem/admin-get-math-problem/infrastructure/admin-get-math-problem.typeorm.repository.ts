@@ -22,7 +22,7 @@ export class AdminGetMathProblemTypeOrmMySqlRepository
     return new MathProblem(
       ormMathProblem.id,
       ormMathProblem.description,
-      ormMathProblem.difficulty.name,
+      ormMathProblem.difficulty.id,
       ormMathProblem.imageUrl,
       ormMathProblem.mathAnswers.map(
         (a) => new MathAnswer(a.id, a.description, a.isCorrect),

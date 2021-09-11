@@ -2,7 +2,7 @@ export class AdminGetMathProblemInteractorResponse {
   constructor(
     readonly id: string,
     readonly description: string,
-    readonly difficulty: string,
+    readonly difficultyId: string,
     readonly imageUrl: string | null,
     readonly answers: AdminGetMathProblemAnswerInteractorResponse[],
   ) {}
