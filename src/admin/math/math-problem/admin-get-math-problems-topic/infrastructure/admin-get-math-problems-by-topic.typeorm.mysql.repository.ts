@@ -28,7 +28,8 @@ export class AdminGetMathProblemsByTopicTypeOrmMySqlRepository
       relations: ['difficulty'],
     });
     return ormMathProblems.map(
-      (p) => new MathProblem(p.id, p.description, p.difficulty.name),
+      (p) =>
+        new MathProblem(p.id, p.description, p.difficulty.name, p.imageUrl),
     );
   }
 }

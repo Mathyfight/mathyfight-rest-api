@@ -30,6 +30,7 @@ export class AdminGetMathProblemsByTopicInteractor {
           m.id,
           m.description,
           m.difficulty,
+          m.imageUrl,
         ),
     );
   }

@@ -11,9 +11,13 @@ export class AdminMathTopicProblemsGetRouteResponse {
   @ApiProperty()
   readonly difficulty: string;
 
+  @ApiProperty({ type: String })
+  readonly imageUrl: string | null;
+
   constructor(intRes: AdminGetMathProblemsByTopicInteractorResponse) {
     this.description = intRes.description;
     this.difficulty = intRes.difficulty;
     this.id = intRes.id;
+    this.imageUrl = intRes.imageUrl;
   }
 }
