@@ -17,10 +17,10 @@ export class AdminMathProblemAddRouteBody {
   @IsString()
   mathTopicId!: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   description!: string;
 
-  @ApiProperty({ type: 'file' })
+  @ApiProperty({ type: 'file', required: false })
   image!: any;
 
   @ApiProperty({ type: [String] })
