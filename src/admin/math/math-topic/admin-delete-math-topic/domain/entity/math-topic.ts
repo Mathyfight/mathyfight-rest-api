@@ -2,6 +2,8 @@ export class MathTopic {
   constructor(
     readonly id: string,
     readonly imageUrl: string,
+    readonly mathProblemIds: string[],
+    readonly mathAnswersIds: string[],
     readonly mathTopicLevels: MathTopicLevel[],
   ) {}
 

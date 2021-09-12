@@ -1,4 +1,6 @@
 import { InjectRepository } from '@nestjs/typeorm';
+import { MathAnswerTypeOrmMySql } from 'src/database/typeorm/mysql/entity/math-answer.typeorm.mysql';
+import { MathProblemTypeOrmMySql } from 'src/database/typeorm/mysql/entity/math-problem.typeorm.mysql';
 import { MathTopicLevelTypeOrmMySql } from 'src/database/typeorm/mysql/entity/math-topic-level.typeorm.mysql';
 import { MathTopicTypeOrmMySql } from 'src/database/typeorm/mysql/entity/math-topic.typeorm.mysql';
 import { PlayerUnlockedMathTopicLevelTypeOrmMySql } from 'src/database/typeorm/mysql/entity/player-unlocked-math-topic-level.typeorm.mysql';
@@ -37,12 +39,16 @@ export class AdminDeleteMathTopicTypeOrmMySqlRepository
         'mathTopicLevels',
         'mathTopicLevels.playerUnlockedMathTopicLevels',
         'mathTopicLevels.playerUnlockedMathTopicLevels.battles',
+        'mathProblems',
+        'mathProblems.mathAnswers',
       ],
     });
     if (ormMathTopic === undefined) return null;
     return new MathTopic(
       ormMathTopic.id,
       ormMathTopic.imageUrl,
+      ormMathTopic.mathProblems.map((p) => p.id),
+      ormMathTopic.mathProblems.flatMap((p) => p.mathAnswers.map((a) => a.id)),
       ormMathTopic.mathTopicLevels.map(
         (l) =>
           new MathTopicLevel(
@@ -73,6 +79,17 @@ export class AdminDeleteMathTopicTypeOrmMySqlRepository
         );
       if (mtlIds.length > 0)
         await manager.delete(MathTopicLevelTypeOrmMySql, mtlIds);
+      if (cmd.mathTopic.mathAnswersIds.length > 0)
+        await manager.delete(
+          MathAnswerTypeOrmMySql,
+          cmd.mathTopic.mathAnswersIds,
+        );
+      if (cmd.mathTopic.mathProblemIds.length > 0)
+        await manager.delete(
+          MathProblemTypeOrmMySql,
+          cmd.mathTopic.mathProblemIds,
+        );
+
       await manager.delete(MathTopicTypeOrmMySql, cmd.mathTopic.id);
     });
   }
