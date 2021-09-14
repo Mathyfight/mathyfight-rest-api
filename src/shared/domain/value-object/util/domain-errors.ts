@@ -30,6 +30,7 @@ export abstract class DomainErrors {
   abstract mathProblemId: string[];
   abstract mathAnswersDescription: string[];
   abstract mathAnswersIsCorrect: string[];
+  abstract mathAnswersIds: string[];
 
   static isEmpty(errors: Partial<DomainErrors>): boolean {
     return Object.values(errors).every((prop) => prop.length === 0);
@@ -66,6 +67,7 @@ export enum DomainErrorsProp {
   defense = 'defense',
   mathTopicId = 'mathTopicId',
   mathProblemId = 'mathProblemId',
+  mathAnswersIds = 'mathAnswersIds',
   mathAnswersDescription = 'mathAnswersDescription',
   mathAnswersIsCorrect = 'mathAnswersIsCorrect',
 }
