@@ -15,14 +15,12 @@ export class DeleteEnemyInteractor {
     );
 
     const errors = new DeleteEnemyErrors();
-
     const command = DeleteEnemyCommand.new(
       user,
       mathTopicLevel,
       request.enemyId.val,
       errors,
     );
-
     if (command === null) {
       throw new BadRequestException({ errors: errors });
     }

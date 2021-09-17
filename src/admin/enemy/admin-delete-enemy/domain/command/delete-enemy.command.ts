@@ -5,7 +5,7 @@ import { DeleteEnemyErrors } from '../value-object/delete-enemy.errors';
 export class DeleteEnemyCommand {
   static readonly userDoesNotExist = 'debe existir';
   static readonly userIsNotAdmin = 'debe ser administrador';
-  static readonly enemyExistInMathLevel = 'no debe estar asociado al nivel';
+  static readonly enemyExistInMathLevel = 'no debe estar asociado a un nivel';
 
   private constructor(readonly enemyId: string) {}
 
@@ -25,7 +25,8 @@ export class DeleteEnemyCommand {
     }
 
     if (mathTopicLevel !== null) {
-      errors.enemyId.push(`${this.enemyExistInMathLevel} ${mathTopicLevel.id}`);
+      errors.enemyId.push(this.enemyExistInMathLevel);
+      return null;
     }
 
     return new DeleteEnemyCommand(enemyId);

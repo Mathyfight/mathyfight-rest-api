@@ -42,9 +42,10 @@ export class DeleteEnemyRepositoryTypeOrmMySqlRepository
   }
 
   async getMathTopicLevel(enemyId: string): Promise<MathTopicLevel | null> {
-    const mathTopicLevel = await this.mathTopicLevelRepository.findOne({
-      where: { id: enemyId },
-    });
+    const mathTopicLevel = await this.mathTopicLevelRepository
+      .createQueryBuilder('mtl')
+      .where('mtl.enemy_id = :enemyId', { enemyId })
+      .getOne();
     if (mathTopicLevel === undefined) return null;
     return new MathTopicLevel(mathTopicLevel.id);
   }
