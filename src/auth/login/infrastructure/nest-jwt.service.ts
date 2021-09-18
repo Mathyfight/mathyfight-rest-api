@@ -10,7 +10,7 @@ export class NestJwtService implements JwtService {
   constructor() {
     this.jwtService = new NestJwtServiceN({
       secret: process.env.MATHYFIGHT_JWT_SECRET,
-      signOptions: { expiresIn: '1y' },
+      signOptions: { expiresIn: '90d' },
     });
   }
 
