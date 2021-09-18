@@ -18,7 +18,7 @@ export class Level {
     readonly enemy: Enemy,
   ) {}
 
-  readonly name = `Piso ${this.number}`;
+  readonly name = `Nivel ${this.number}`;
 }
 
 export class Enemy {
