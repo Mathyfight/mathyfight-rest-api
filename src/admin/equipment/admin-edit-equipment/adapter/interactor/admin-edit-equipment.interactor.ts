@@ -19,11 +19,14 @@ export class AdminEditEquipmentInteractor {
     req: AdminEditEquipmentInteractorRequest,
   ): Promise<AdminEditEquipmentInteractorResponse> {
     const user = await this.repository.getUserById(req.userId.val);
+    const equipment = await this.repository.getEquipmentById(
+      req.equipmentId.val,
+    );
 
     const errors = new AdminEditEquipmentErrors();
     const cmd = AdminEditEquipmentCommand.new(
       user,
-      req.equipmentId.val,
+      equipment,
       req.image?.val,
       req.name?.val,
       req.description?.val,

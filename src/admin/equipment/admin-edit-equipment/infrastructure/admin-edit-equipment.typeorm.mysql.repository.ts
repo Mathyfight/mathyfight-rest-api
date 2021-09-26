@@ -5,6 +5,7 @@ import { UserTypeOrmMySql } from 'src/database/typeorm/mysql/entity/user.typeorm
 import { Repository } from 'typeorm';
 import { AdminEditEquipmentRepository } from '../adapter/interface/admin-edit-equipment.repository';
 import { PersistEquipment } from '../domain/command/persist-equipment';
+import { Equipment } from '../domain/entity/equipment';
 import { User } from '../domain/entity/user';
 
 export class AdminEditEquipmentTypeOrmMySqlRepository
@@ -18,6 +19,17 @@ export class AdminEditEquipmentTypeOrmMySqlRepository
     @InjectRepository(AvatarEquipmentTypeOrmMySql)
     private avatarEquipmentRepository: Repository<AvatarEquipmentTypeOrmMySql>,
   ) {}
+
+  async getEquipmentById(equipmentId: string): Promise<Equipment | null> {
+    const ormEquipment = await this.equipmentRepository.findOne(equipmentId, {
+      relations: ['avatars'],
+    });
+    if (ormEquipment === undefined) return null;
+    return new Equipment(
+      equipmentId,
+      ormEquipment.avatars.map((a) => a.id),
+    );
+  }
 
   async getImageUrlFromEquipment(equipmentId: string): Promise<string | null> {
     const ormEquipment = await this.equipmentRepository.findOne(equipmentId);
@@ -61,12 +73,6 @@ export class AdminEditEquipmentTypeOrmMySqlRepository
       ormUpdateFields.isActive !== undefined
     ) {
       await this.equipmentRepository.update({ id: cmd.id }, ormUpdateFields);
-      if (!ormUpdateFields.isActive) {
-        await this.avatarEquipmentRepository.update(
-          { equipment: { id: cmd.id } },
-          { equipped: false },
-        );
-      }
     }
   }
 }

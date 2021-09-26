@@ -32,6 +32,7 @@ export class AdminAddEquipmentTypeOrmMySqlRepository
       imageUrl: cmd.imageUrl,
       name: cmd.name,
       type: cmd.type,
+      isActive: true,
     });
   }
 }

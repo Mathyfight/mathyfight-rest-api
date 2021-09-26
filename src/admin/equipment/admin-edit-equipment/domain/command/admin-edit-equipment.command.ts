@@ -1,5 +1,6 @@
 import * as path from 'path';
 import { UploadImage } from 'src/shared/domain/value-object/general/upload-image';
+import { Equipment } from '../entity/equipment';
 import { User } from '../entity/user';
 import { AdminEditEquipmentErrors } from '../value-object/admin-edit-equipment.errors';
 import { PersistEquipment } from './persist-equipment';
@@ -10,12 +11,14 @@ export class AdminEditEquipmentCommand {
     readonly uploadEquipmentImage: UploadImage | undefined,
   ) {}
 
-  static readonly userNotFound = 'debe existir';
+  static readonly notFound = 'debe existir';
   static readonly userNotAdmin = 'debe ser administrador';
+  static readonly equipmentHasAvatars =
+    'no debe haber sido comprado por un avatar';
 
   static new(
     user: User | null,
-    equipmentId: string,
+    equipment: Equipment | null,
     image: Express.Multer.File | undefined,
     name: string | undefined,
     description: string | undefined,
@@ -26,7 +29,7 @@ export class AdminEditEquipmentCommand {
     errors: AdminEditEquipmentErrors,
   ): AdminEditEquipmentCommand | null {
     if (user === null) {
-      errors.userId.push(this.userNotFound);
+      errors.userId.push(this.notFound);
       return null;
     }
 
@@ -35,15 +38,25 @@ export class AdminEditEquipmentCommand {
       return null;
     }
 
+    if (equipment === null) {
+      errors.equipmentId.push(this.notFound);
+      return null;
+    }
+
+    if (isActive === false && equipment.avatarEquipmentIds.length > 0) {
+      errors.equipmentId.push(this.equipmentHasAvatars);
+      return null;
+    }
+
     let imageName = undefined;
     if (image !== undefined) {
       const imageExtension = path.extname(image.originalname);
-      imageName = `equipment_${equipmentId}${imageExtension}`;
+      imageName = `equipment_${equipment.id}${imageExtension}`;
     }
 
     return new AdminEditEquipmentCommand(
       new PersistEquipment(
-        equipmentId,
+        equipment.id,
         name,
         description,
         buyPrice,
