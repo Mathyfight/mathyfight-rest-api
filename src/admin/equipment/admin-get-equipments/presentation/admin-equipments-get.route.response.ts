@@ -26,6 +26,9 @@ export class AdminEquipmentsGetRouteResponse {
   @ApiProperty()
   readonly defense: number;
 
+  @ApiProperty()
+  readonly isActive: boolean;
+
   constructor(intRes: AdminGetEquipmentsInteractorResponse) {
     this.attack = intRes.attack;
     this.buyPrice = intRes.buyPrice;
@@ -35,5 +38,6 @@ export class AdminEquipmentsGetRouteResponse {
     this.imageUrl = intRes.imageUrl;
     this.name = intRes.name;
     this.sellPrice = intRes.sellPrice;
+    this.isActive = intRes.isActive;
   }
 }

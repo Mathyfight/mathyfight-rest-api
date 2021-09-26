@@ -37,6 +37,7 @@ export class AdminGetEquipmentsTypeOrmMySqlRepository
           e.buyPrice,
           e.attack,
           e.defense,
+          e.isActive,
         ),
     );
   }

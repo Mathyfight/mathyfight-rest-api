@@ -28,7 +28,7 @@ export class EquipmentTypeOrmMySql {
   @Column('int', { name: 'buy_price', unsigned: true, nullable: false })
   buyPrice: number;
 
-  @Column('bool', { name: 'is_active', nullable: true })
+  @Column('bool', { name: 'is_active', nullable: false })
   isActive: boolean;
 
   @OneToMany(

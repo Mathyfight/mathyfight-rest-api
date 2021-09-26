@@ -7,6 +7,7 @@ export class Equipment {
     readonly buyPrice: number,
     readonly attack: number,
     readonly defense: number,
+    readonly isActive: boolean,
   ) {}
 
   readonly sellPrice = Math.floor(this.buyPrice * 0.7);

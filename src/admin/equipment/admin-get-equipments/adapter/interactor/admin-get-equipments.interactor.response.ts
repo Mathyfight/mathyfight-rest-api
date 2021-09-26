@@ -8,5 +8,6 @@ export class AdminGetEquipmentsInteractorResponse {
     readonly buyPrice: number,
     readonly attack: number,
     readonly defense: number,
+    readonly isActive: boolean,
   ) {}
 }
