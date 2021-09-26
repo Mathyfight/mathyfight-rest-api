@@ -51,6 +51,7 @@ export class AdminEquipmentEditRoute {
       body.buyPrice,
       body.attack,
       body.defense,
+      body.isActive === undefined ? undefined : body.isActive === 'true',
     );
     const intRes = await this.interactor.invoke(intReq);
     return new AdminEquipmentEditRouteResponse(intRes);

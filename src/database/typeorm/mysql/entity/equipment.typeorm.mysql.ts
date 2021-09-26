@@ -28,6 +28,9 @@ export class EquipmentTypeOrmMySql {
   @Column('int', { name: 'buy_price', unsigned: true, nullable: false })
   buyPrice: number;
 
+  @Column('bool', { name: 'is_active', nullable: true })
+  isActive: boolean;
+
   @OneToMany(
     () => AvatarEquipmentTypeOrmMySql,
     (avatarEquipment) => avatarEquipment.equipment,
@@ -43,6 +46,7 @@ export class EquipmentTypeOrmMySql {
     attack: number,
     defense: number,
     buyPrice: number,
+    isActive: boolean,
     avatars: AvatarEquipmentTypeOrmMySql[],
   ) {
     this.id = id;
@@ -53,6 +57,7 @@ export class EquipmentTypeOrmMySql {
     this.attack = attack;
     this.defense = defense;
     this.buyPrice = buyPrice;
+    this.isActive = isActive;
     this.avatars = avatars;
   }
 }

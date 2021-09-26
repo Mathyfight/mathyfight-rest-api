@@ -18,6 +18,7 @@ export class AdminEditEquipmentInteractorRequest {
     readonly buyPrice: PositiveInteger | undefined,
     readonly attack: Integer | undefined,
     readonly defense: Integer | undefined,
+    readonly isActive: boolean | undefined,
   ) {}
 
   static readonly noDataEditedMsg = 'debes editar al menos un campo';
@@ -31,6 +32,7 @@ export class AdminEditEquipmentInteractorRequest {
     buyPrice: number | undefined,
     attack: number | undefined,
     defense: number | undefined,
+    isActive: boolean | undefined,
   ): AdminEditEquipmentInteractorRequest {
     const errors = new AdminEditEquipmentErrors();
 
@@ -75,7 +77,8 @@ export class AdminEditEquipmentInteractorRequest {
       description === undefined &&
       buyPrice === undefined &&
       attack === undefined &&
-      defense === undefined;
+      defense === undefined &&
+      isActive === undefined;
     if (noDataEdited) errors.errors.push(this.noDataEditedMsg);
 
     if (
@@ -100,6 +103,7 @@ export class AdminEditEquipmentInteractorRequest {
       buyPriceV,
       attackV,
       defenseV,
+      isActive,
     );
   }
 }

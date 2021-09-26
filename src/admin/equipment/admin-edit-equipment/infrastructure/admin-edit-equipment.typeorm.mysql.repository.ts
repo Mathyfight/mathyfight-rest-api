@@ -1,4 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm';
+import { AvatarEquipmentTypeOrmMySql } from 'src/database/typeorm/mysql/entity/avatar-equipment.typeorm.mysql';
 import { EquipmentTypeOrmMySql } from 'src/database/typeorm/mysql/entity/equipment.typeorm.mysql';
 import { UserTypeOrmMySql } from 'src/database/typeorm/mysql/entity/user.typeorm.mysql';
 import { Repository } from 'typeorm';
@@ -14,6 +15,8 @@ export class AdminEditEquipmentTypeOrmMySqlRepository
     private userRepository: Repository<UserTypeOrmMySql>,
     @InjectRepository(EquipmentTypeOrmMySql)
     private equipmentRepository: Repository<EquipmentTypeOrmMySql>,
+    @InjectRepository(AvatarEquipmentTypeOrmMySql)
+    private avatarEquipmentRepository: Repository<AvatarEquipmentTypeOrmMySql>,
   ) {}
 
   async getImageUrlFromEquipment(equipmentId: string): Promise<string | null> {
@@ -36,6 +39,7 @@ export class AdminEditEquipmentTypeOrmMySqlRepository
       description?: string;
       name?: string;
       imageUrl?: string;
+      isActive?: boolean;
     } = {};
 
     if (cmd.name !== undefined) ormUpdateFields.name = cmd.name;
@@ -45,6 +49,7 @@ export class AdminEditEquipmentTypeOrmMySqlRepository
     if (cmd.description !== undefined)
       ormUpdateFields.description = cmd.description;
     if (cmd.imageUrl !== undefined) ormUpdateFields.imageUrl = cmd.imageUrl;
+    if (cmd.isActive !== undefined) ormUpdateFields.isActive = cmd.isActive;
 
     if (
       ormUpdateFields.attack !== undefined ||
@@ -52,9 +57,16 @@ export class AdminEditEquipmentTypeOrmMySqlRepository
       ormUpdateFields.defense !== undefined ||
       ormUpdateFields.description !== undefined ||
       ormUpdateFields.imageUrl !== undefined ||
-      ormUpdateFields.name !== undefined
+      ormUpdateFields.name !== undefined ||
+      ormUpdateFields.isActive !== undefined
     ) {
       await this.equipmentRepository.update({ id: cmd.id }, ormUpdateFields);
+      if (!ormUpdateFields.isActive) {
+        await this.avatarEquipmentRepository.update(
+          { equipment: { id: cmd.id } },
+          { equipped: false },
+        );
+      }
     }
   }
 }

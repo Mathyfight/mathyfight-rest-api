@@ -22,6 +22,7 @@ export class AdminEditEquipmentCommand {
     buyPrice: number | undefined,
     attack: number | undefined,
     defense: number | undefined,
+    isActive: boolean | undefined,
     errors: AdminEditEquipmentErrors,
   ): AdminEditEquipmentCommand | null {
     if (user === null) {
@@ -48,6 +49,7 @@ export class AdminEditEquipmentCommand {
         buyPrice,
         attack,
         defense,
+        isActive,
         imageName,
       ),
       image === undefined || imageName === undefined

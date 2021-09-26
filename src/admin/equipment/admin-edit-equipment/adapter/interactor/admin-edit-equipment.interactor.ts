@@ -30,6 +30,7 @@ export class AdminEditEquipmentInteractor {
       req.buyPrice?.val,
       req.attack?.val,
       req.defense?.val,
+      req.isActive,
       errors,
     );
     if (cmd === null) throw new ValidationException(errors);

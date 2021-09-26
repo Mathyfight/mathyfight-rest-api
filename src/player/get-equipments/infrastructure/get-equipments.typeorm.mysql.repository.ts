@@ -50,6 +50,7 @@ export class GetEquipmentTypeOrmMySqlRepository
       .andWhere('e.type = :equipmentType', {
         equipmentType: command.equipmentType,
       })
+      .andWhere('e.isActive = true')
       .orderBy(`${sortingOrder}`, sortingCriteria)
       .offset((command.page - 1) * command.elementsPerPage)
       .limit(command.elementsPerPage)

@@ -8,6 +8,7 @@ export class PersistEquipment {
     readonly buyPrice: number | undefined,
     readonly attack: number | undefined,
     readonly defense: number | undefined,
+    readonly isActive: boolean | undefined,
     imageName: string | undefined,
   ) {
     this.imageUrl =

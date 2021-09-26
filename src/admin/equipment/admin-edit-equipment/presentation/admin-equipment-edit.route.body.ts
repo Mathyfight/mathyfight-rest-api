@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
+import { IsBooleanString, IsOptional } from 'class-validator';
 
 export class AdminEquipmentEditRouteBody {
   @ApiProperty({ type: 'file', required: false })
@@ -22,4 +23,9 @@ export class AdminEquipmentEditRouteBody {
   @ApiProperty({ type: Number, required: false })
   @Transform((params) => +params.value)
   defense!: number | undefined;
+
+  @ApiProperty({ type: Boolean, required: false })
+  @IsOptional()
+  @IsBooleanString()
+  isActive!: string | undefined;
 }
