@@ -1,0 +1,25 @@
+import { PositiveInteger } from 'src/shared/domain/value-object/primitive/number/positive-integer';
+import {
+  DomainErrors,
+  DomainErrorsProp,
+} from 'src/shared/domain/value-object/util/domain-errors';
+
+export class EquipmentBuyPrice {
+  private constructor(readonly val: number) {}
+
+  static maxVal = 23;
+
+  static parse(
+    val: number,
+    errors: Partial<DomainErrors>,
+    prop: DomainErrorsProp,
+  ): EquipmentBuyPrice | null {
+    const valV = PositiveInteger.parse(val, errors, DomainErrorsProp.buyPrice);
+    if (val > this.maxVal) {
+      errors[prop]?.push(`debe ser menor o igual a ${this.maxVal}`);
+      return null;
+    }
+    if (valV === null) return null;
+    return new EquipmentBuyPrice(valV.val);
+  }
+}

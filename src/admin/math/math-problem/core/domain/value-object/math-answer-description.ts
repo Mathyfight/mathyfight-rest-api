@@ -12,7 +12,7 @@ export class MathAnswerDescription {
     errors: Partial<DomainErrors>,
     prop: DomainErrorsProp,
   ): MathAnswerDescription | null {
-    const valV = FiniteString.parse(val, 1, 10, errors, prop);
+    const valV = FiniteString.parse(val, 1, 20, errors, prop);
 
     if (valV === null) return null;
 

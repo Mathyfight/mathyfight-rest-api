@@ -12,7 +12,7 @@ export class EquipmentDescription {
     errors: Partial<DomainErrors>,
     prop: DomainErrorsProp,
   ): EquipmentDescription | null {
-    const valV = FiniteString.parse(val, 1, 200, errors, prop);
+    const valV = FiniteString.parse(val, 5, 200, errors, prop);
     if (valV === null) return null;
     return new EquipmentDescription(valV.val);
   }

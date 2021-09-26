@@ -1,3 +1,6 @@
+import { EquipmentAttack } from 'src/admin/equipment/core/domain/value-object/equipment-attack';
+import { EquipmentBuyPrice } from 'src/admin/equipment/core/domain/value-object/equipment-buy-price';
+import { EquipmentDefense } from 'src/admin/equipment/core/domain/value-object/equipment-defense';
 import { EquipmentDescription } from 'src/admin/equipment/core/domain/value-object/equipment-description';
 import { EquipmentName } from 'src/admin/equipment/core/domain/value-object/equipment-name';
 import { FormImage } from 'src/shared/domain/value-object/general/form-image';
@@ -15,9 +18,9 @@ export class AdminEditEquipmentInteractorRequest {
     readonly image: FormImage | undefined,
     readonly name: EquipmentName | undefined,
     readonly description: EquipmentDescription | undefined,
-    readonly buyPrice: PositiveInteger | undefined,
-    readonly attack: Integer | undefined,
-    readonly defense: Integer | undefined,
+    readonly buyPrice: EquipmentBuyPrice | undefined,
+    readonly attack: EquipmentAttack | undefined,
+    readonly defense: EquipmentDefense | undefined,
     readonly isActive: boolean | undefined,
   ) {}
 
@@ -57,15 +60,15 @@ export class AdminEditEquipmentInteractorRequest {
     const buyPriceV =
       buyPrice === undefined
         ? undefined
-        : PositiveInteger.parse(buyPrice, errors, DomainErrorsProp.buyPrice);
+        : EquipmentBuyPrice.parse(buyPrice, errors, DomainErrorsProp.buyPrice);
     const attackV =
       attack === undefined
         ? undefined
-        : Integer.parse(attack, errors, DomainErrorsProp.attack);
+        : EquipmentAttack.parse(attack, errors, DomainErrorsProp.attack);
     const defenseV =
       defense === undefined
         ? undefined
-        : Integer.parse(defense, errors, DomainErrorsProp.defense);
+        : EquipmentDefense.parse(defense, errors, DomainErrorsProp.defense);
     const imageV =
       image === undefined
         ? undefined

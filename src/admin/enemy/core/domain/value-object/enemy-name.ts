@@ -12,7 +12,7 @@ export class EnemyName {
     errors: Partial<DomainErrors>,
     prop: DomainErrorsProp,
   ): EnemyName | null {
-    const valV = FiniteString.parse(val, 1, 64, errors, prop);
+    const valV = FiniteString.parse(val, 3, 25, errors, prop);
 
     if (valV === null) return null;
 
