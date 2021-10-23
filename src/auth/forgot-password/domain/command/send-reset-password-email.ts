@@ -1,9 +1,10 @@
 export class SendResetPasswordEmail {
   constructor(resetPasswordTokenId: string, readonly toEmail: string) {
-    this.text = `Reestablece tu contraseña ingresando al siguiente enlace: https://mathyfight-api.herokuapp.com/reset-password/${resetPasswordTokenId}`;
+    const apiUrl = process.env.MATHYFIGHT_API_URL;
+    this.text = `Reestablece tu contraseña ingresando al siguiente enlace: https://${apiUrl}/reset-password/${resetPasswordTokenId}`;
   }
 
-  readonly fromEmail = 'mathyfight@gmail.com';
+  readonly fromEmail = process.env.MATHYFIGHT_SENDGRID_FROMEMAIL!;
   readonly fromName = 'Mathyfight';
   readonly subject = 'Reestablece tu contraseña';
   readonly text: string;
